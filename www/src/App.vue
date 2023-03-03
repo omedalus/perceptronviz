@@ -3,11 +3,7 @@ import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav></nav>
-    </div>
-  </header>
+  <header>Perceptron visualization</header>
 
   <RouterView />
 

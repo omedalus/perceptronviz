@@ -1,5 +1,11 @@
 @import './base.css';
 
+body {
+  background: black;
+  color: #ddd;
+  margin: 0;
+}
+
 #app {
 }
 
