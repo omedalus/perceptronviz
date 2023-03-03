@@ -5,17 +5,3 @@ body {
   color: #ddd;
   margin: 0;
 }
-
-#app {
-}
-
-a {
-}
-
-@media (hover: hover) {
-  a:hover {
-  }
-}
-
-@media (min-width: 1024px) {
-}
