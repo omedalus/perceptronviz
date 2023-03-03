@@ -4,7 +4,18 @@ import { ref, onMounted, onBeforeUnmount } from 'vue';
 const elemSpacer = ref();
 const elemHeader = ref();
 
-const adjustSpacerSizeToMatchHeader = () => {};
+function adjustSpacerSizeToMatchHeader(this: Window, event: Event) {}
+
+onMounted(() => {
+  window.addEventListener('scroll', adjustSpacerSizeToMatchHeader);
+  window.addEventListener('resize', adjustSpacerSizeToMatchHeader);
+  adjustSpacerSizeToMatchHeader.bind(window)(new Event('scroll'));
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', adjustSpacerSizeToMatchHeader);
+  window.removeEventListener('resize', adjustSpacerSizeToMatchHeader);
+});
 </script>
 
 <template>
