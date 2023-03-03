@@ -5,3 +5,13 @@ body {
   color: #ddd;
   margin: 0;
 }
+
+a {
+  cursor: pointer;
+  color: #6ac;
+  text-decoration: none;
+}
+a:hover {
+  color: #8cf;
+  text-decoration: underline;
+}
