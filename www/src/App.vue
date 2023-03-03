@@ -54,7 +54,7 @@ import Header from './components/Header.vue';
           perceptron could perform tasks that many had considered impossible for a machine to do,
           such as
           <a href="http://neuralnetworksanddeeplearning.com/chap1.html">read handwriting</a>, solve
-          logical deduction problems, and even
+          logical deduction problems, and eventually
           <a
             href="https://towardsdatascience.com/the-1958-perceptron-as-a-breast-cancer-classifier-672556186156"
             >potentially diagnose cancer</a
