@@ -18,8 +18,8 @@ import Header from './components/Header.vue';
           <a href="https://www.mathworks.com/discovery/deep-learning.html">Deep Learning </a>
           to <a href="https://stablediffusionweb.com/"> image generation </a> to
           <a href="https://openai.com/blog/chatgpt">Large Language Models (LLMs)</a>
-          &mdash; all use an architecture that derives directly from the lowly perceptron. In fact,
-          modern neural networks are often called
+          &mdash; all derive directly from the perceptron. In fact, modern neural networks are often
+          called
           <a href="https://en.wikipedia.org/wiki/Multilayer_perceptron"> "multilayer perceptrons"</a
           >.
         </p>
@@ -53,8 +53,9 @@ import Header from './components/Header.vue';
           incredible achievements that AI engineers were demonstrating in the real world. The
           perceptron could perform tasks that many had considered impossible for a machine to do,
           such as
-          <a href="http://neuralnetworksanddeeplearning.com/chap1.html">read handwriting</a>, solve
-          logical deduction problems, and eventually
+          <a href="https://www.techtarget.com/whatis/definition/perceptron">recognize images</a>,
+          <a href="http://neuralnetworksanddeeplearning.com/chap1.html">read handwriting</a>, and
+          eventually
           <a
             href="https://towardsdatascience.com/the-1958-perceptron-as-a-breast-cancer-classifier-672556186156"
             >potentially diagnose cancer</a
@@ -96,6 +97,8 @@ import Header from './components/Header.vue';
           >
           &mdash; those based on or inspired by the concepts of neural connectivity from biological
           brains &mdash; practically disappeared overnight. Through the 1970s and early 1980s,
+          partly due to
+          <a href="https://dougenterprises.com/perceptron-history/">Minsky's influence</a>
           research focused on the development of
           <a href="https://en.wikipedia.org/wiki/Symbolic_artificial_intelligence"
             >symbolic artificial intelligence</a
@@ -107,9 +110,11 @@ import Header from './components/Header.vue';
           human performance, but they had very little means of adapting to novel situations, and
           were incapable of doing anything that their human programmers didn't explicitly tell them
           to. During this time, connectionism was generally regarded as naive and perhaps childish
-          &mdash; but at the same time, practically nobody believed that this approach would ever
+          &mdash; but at the same time, practically nobody believed that expert systems would ever
           lead to "self-aware" machinery. This was known as the
-          <a href="https://builtin.com/artificial-intelligence/ai-winter">AI winter</a>.
+          <a href="https://builtin.com/artificial-intelligence/ai-winter">AI winter</a>, and during
+          this time many people both in industry and in culture believed that the development of a
+          "true" machine intelligence was ultimately impossible.
         </p>
         <p>
           On the other hand, Minsky and Papert left a glimmering promise amidst this flood of
@@ -124,16 +129,14 @@ import Header from './components/Header.vue';
           published an algorithm called "backpropagation". Though simple in concept and honestly
           fairly easy for a trained graduate-level mathematician, the equations behind
           backpropagation are far beyond the grasp of laymen, requiring the ability to solve partial
-          differential equations in arbitrarily high-dimensional hyperspaces. (If you're a layman
-          who'd like to at least <em>attempt</em> to grasp what the equations are doing, I recommend
-          you start with
+          differential equations in arbitrarily high-dimensional hyperspaces. (If you''d like to
+          grasp what the equations are doing, I recommend you start with
           <a href="https://www.youtube.com/watch?v=Ilg3gGewQ5U"
-            >this excellent video series by the highly skilled data science educator 3Blue1Brown</a
+            >this excellent video series by 3Blue1Brown</a
           >
           (no affiliation)). Fortunately, though backpropagation's equations may be difficult to
-          <em>understand</em>, they are relatively easy to <em>implement</em> in software. (If you
-          have some programming expertise and want to really understand how to turn the equations
-          into code,
+          <em>understand</em>, they are relatively easy to <em>implement</em>. (If you have some
+          programming expertise and want to really understand how to turn the equations into code,
           <a href="https://neptune.ai/blog/backpropagation-algorithm-in-neural-networks-guide"
             >Neptune.ai (no affiliation) has a detailed lesson.</a
           >) Indeed, the backpropagation algorithm, which makes Deep Learning possible, remains the
@@ -162,4 +165,10 @@ import Header from './components/Header.vue';
   <div>barrrrrr foooo weeee</div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.mainblock {
+  max-width: 1280px;
+  padding: 0 2em;
+  margin: auto;
+}
+</style>
