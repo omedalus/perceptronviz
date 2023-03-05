@@ -17,7 +17,7 @@ import Header from './components/Header.vue';
     <div class="">
       <p>
         A <a href="https://en.wikipedia.org/wiki/Perceptron"><em>perceptron</em></a> is the
-        ancestral version of modern machine learning architectures. In fact, the
+        ancestral version of modern machine learning architectures. The
         <a href="https://en.wikipedia.org/wiki/Artificial_neural_network"
           >artificial neural networks</a
         >
@@ -97,8 +97,8 @@ import Header from './components/Header.vue';
           >linear separability</a
         >. If a pattern recognition assignment couldn't be expressed in linearly separable terms,
         then a perceptron was simply mathematically incapable of ever learning the pattern &mdash;
-        no matter how many neurons the perceptron had, no matter how densely its neurons were wired,
-        and no matter how many example cases it was shown.
+        no matter how many neurons it had, no matter how densely connected it was, and no matter how
+        many training examples it was shown.
       </p>
       <p>
         A 1969 book called simply
@@ -143,7 +143,7 @@ import Header from './components/Header.vue';
         <a href="https://en.wikipedia.org/wiki/Automated_theorem_proving"
           >automated mathematical theorem-provers</a
         >. These systems could explicitly mimic human decision-making and possibly even exceed human
-        performance, but they had very little means of adapting to novel situations, and were
+        performance. However, they had very little means of adapting to novel situations, and were
         incapable of doing anything that their human programmers didn't explicitly tell them to.
         During this time, connectionism was generally regarded as naive and perhaps childish &mdash;
         but at the same time, practically nobody believed that expert systems would ever lead to
@@ -152,6 +152,30 @@ import Header from './components/Header.vue';
         this time many people both in industry and in culture came to believe that the development
         of a "true" machine intelligence was ultimately impossible.
       </p>
+
+      <div class="explando-photo explando-photo-right">
+        <a href="https://www.newyorker.com/magazine/1981/12/14/a-i">
+          <img src="@/assets/img/Lives-MinskyNew.jpg" />
+        </a>
+        <div class="caption">
+          <a href="https://www.newyorker.com/magazine/1981/12/14/a-i">Marvin Minsky</a>, co-founder
+          of the
+          <a
+            href="https://capd.mit.edu/organizations/mit-computer-science-artificial-intelligence-lab/"
+            >MIT AI Lab</a
+          >, advocated a
+          <a
+            href="https://medium.com/codex/the-perceptron-and-the-rivalry-between-frank-rosenblatt-and-marvin-minsky-e68fb3e0e3b6"
+            >radically different approach to AI than Rosenblatt</a
+          >. He and <a href="https://en.wikipedia.org/wiki/Seymour_Papert">Seymour Papert</a>
+          published
+          <a href="https://mitpress.mit.edu/9780262630221/perceptrons/"><em>Perceptrons</em></a> in
+          1969. This book crushed all faith in neural networks for an entire generation of
+          researchers, but it also described the innovations that would need to take place &mdash;
+          and ultimately <em>did</em> take place &mdash; to bring connectionist AI to fruition.
+        </div>
+      </div>
+
       <p>
         On the other hand, Minsky and Papert left a glimmering promise amidst this flood of despair.
         In the book, they posited that, even though individual perceptrons had this limitation of
@@ -211,15 +235,15 @@ import Header from './components/Header.vue';
 }
 
 .explando-photo {
+  margin: 1em 3em 1em;
+
   &.explando-photo-right {
     float: right;
-    margin: 1em 3em 2em;
     margin-right: 0;
   }
 
   &.explando-photo-left {
     float: left;
-    margin: 1em 3em 2em;
     margin-left: 0;
   }
 
@@ -239,5 +263,6 @@ import Header from './components/Header.vue';
 
 .explando-essay {
   padding-bottom: 2em;
+  max-width: 640px;
 }
 </style>
