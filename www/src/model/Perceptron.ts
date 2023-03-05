@@ -12,6 +12,9 @@ class Perceptron {
   public get size() {
     return this._dim * this._dim;
   }
+  public get dim() {
+    return this._dim;
+  }
 }
 
 export default Perceptron;

@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 
 import Header from '@/components/Header.vue';
 import GridSquare from '@/components/GridSquare.vue';
+import GridModel from './components/GridModel.vue';
 
 import Perceptron from '@/model/Perceptron';
 
@@ -20,15 +21,7 @@ onMounted(() => {});
         <h2>Input</h2>
 
         <div class="gridmodel-holder">
-          <div class="gridmodel">
-            <div class="gridmodel-y" v-for="(vy, y) in Array(5)">
-              <div class="gridmodel-x" v-for="(vx, x) in Array(5)">
-                <div class="gridsquare-holder">
-                  <GridSquare v-model="thePerceptron.input[y * 5 + x]"></GridSquare>
-                </div>
-              </div>
-            </div>
-          </div>
+          <GridModel v-model="thePerceptron.input" :dim="thePerceptron.dim"></GridModel>
         </div>
 
         <div>
@@ -340,16 +333,6 @@ onMounted(() => {});
 
   .gridmodel-holder {
     margin: auto;
-  }
-
-  .gridmodel-x,
-  .gridsquare-holder {
-    display: inline-block;
-  }
-
-  .gridmodel-x {
-    margin-left: 0.25ex;
-    margin-right: 0.25ex;
   }
 }
 
