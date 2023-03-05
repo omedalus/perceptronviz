@@ -52,9 +52,12 @@ onMounted(() => {});
           <p>Here's how your picture "looks" to the machine:</p>
 
           <div class="vector-readout">
-            <span class="vector-readout-value" v-for="(v, i) in thePerceptron.input">{{
-              v.toFixed(2)
-            }}</span>
+            <span
+              class="vector-readout-value"
+              v-for="(v, i) in thePerceptron.input"
+              :style="{ opacity: v / 2 + 0.5 }"
+              >{{ v.toFixed(2) }}</span
+            >
           </div>
         </div>
       </div>
