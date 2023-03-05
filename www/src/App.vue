@@ -3,6 +3,10 @@ import { ref } from 'vue';
 
 import Header from './components/Header.vue';
 import GridSquare from './components/GridSquare.vue';
+
+const inputLayer = ref([] as number[]);
+inputLayer.value.length = 36;
+inputLayer.value.forEach((v, i) => (inputLayer.value[i] = 0));
 </script>
 
 <template>
@@ -14,7 +18,15 @@ import GridSquare from './components/GridSquare.vue';
         <h2>Input</h2>
 
         <div class="gridmodel-holder">
-          <GridSquare></GridSquare>
+          <div class="gridmodel">
+            <div class="gridmodel-y" v-for="(vy, y) in Array(6)">
+              <div class="gridmodel-x" v-for="(vx, x) in Array(6)">
+                <div class="gridsquare-holder">
+                  <GridSquare></GridSquare>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div>Draw a picture on this grid.</div>
@@ -306,6 +318,11 @@ h6 {
     flex: 1;
     margin: 1em;
     border: 1px dashed yellow;
+  }
+
+  .gridmodel-x,
+  .gridsquare-holder {
+    display: inline-block;
   }
 }
 </style>

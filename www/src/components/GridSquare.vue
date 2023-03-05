@@ -53,10 +53,10 @@ const theValue = computed(() => {
 .gridsquare {
   border: 1px solid #fff;
   background-color: #000;
-  height: 3em;
-  width: 3em;
-  margin: 1em;
+  height: 2em;
+  width: 2em;
   position: relative;
+  display: inline-block;
 
   cursor: url('@/assets/pen-cursor.svg'), pointer;
 
