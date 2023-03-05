@@ -1,23 +1,45 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import Header from './components/Header.vue';
+import GridSquare from './components/GridSquare.vue';
 </script>
 
 <template>
   <Header></Header>
 
   <main>
-    <div class="hero mainblock">
-      <p>Humans are good at visual perception, and your screen is a visual medium.</p>
+    <div class="interactive-model mainblock">
+      <div class="interactive-panel interactive-panel--grid">
+        <h2>Input</h2>
+
+        <div class="gridmodel-holder">
+          <GridSquare></GridSquare>
+        </div>
+
+        <div>Draw a picture on this grid.</div>
+
+        <div class="explanation">
+          <p>
+            Humans are good at visual perception, and your screen is a visual medium. Therefore, for
+            this demonstration, you'll train a perceptron to recognize images.
+          </p>
+        </div>
+      </div>
+      <div class="interactive-panel interactive-panel--outputs">Outputs go here</div>
+      <div class="interactive-panel interactive-panel--network">Diagram of network goes here</div>
     </div>
   </main>
 
-  <div>barrrrrr foooo weeee</div>
+  <div>
+    <hr />
+  </div>
 
   <div class="explando-essay mainblock">
     <div class="">
       <p>
         A <a href="https://en.wikipedia.org/wiki/Perceptron"><em>perceptron</em></a> is the
-        ancestral version of modern machine learning architectures. The
+        ancestral version of modern machine learning systems. The
         <a href="https://en.wikipedia.org/wiki/Artificial_neural_network"
           >artificial neural networks</a
         >
@@ -228,41 +250,62 @@ import Header from './components/Header.vue';
 </template>
 
 <style scoped lang="scss">
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
 .mainblock {
-  max-width: 1024px;
-  padding: 0 2em;
   margin: auto;
 }
 
-.explando-photo {
-  margin: 1em 3em 1em;
+.explando-essay {
+  padding-top: 1em;
+  padding-bottom: 2em;
+  max-width: 640px;
 
-  &.explando-photo-right {
-    float: right;
-    margin-right: 0;
-  }
+  .explando-photo {
+    margin: 1em 3em 1em;
 
-  &.explando-photo-left {
-    float: left;
-    margin-left: 0;
-  }
+    &.explando-photo-right {
+      float: right;
+      margin-right: 0;
+    }
 
-  width: 15em;
-  max-width: 33vw;
+    &.explando-photo-left {
+      float: left;
+      margin-left: 0;
+    }
 
-  img {
-    width: 100%;
-  }
+    width: 15em;
+    max-width: 33vw;
 
-  .caption {
-    font-size: 0.875rem;
-    font-style: italic;
-    color: #aaa;
+    img {
+      width: 100%;
+    }
+
+    .caption {
+      font-size: 0.875rem;
+      font-style: italic;
+      color: #aaa;
+    }
   }
 }
 
-.explando-essay {
-  padding-bottom: 2em;
-  max-width: 640px;
+.interactive-model {
+  display: flex;
+  flex-direction: row;
+
+  margin: 1em;
+
+  .interactive-panel {
+    flex: 1;
+    margin: 1em;
+    border: 1px dashed yellow;
+  }
 }
 </style>
