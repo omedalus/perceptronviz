@@ -8,9 +8,7 @@ import Perceptron from '@/model/Perceptron';
 
 const thePerceptron = ref(new Perceptron(5));
 
-onMounted(() => {
-  console.log(thePerceptron.value.input);
-});
+onMounted(() => {});
 </script>
 
 <template>
@@ -26,7 +24,7 @@ onMounted(() => {
             <div class="gridmodel-y" v-for="(vy, y) in Array(5)">
               <div class="gridmodel-x" v-for="(vx, x) in Array(5)">
                 <div class="gridsquare-holder">
-                  <GridSquare></GridSquare>
+                  <GridSquare v-model="thePerceptron.input[y * 5 + x]"></GridSquare>
                 </div>
               </div>
             </div>

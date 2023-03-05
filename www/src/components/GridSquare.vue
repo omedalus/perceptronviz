@@ -9,6 +9,7 @@ const MS_INTERVAL_HOLD = 50;
 const fnHold = () => {
   msTotalHoldTime.value += MS_INTERVAL_HOLD;
   msTotalHoldTime.value %= 2000;
+  emit('update:modelValue', theValue.value);
 };
 
 const cleanup = () => {
@@ -41,6 +42,13 @@ const theValue = computed(() => {
   }
   return v;
 });
+
+const prop = defineProps<{
+  modelValue: number;
+}>();
+const emit = defineEmits<{
+  (e: 'update:modelValue', v: number): void;
+}>();
 </script>
 
 <template>
@@ -87,10 +95,13 @@ const theValue = computed(() => {
 
     display: none;
   }
-  &:hover {
-    .gridsquare-value-hover {
-      display: block;
-    }
+
+  // The following rather complicated thing is caused by the fact that
+  // the hoverer can't be *in* the same element that it's being hovered over,
+  // or else it'll extend the hovering range.
+
+  .gridsquare-brightener:hover + .gridsquare-value-hover {
+    display: block;
   }
 }
 </style>
