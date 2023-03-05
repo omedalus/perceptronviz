@@ -14,7 +14,7 @@ import Header from './components/Header.vue';
   <div>barrrrrr foooo weeee</div>
 
   <div class="explando-essay mainblock">
-    <div class="explanation">
+    <div class="">
       <p>
         A <a href="https://en.wikipedia.org/wiki/Perceptron"><em>perceptron</em></a> is the
         ancestral version of modern machine learning architectures. In fact, the
@@ -90,15 +90,15 @@ import Header from './components/Header.vue';
       </p>
       <p>
         Unfortunately, this whirlwind of excitement proved immature. In the late 1960s, it was
-        becoming apparent that the perceptron could only learn a very specific format of problems
-        &mdash; ones that exhibited a mathematical property called
+        becoming apparent that the perceptron could only learn a very specific format of problems:
+        ones that exhibited a mathematical property called
         <a
           href="https://subscription.packtpub.com/book/big-data-and-business-intelligence/9781788830577/2/ch02lvl1sec26/linear-separability"
           >linear separability</a
         >. If a pattern recognition assignment couldn't be expressed in linearly separable terms,
-        then a perceptron was simply mathematically incapable of ever learning the pattern, no
-        matter how many neurons the perceptron had and no matter how many example cases it was
-        shown.
+        then a perceptron was simply mathematically incapable of ever learning the pattern &mdash;
+        no matter how many neurons the perceptron had, no matter how densely its neurons were wired,
+        and no matter how many example cases it was shown.
       </p>
       <p>
         A 1969 book called simply
