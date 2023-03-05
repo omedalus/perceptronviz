@@ -37,7 +37,7 @@ onBeforeUnmount(() => {
 const theValue = computed(() => {
   let v = msTotalHoldTime.value / 1000;
   if (v > 1) {
-    v = 2 - v;
+    v = (2000 - msTotalHoldTime.value) / 1000;
   }
   return v;
 });
@@ -46,6 +46,10 @@ const theValue = computed(() => {
 <template>
   <div class="gridsquare" @mousedown="onMouseDown()" @mouseup="onMouseUp()">
     <div class="gridsquare-brightener" :style="{ opacity: theValue }"></div>
+
+    <div class="gridsquare-value-hover">
+      {{ `${Math.round(theValue * 100)}%` }}
+    </div>
   </div>
 </template>
 
@@ -67,6 +71,26 @@ const theValue = computed(() => {
     width: calc(100% - 4px);
     height: calc(100% - 4px);
     background-color: #fff;
+  }
+
+  .gridsquare-value-hover {
+    position: absolute;
+    font-size: 0.75rem;
+    top: -1.5em;
+    left: 0.5ex;
+    width: calc(100% - 1ex);
+    background-color: black;
+    text-align: center;
+    color: white;
+    border: 1px solid #888;
+    border-radius: 1ex;
+
+    display: none;
+  }
+  &:hover {
+    .gridsquare-value-hover {
+      display: block;
+    }
   }
 }
 </style>

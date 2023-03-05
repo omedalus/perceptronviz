@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
-import Header from './components/Header.vue';
-import GridSquare from './components/GridSquare.vue';
+import Header from '@/components/Header.vue';
+import GridSquare from '@/components/GridSquare.vue';
 
-const inputLayer = ref([] as number[]);
-inputLayer.value.length = 36;
-inputLayer.value.forEach((v, i) => (inputLayer.value[i] = 0));
+import Perceptron from '@/model/Perceptron';
+
+const thePerceptron = ref(new Perceptron(5));
+
+onMounted(() => {
+  console.log(thePerceptron.value.input);
+});
 </script>
 
 <template>
@@ -29,13 +33,31 @@ inputLayer.value.forEach((v, i) => (inputLayer.value[i] = 0));
           </div>
         </div>
 
-        <div>Draw a picture on this grid.</div>
-
-        <div class="explanation">
+        <div>
           <p>
-            Humans are good at visual perception, and your screen is a visual medium. So, for this
-            demonstration, you'll train a perceptron to recognize images.
+            <span style="font-weight: bold">Draw a 5x5-pixel picture on this grid.</span><br />
+            <span>Hold down on a pixel (square) to change its brightness level (its value).</span>
           </p>
+        </div>
+
+        <div style="text-align: left; font-size: 0.875rem; margin-top: 1em">
+          <p style="color: #888; margin-bottom: 1em">
+            The machine can't <em>see</em> the image like you or I can. It can only "see" a set of
+            values between 0 and 1, corresponding to brightness levels. In
+            <a
+              href="https://towardsdatascience.com/a-concise-history-of-neural-networks-2070655d3fec"
+            >
+              inventor Frank Rosenblatt's original Mark 1 Perceptron</a
+            >, these values weren't even <em>numbers</em>; they were simply the electrical voltage
+            coming out of a grid of analog photocells.
+          </p>
+          <p>Here's how your picture "looks" to the machine:</p>
+
+          <div class="vector-readout">
+            <span class="vector-readout-value" v-for="(v, i) in thePerceptron.input">{{
+              v.toFixed(2)
+            }}</span>
+          </div>
         </div>
       </div>
       <div class="interactive-panel interactive-panel--outputs">Outputs go here</div>
@@ -262,15 +284,6 @@ inputLayer.value.forEach((v, i) => (inputLayer.value[i] = 0));
 </template>
 
 <style scoped lang="scss">
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-}
-
 .mainblock {
   margin: auto;
 }
@@ -317,7 +330,6 @@ h6 {
   .interactive-panel {
     flex: 1;
     margin: 1em;
-    border: 1px dashed yellow;
     text-align: center;
   }
 
@@ -337,6 +349,18 @@ h6 {
   .gridmodel-x {
     margin-left: 0.25ex;
     margin-right: 0.25ex;
+  }
+}
+
+.vector-readout {
+  white-space: normal;
+
+  .vector-readout-value {
+    display: inline-block;
+  }
+
+  .vector-readout-value {
+    margin-left: 0.5em;
   }
 }
 </style>
