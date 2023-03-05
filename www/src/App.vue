@@ -19,8 +19,8 @@ inputLayer.value.forEach((v, i) => (inputLayer.value[i] = 0));
 
         <div class="gridmodel-holder">
           <div class="gridmodel">
-            <div class="gridmodel-y" v-for="(vy, y) in Array(6)">
-              <div class="gridmodel-x" v-for="(vx, x) in Array(6)">
+            <div class="gridmodel-y" v-for="(vy, y) in Array(5)">
+              <div class="gridmodel-x" v-for="(vx, x) in Array(5)">
                 <div class="gridsquare-holder">
                   <GridSquare></GridSquare>
                 </div>
@@ -33,8 +33,8 @@ inputLayer.value.forEach((v, i) => (inputLayer.value[i] = 0));
 
         <div class="explanation">
           <p>
-            Humans are good at visual perception, and your screen is a visual medium. Therefore, for
-            this demonstration, you'll train a perceptron to recognize images.
+            Humans are good at visual perception, and your screen is a visual medium. So, for this
+            demonstration, you'll train a perceptron to recognize images.
           </p>
         </div>
       </div>
@@ -318,11 +318,25 @@ h6 {
     flex: 1;
     margin: 1em;
     border: 1px dashed yellow;
+    text-align: center;
+  }
+
+  .interactive-panel--grid {
+    min-width: 16em;
+  }
+
+  .gridmodel-holder {
+    margin: auto;
   }
 
   .gridmodel-x,
   .gridsquare-holder {
     display: inline-block;
+  }
+
+  .gridmodel-x {
+    margin-left: 0.25ex;
+    margin-right: 0.25ex;
   }
 }
 </style>
