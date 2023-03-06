@@ -48,6 +48,7 @@ updateViz();
 
   <div>
     <hr />
+    {{ thePerceptron }}
   </div>
 
   <div class="explando-essay mainblock">
