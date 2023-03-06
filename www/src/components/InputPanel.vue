@@ -39,7 +39,7 @@ const formula = ref('');
         levels. In
         <a href="https://towardsdatascience.com/a-concise-history-of-neural-networks-2070655d3fec">
           inventor Frank Rosenblatt's original Mark 1 Perceptron</a
-        >, these values weren't even <em>numbers</em>; they were simply the electrical voltage
+        >, these values weren't even <em>numbers</em>; they were simply the electrical voltages
         coming out of a grid of analog photocells.
       </p>
       <p>

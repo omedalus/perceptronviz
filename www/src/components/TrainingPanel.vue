@@ -141,7 +141,14 @@ onBeforeUnmount(() => {
     </div>
 
     <div v-else>
-      <div class="training-heatgrid">
+      <div class="training-forward-heatgrid-section" style="display: flex">
+        <div class="training-forward-heatgrid-input">
+          <HeatGrid
+            :vector="modelValue.input"
+            :dim="modelValue.dim"
+            :input-overlay="true"
+          ></HeatGrid>
+        </div>
         <HeatGrid :vector="modelValue.currentOutputVector" :dim="modelValue.dim"></HeatGrid>
       </div>
 

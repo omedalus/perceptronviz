@@ -16,7 +16,18 @@ const vectorIndex = (x: number, y: number) => {
 };
 
 const squareColorAtXY = (x: number, y: number) => {
-  let vRaw = props.vector[vectorIndex(x, y)];
+  const vix = vectorIndex(x, y);
+  if (vix >= props.vector.length) {
+    if (!props.inputOverlay) {
+      throw new Error(
+        `We've been given a heat grid that's longer than our input vector. This is okay if we're showing an input overlay, but otherwise it's a no-no.`
+      );
+    }
+    // But we ARE an input overlay, so all is well.
+    return `rgb(255,255,255)`;
+  }
+
+  let vRaw = props.vector[vix];
 
   if (props.inputOverlay) {
     // Raw value is between 0 and 1.
@@ -63,7 +74,10 @@ const squareColorAtXY = (x: number, y: number) => {
     >
       <div class="heatgrid-square-hoverdetector"></div>
       <div class="heatgrid-square-tooltip">
-        {{ vector[dim * dim] > 0 ? '+' : '' }}{{ vector[dim * dim].toFixed(2) }}
+        <span v-if="vector.length < dim * dim">
+          {{ vector[dim * dim] > 0 ? '+' : '' }}{{ vector[dim * dim].toFixed(2) }}
+        </span>
+        <span v-else> +1 </span>
       </div>
     </div>
   </div>
