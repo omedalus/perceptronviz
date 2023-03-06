@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed, onBeforeUnmount } from 'vue';
 
 import HeatGrid from './HeatGrid.vue';
 
@@ -10,7 +10,6 @@ const props = defineProps<{
 }>();
 const emit = defineEmits<{
   (e: 'update:modelValue', v: Perceptron): void;
-  (e: 'clear'): void;
 }>();
 
 const imagelabel = ref();
@@ -23,6 +22,30 @@ const onNameSelectorChange = () => {
   }
   props.modelValue.currentOutput = name;
 };
+
+const timerTrainingAnimation = ref(0);
+const MS_TRAINING_ANIMATION_DURATION = 2000;
+const isTrainingAnimationRunning = computed(() => {
+  return !!timerTrainingAnimation.value;
+});
+
+const train = (reinforcementFactor: number) => {
+  if (timerTrainingAnimation.value) {
+    // Training animation is still running.
+    return;
+  }
+
+  timerTrainingAnimation.value = window.setTimeout(() => {
+    // TODO: Train the perceptron here.
+    timerTrainingAnimation.value = 0;
+  }, MS_TRAINING_ANIMATION_DURATION);
+};
+
+onBeforeUnmount(() => {
+  if (timerTrainingAnimation.value) {
+    window.clearTimeout(timerTrainingAnimation.value);
+  }
+});
 
 // How to use an HTML5 datalist:
 // https://stackoverflow.com/questions/264640/how-can-i-create-an-editable-dropdownlist-in-html
@@ -38,7 +61,7 @@ const onNameSelectorChange = () => {
         <label for="imagelabel"
           ><strong>Give your image an output label:</strong>
 
-          <span v-if="modelValue.outputNames.length > 0">
+          <span v-if="modelValue.outputLabels.length > 0">
             <br />(or choose a label you've already created)
           </span>
         </label>
@@ -50,11 +73,11 @@ const onNameSelectorChange = () => {
           ref="imagelabel"
           list="imagelabels"
           placeholder="Name this image"
-          :value="modelValue.currentOutputName"
+          :value="modelValue.currentOutputLabel"
           @focus="imagelabel.value = ''"
           @blur="
             if (!imagelabel.value) {
-              imagelabel.value = modelValue.currentOutputName;
+              imagelabel.value = modelValue.currentOutputLabel;
             }
           "
           @change="
@@ -63,15 +86,15 @@ const onNameSelectorChange = () => {
           "
         />
         <datalist id="imagelabels">
-          <option v-for="oname in modelValue.outputNames" :value="oname">{{ oname }}</option>
+          <option v-for="olabel in modelValue.outputLabels" :value="olabel">{{ olabel }}</option>
         </datalist>
       </div>
-      <div class="training-delete-name" v-if="modelValue.currentOutputName">
-        <a @click="modelValue.deleteCurrentOutput()">Delete this name</a>
+      <div class="training-delete-name" v-if="modelValue.currentOutputLabel">
+        <a @click="modelValue.deleteCurrentOutput()">Delete this label</a>
       </div>
     </div>
 
-    <div v-if="!modelValue.currentOutputName">
+    <div v-if="!modelValue.currentOutputLabel">
       <div class="training-no-labels-explanation">
         <p>
           The perceptron needs to be built with a set of named outputs, called
@@ -103,21 +126,27 @@ const onNameSelectorChange = () => {
 
       <div class="training-instructions">
         By <strong>training</strong> the perceptron, it "learns" to associate this image with this
-        name (or to dissociate them).
+        label (or to dissociate them).
         <strong>Click one of the two buttons below to train your perceptron. </strong>
       </div>
 
-      <div class="training-controls">
-        <div class="training-button training-button--associate">
+      <div
+        class="training-controls"
+        :class="{
+          'training-animation-is-running': isTrainingAnimationRunning,
+          'training-animation-is-not-running': !isTrainingAnimationRunning
+        }"
+      >
+        <div class="training-button training-button--associate" @click="train(1)">
           <img src="@/assets/img/green-check.png" />
           <strong>Yes</strong>, this image is
-          <span class="outputlabel">{{ modelValue.currentOutputName }}</span
+          <span class="outputlabel">{{ modelValue.currentOutputLabel }}</span
           >.
         </div>
-        <div class="training-button training-button--dissociate">
+        <div class="training-button training-button--dissociate" @click="train(-1)">
           <img src="@/assets/img/red-x.png" />
           <strong>No</strong>, this image is not
-          <span class="outputlabel">{{ modelValue.currentOutputName }}</span
+          <span class="outputlabel">{{ modelValue.currentOutputLabel }}</span
           >.
         </div>
       </div>
@@ -169,6 +198,21 @@ const onNameSelectorChange = () => {
     flex-direction: row;
     gap: 1em;
     margin-top: 0.5em;
+    position: relative;
+
+    &.training-animation-is-running {
+      filter: saturate(0.25);
+
+      &::after {
+        // Create an overlay so the buttons can't receive click events.
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
 
     .training-button {
       flex: 1;
@@ -178,6 +222,8 @@ const onNameSelectorChange = () => {
       padding: 0.5em;
       font-size: 0.875em;
       user-select: none;
+
+      transition: opacity 0.25s, filter 0.25s;
 
       img {
         width: 1.5em;

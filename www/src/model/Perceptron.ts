@@ -51,7 +51,7 @@ class Perceptron {
   }
 
   public deleteCurrentOutput() {
-    this.deleteOutput(this.currentOutputName);
+    this.deleteOutput(this.currentOutputLabel);
   }
 
   public set currentOutput(name: string) {
@@ -61,7 +61,7 @@ class Perceptron {
     this._currentOutput = name;
   }
 
-  public get currentOutputName() {
+  public get currentOutputLabel() {
     return this._currentOutput;
   }
 
@@ -69,10 +69,12 @@ class Perceptron {
     return this.outputs[this._currentOutput];
   }
 
-  public get outputNames() {
+  public get outputLabels() {
     const a = [...Object.keys(this.outputs)].sort();
     return a;
   }
+
+  public trainOutput(outputName: string, reinforcementFactor: number) {}
 }
 
 export default Perceptron;
