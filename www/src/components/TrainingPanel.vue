@@ -20,7 +20,7 @@ const onNameSelectorChange = () => {
   if (!name) {
     return;
   }
-  props.modelValue.currentOutput = name;
+  props.modelValue.currentOutputLabel = name;
 };
 
 const timerTrainingAnimation = ref(0);

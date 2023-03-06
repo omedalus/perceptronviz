@@ -54,7 +54,7 @@ class Perceptron {
     this.deleteOutput(this.currentOutputLabel);
   }
 
-  public set currentOutput(label: string) {
+  public set currentOutputLabel(label: string) {
     if (!(label in this.outputs)) {
       this.createOutput(label);
     }
@@ -74,7 +74,38 @@ class Perceptron {
     return a;
   }
 
-  public trainOutput(outputLabel: string, reinforcementFactor: number) {}
+  public getOutputVector(label: string) {
+    if (!(label in this.outputs)) {
+      return this.createOutput(label);
+    }
+    return this.outputs[label];
+  }
+
+  public trainOutput(outputLabel: string, reinforcementFactor: number, inputVector: number[]) {
+    const weights = this.getOutputVector(outputLabel);
+    if (weights.length !== inputVector.length + 1) {
+      throw new Error(
+        'The weight vector needs to be the same dimensionality (plus one) as the input vector.'
+      );
+    }
+    weights.forEach((w, i) => {
+      const inputValue = i < inputVector.length ? inputVector[i] : 1;
+      weights[i] += inputValue * reinforcementFactor;
+    });
+  }
+
+  public trainCurrentOutput(reinforcementFactor: number, inputVector: number[]) {
+    const weights = this.currentOutputVector;
+    if (weights.length !== inputVector.length + 1) {
+      throw new Error(
+        'The weight vector needs to be the same dimensionality (plus one) as the input vector.'
+      );
+    }
+    weights.forEach((w, i) => {
+      const inputValue = i < inputVector.length ? inputVector[i] : 1;
+      weights[i] += inputValue * reinforcementFactor;
+    });
+  }
 }
 
 export default Perceptron;
