@@ -68,23 +68,33 @@ const onNameSelectorChange = () => {
         <a @click="modelValue.deleteCurrentOutput()">Delete this name</a>
       </div>
     </div>
-    <div class="training-instructions">
-      By <strong>training</strong> the perceptron, you "teach" it to associate this image with this
-      name (or to dissociate them).
+
+    <div v-if="!modelValue.currentOutputName">
+      <div class="training-no-labels-explanation">
+        <p>The perceptron</p>
+      </div>
     </div>
 
-    <div class="training-controls">
-      <div class="training-button training-button--associate">
-        <img src="@/assets/img/green-check.png" />
-        <strong>Yes</strong>, this image is
-        <span class="outputlabel">{{ modelValue.currentOutputName }}</span
-        >.
+    <div v-else>
+      <div class="training-instructions">
+        By <strong>training</strong> the perceptron, you "teach" it to associate this image with
+        this name (or to dissociate them).
+        <strong>Click one of the two buttons below to train your perceptron. </strong>
       </div>
-      <div class="training-button training-button--dissociate">
-        <img src="@/assets/img/red-x.png" />
-        <strong>No</strong>, this image is not
-        <span class="outputlabel">{{ modelValue.currentOutputName }}</span
-        >.
+
+      <div class="training-controls">
+        <div class="training-button training-button--associate">
+          <img src="@/assets/img/green-check.png" />
+          <strong>Yes</strong>, this image is
+          <span class="outputlabel">{{ modelValue.currentOutputName }}</span
+          >.
+        </div>
+        <div class="training-button training-button--dissociate">
+          <img src="@/assets/img/red-x.png" />
+          <strong>No</strong>, this image is not
+          <span class="outputlabel">{{ modelValue.currentOutputName }}</span
+          >.
+        </div>
       </div>
     </div>
   </div>
@@ -126,12 +136,14 @@ const onNameSelectorChange = () => {
 
   .training-instructions {
     margin-top: 0.5em;
+    font-size: 0.875rem;
+    text-align: left;
   }
   .training-controls {
     display: flex;
     flex-direction: row;
     gap: 1em;
-    margin-top: 1em;
+    margin-top: 0.5em;
 
     .training-button {
       flex: 1;
