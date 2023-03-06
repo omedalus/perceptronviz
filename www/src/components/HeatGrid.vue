@@ -1,14 +1,44 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+// @ts-ignore
+import colorBetween from 'color-between';
+
 const props = defineProps<{
   vector: number[];
   dim: number;
+  inputOverlay?: boolean;
 }>();
 const arrayDim = ref(Array(props.dim));
 
 const vectorIndex = (x: number, y: number) => {
   return y * props.dim + x;
+};
+
+const squareColorAtXY = (x: number, y: number) => {
+  let vRaw = props.vector[vectorIndex(x, y)];
+
+  if (props.inputOverlay) {
+    // Raw value is between 0 and 1.
+    const b = Math.floor(vRaw * 255);
+    const retval = `rgb(${b}, ${b}, ${b})`;
+    return retval;
+  }
+
+  // vRaw is -inf to +inf, but the juicy parts are
+  // between -dim and +dim.
+  // We treat the negative and positive cases differently.
+  if (vRaw <= 0) {
+    const red = Math.min(-vRaw, props.dim) / props.dim;
+    const redInt = Math.floor(255 * red);
+    const retval = `rgb(${redInt}, 0, 0)`;
+    return retval;
+  }
+
+  const green = Math.min(vRaw, props.dim) / props.dim;
+  const greenInt = Math.floor(255 * green);
+  const retval = `rgb(0, ${greenInt}, 0)`;
+  return retval;
 };
 </script>
 
@@ -16,7 +46,10 @@ const vectorIndex = (x: number, y: number) => {
   <div class="heatgrid" :style="{ height: `${dim + 1}em`, width: `${dim}em` }">
     <div class="heatgrid-y" v-for="(vy, y) in arrayDim">
       <div class="heatgrid-x" v-for="(vx, x) in arrayDim">
-        <div class="heatgrid-square" :style="{ top: `${y}em`, left: `${x}em` }">
+        <div
+          class="heatgrid-square"
+          :style="{ top: `${y}em`, left: `${x}em`, 'background-color': squareColorAtXY(x, y) }"
+        >
           <div class="heatgrid-square-hoverdetector"></div>
           <div class="heatgrid-square-tooltip">
             {{ vector[vectorIndex(x, y)] > 0 ? '+' : '' }}{{ vector[vectorIndex(x, y)].toFixed(2) }}
@@ -24,7 +57,10 @@ const vectorIndex = (x: number, y: number) => {
         </div>
       </div>
     </div>
-    <div class="heatgrid-square" :style="{ top: `${dim}em`, left: `${0}em` }">
+    <div
+      class="heatgrid-square"
+      :style="{ top: `${dim}em`, left: `${0}em`, 'background-color': squareColorAtXY(0, dim) }"
+    >
       <div class="heatgrid-square-hoverdetector"></div>
       <div class="heatgrid-square-tooltip">
         {{ vector[dim * dim] > 0 ? '+' : '' }}{{ vector[dim * dim].toFixed(2) }}
@@ -43,7 +79,7 @@ const vectorIndex = (x: number, y: number) => {
     position: absolute;
     height: 1em;
     width: 1em;
-    background-color: blue;
+    background-color: #000;
     box-sizing: border-box;
     border: 1px solid #666;
 
