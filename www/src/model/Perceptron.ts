@@ -32,20 +32,20 @@ class Perceptron {
     });
   }
 
-  public createOutput(name: string) {
-    if (!(name in this.outputs)) {
-      this.outputs[name] = _createZeroArray(this.size + 1);
+  public createOutput(label: string) {
+    if (!(label in this.outputs)) {
+      this.outputs[label] = _createZeroArray(this.size + 1);
     }
-    return this.outputs[name];
+    return this.outputs[label];
   }
 
-  public deleteOutput(name: string) {
-    if (!(name in this.outputs)) {
+  public deleteOutput(label: string) {
+    if (!(label in this.outputs)) {
       return;
     }
-    delete this.outputs[name];
+    delete this.outputs[label];
 
-    if (this._currentOutput === name) {
+    if (this._currentOutput === label) {
       this._currentOutput = '';
     }
   }
@@ -54,11 +54,11 @@ class Perceptron {
     this.deleteOutput(this.currentOutputLabel);
   }
 
-  public set currentOutput(name: string) {
-    if (!(name in this.outputs)) {
-      this.createOutput(name);
+  public set currentOutput(label: string) {
+    if (!(label in this.outputs)) {
+      this.createOutput(label);
     }
-    this._currentOutput = name;
+    this._currentOutput = label;
   }
 
   public get currentOutputLabel() {
@@ -74,7 +74,7 @@ class Perceptron {
     return a;
   }
 
-  public trainOutput(outputName: string, reinforcementFactor: number) {}
+  public trainOutput(outputLabel: string, reinforcementFactor: number) {}
 }
 
 export default Perceptron;
