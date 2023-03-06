@@ -50,6 +50,10 @@ class Perceptron {
     }
   }
 
+  public deleteCurrentOutput() {
+    this.deleteOutput(this.currentOutputName);
+  }
+
   public set currentOutput(name: string) {
     if (!(name in this.outputs)) {
       this.createOutput(name);

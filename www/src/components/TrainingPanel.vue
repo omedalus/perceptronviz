@@ -34,8 +34,12 @@ const onNameSelectorChange = () => {
 
       <div class="training-field-image-name">
         <label for="imagename"
-          >Give your image a name (or choose a name you've already created)</label
-        >
+          >Give your image a name:
+
+          <span v-if="modelValue.outputNames.length > 0">
+            <br />(or choose a name you've already created)
+          </span>
+        </label>
 
         <input
           type="text"
@@ -60,8 +64,8 @@ const onNameSelectorChange = () => {
           <option v-for="oname in modelValue.outputNames" :value="oname">{{ oname }}</option>
         </datalist>
       </div>
-      <div class="training-delete-name">
-        <a @click="">Delete this name</a>
+      <div class="training-delete-name" v-if="modelValue.currentOutputName">
+        <a @click="modelValue.deleteCurrentOutput()">Delete this name</a>
       </div>
     </div>
     <div class="training-instructions">
