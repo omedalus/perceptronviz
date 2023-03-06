@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import HeatGrid from './HeatGrid.vue';
+
 import type Perceptron from '@/model/Perceptron';
 
 const props = defineProps<{
@@ -34,7 +36,7 @@ const onNameSelectorChange = () => {
 
       <div class="training-field-image-name">
         <label for="imagelabel"
-          >Give your image an output label:
+          ><strong>Give your image an output label:</strong>
 
           <span v-if="modelValue.outputNames.length > 0">
             <br />(or choose a label you've already created)
@@ -72,15 +74,15 @@ const onNameSelectorChange = () => {
     <div v-if="!modelValue.currentOutputName">
       <div class="training-no-labels-explanation">
         <p>
-          The perceptron needs to be built with a set of named outputs, often called
-          <em>labels</em> or <em>classes</em>. These output labels describe the problem that the
-          human trainer or programmer is trying to "teach" the perceptron.
+          The perceptron needs to be built with a set of named outputs, called
+          <em>labels</em> or <em>classes</em>. These labels describe the problem that the human
+          trainer wants to "teach" the perceptron.
         </p>
         <p>
-          For example, if you're training it to distinguish shapes, then you could define three
+          For example, if you're training it to distinguish shapes, then you might define three
           output labels which you call <em>Square</em>, <em>Circle</em>, and <em>Triangle</em>. If
-          you want it to distinguish handwritten digits, then you would define ten output labels,
-          and call them <em>0</em>, <em>1</em>, <em>2</em>, and so on.
+          you want it to distinguish handwritten digits, then you'd define ten output labels, and
+          call them <em>0</em>, <em>1</em>, <em>2</em>, and so on.
         </p>
         <p>
           The perceptron, of course, doesn't magically know what a square is or what the written
@@ -95,6 +97,10 @@ const onNameSelectorChange = () => {
     </div>
 
     <div v-else>
+      <div class="training-heatgrid">
+        <HeatGrid :vector="modelValue.currentOutputVector" :dim="modelValue.dim"></HeatGrid>
+      </div>
+
       <div class="training-instructions">
         By <strong>training</strong> the perceptron, it "learns" to associate this image with this
         name (or to dissociate them).

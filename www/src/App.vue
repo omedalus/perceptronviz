@@ -311,8 +311,9 @@ updateViz();
 
   @media screen and (max-width: 960px) {
     display: block;
-    margin-left: 0;
-    margin-right: 0;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .interactive-panel {
