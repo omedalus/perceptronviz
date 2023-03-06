@@ -3,6 +3,11 @@ const _createZeroArray = (n: number) => {
   return a;
 };
 
+const _createRandomArray = (n: number, r: number) => {
+  const a = Array.from({ length: n }, (v, i) => Math.random() * r * 2 - r);
+  return a;
+};
+
 class Perceptron {
   public _dim: number;
 
@@ -37,6 +42,15 @@ class Perceptron {
       this.outputs[label] = _createZeroArray(this.size + 1);
     }
     return this.outputs[label];
+  }
+
+  public randomizeOutput(label: string) {
+    this.outputs[label] = _createRandomArray(this.size + 1, this.dim);
+    return this.outputs[label];
+  }
+
+  public randomizeCurrentOutput() {
+    return this.randomizeOutput(this.currentOutputLabel);
   }
 
   public deleteOutput(label: string) {

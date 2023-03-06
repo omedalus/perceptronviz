@@ -24,12 +24,16 @@ const onNameSelectorChange = () => {
 };
 
 const timerTrainingAnimation = ref(0);
-const MS_TRAINING_ANIMATION_DURATION = 2000;
+const MS_TRAINING_ANIMATION_DURATION = 1000;
 const isTrainingAnimationRunning = computed(() => {
   return !!timerTrainingAnimation.value;
 });
 
 const train = (reinforcementFactor: number) => {
+  console.log('randomize!');
+  props.modelValue.randomizeCurrentOutput();
+  return;
+
   if (timerTrainingAnimation.value) {
     // Training animation is still running.
     return;

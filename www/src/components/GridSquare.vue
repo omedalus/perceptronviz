@@ -52,7 +52,13 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="gridsquare" @mousedown="onMouseDown()" @mouseup="onMouseUp()">
+  <div
+    class="gridsquare"
+    @mousedown="onMouseDown()"
+    @mouseup="onMouseUp()"
+    @mouseleave="onMouseUp()"
+    @mouseout="onMouseUp()"
+  >
     <div class="gridsquare-brightener" :style="{ opacity: theValue }"></div>
 
     <div class="gridsquare-value-hover">
