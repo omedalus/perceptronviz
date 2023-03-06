@@ -38,7 +38,7 @@ updateViz();
         ></InputPanel>
       </div>
       <div class="interactive-panel interactive-panel--training">
-        <TrainingPanel :key="vizUpdateHack"></TrainingPanel>
+        <TrainingPanel v-model="thePerceptron" :key="vizUpdateHack"></TrainingPanel>
       </div>
       <div class="interactive-panel interactive-panel--output">
         <h2>Output</h2>

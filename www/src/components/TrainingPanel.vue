@@ -1,16 +1,37 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue';
+
+import type Perceptron from '@/model/Perceptron';
+
+const prop = defineProps<{
+  modelValue: Perceptron;
+}>();
+const emit = defineEmits<{
+  (e: 'update:modelValue', v: Perceptron): void;
+  (e: 'clear'): void;
+}>();
+
+// How to use an HTML5 datalist:
+// https://stackoverflow.com/questions/264640/how-can-i-create-an-editable-dropdownlist-in-html
+</script>
 
 <template>
   <div class="training-panel">
     <h2>Training</h2>
     <div class="training-fields">
-      <div class="training-field-enter-name">
-        <label for="currentimagelabel">Give your image a name: </label>
-        <input id="currentimagelabel" type="text" />
-      </div>
-      <div class="training-field-choose-name">
-        <label for="currentimagedropdown">Or choose a name you've already created: </label>
-        <select id="currentimagedropdown" />
+      <div></div>
+
+      <div class="training-field-image-name">
+        <label for="imagename"
+          >Give your image a name (or choose a name you've already created)</label
+        >
+
+        <input type="text" id="imagename" name="imagename" list="imageNames" />
+        <datalist id="imageNames">
+          <option value="Pen">Pen</option>
+          <option value="Pencil">Pencil</option>
+          <option value="Paper">Paper</option>
+        </datalist>
       </div>
       <div class="training-delete-name">
         <a @click="">Delete this name</a>
@@ -44,6 +65,8 @@
 
     input {
       width: 12ex;
+      height: 1.5em;
+      align-self: flex-end;
     }
     select {
       width: 13ex;
@@ -53,7 +76,18 @@
       font-size: 0.75rem;
       margin-top: 0.25ex;
     }
+
+    .training-field-image-name {
+      display: flex;
+      flex-direction: row;
+      gap: 1ex;
+
+      & > * {
+        flex: 1;
+      }
+    }
   }
+
   .training-instructions {
     margin-top: 0.5em;
   }
