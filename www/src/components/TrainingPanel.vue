@@ -36,8 +36,8 @@ const train = (reinforcementFactor: number) => {
   }
 
   timerTrainingAnimation.value = window.setTimeout(() => {
-    // TODO: Train the perceptron here.
     timerTrainingAnimation.value = 0;
+    props.modelValue.trainCurrentOutput(reinforcementFactor);
   }, MS_TRAINING_ANIMATION_DURATION);
 };
 
@@ -121,12 +121,16 @@ onBeforeUnmount(() => {
           declares that this image does in fact depict the desired output object.
         </p>
         <p>
-          For a detailed an easy-to-grasp discussion of the perceptron's operating principles,
-          please check out
+          For a detailed and easy-to-grasp discussion of the perceptron's operating principles,
+          please read
           <a
             href="https://towardsdatascience.com/rosenblatts-perceptron-the-very-first-neural-network-37a3ec09038a"
           >
             this article by Jean-Christophe B. Loiseau</a
+          >. For a longer and more technical dive that's still nonetheless geared for beginners and
+          laymen, check out
+          <a href="https://www.simplilearn.com/tutorials/deep-learning-tutorial/perceptron">
+            this course on Simplilearn</a
           >.
         </p>
       </div>
