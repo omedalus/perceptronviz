@@ -95,9 +95,11 @@ updateViz();
         </div>
         <div class="training-controls">
           <div class="training-button training-button--associate">
+            <img src="@/assets/img/green-check.png" />
             <strong>Yes</strong>, this image is ______.
           </div>
           <div class="training-button training-button--dissociate">
+            <img src="@/assets/img/red-x.png" />
             <strong>No</strong>, this image is not ______.
           </div>
         </div>
@@ -436,6 +438,13 @@ updateViz();
     cursor: pointer;
     border-radius: 1ex;
     padding: 0.5em;
+    font-size: 0.875em;
+
+    img {
+      width: 1.5em;
+      float: left;
+      margin-right: 0.25em;
+    }
 
     &:hover {
       opacity: 1;
