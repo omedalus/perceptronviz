@@ -98,23 +98,36 @@ onBeforeUnmount(() => {
       <div class="training-no-labels-explanation">
         <p>
           The perceptron needs to be built with a set of named outputs, called
-          <em>labels</em> or <em>classes</em>. These labels describe the problem that the human
-          trainer wants to "teach" the perceptron.
+          <em>labels</em> or <em>classes</em> (which is why it's a type of AI called a
+          <em><a href="https://monkeylearn.com/blog/what-is-a-classifier/">classifer</a></em
+          >). These labels describe the results that the human trainer wants to "teach" the
+          perceptron.
         </p>
         <p>
-          For example, if you're training it to distinguish shapes, then you might define three
-          output labels which you call <em>Square</em>, <em>Circle</em>, and <em>Triangle</em>. If
-          you want it to distinguish handwritten digits, then you'd define ten output labels, and
-          call them <em>0</em>, <em>1</em>, <em>2</em>, and so on.
+          For example, if you're training it to recognize shapes, then you might define three output
+          labels which you call <em>Square</em>, <em>Circle</em>, and <em>Triangle</em>. If you want
+          it to recognize handwritten digits, then you'd define ten output labels, and call them
+          <em>0</em>, <em>1</em>, <em>2</em>, and so on.
         </p>
         <p>
           The perceptron, of course, doesn't magically know what a square is or what the written
           number 2 looks like. Through training, the perceptron identifies certain pixels as having
-          a positive or negative contribution towards each output label. When shown an image, the
-          perceptron multiplies each pixel's activation level with that pixel's contribution, or
-          <em>connection strength</em> or <em>weight</em>, to each output. The output label with the
-          highest total score is declared as the perceptron's answer to the question, "What is this
-          image?"
+          a positive or negative contribution, or <em>connection weight</em>, towards each output
+          label. When shown an image, the perceptron multiplies each pixel's brightness level with
+          that pixel's connection weight &mdash; which can be positive or negative. Essentially,
+          each pixel gets to "vote" on whether this image does or doesn't correspond to the output
+          label, and the pixel's "vote" is scaled both by its connection weight and its activity
+          level. If the total votes summed across all pixels is positive, then the perceptron
+          declares that this image does in fact depict the desired output object.
+        </p>
+        <p>
+          For a detailed an easy-to-grasp discussion of the perceptron's operating principles,
+          please check out
+          <a
+            href="https://towardsdatascience.com/rosenblatts-perceptron-the-very-first-neural-network-37a3ec09038a"
+          >
+            this article by Jean-Christophe B. Loiseau</a
+          >.
         </p>
       </div>
     </div>
