@@ -11,10 +11,10 @@ const emit = defineEmits<{
   (e: 'clear'): void;
 }>();
 
-const imagename = ref();
+const imagelabel = ref();
 
 const onNameSelectorChange = () => {
-  const elemInput = imagename.value as HTMLInputElement;
+  const elemInput = imagelabel.value as HTMLInputElement;
   const name = elemInput.value || '';
   if (!name) {
     return;
@@ -33,34 +33,34 @@ const onNameSelectorChange = () => {
       <div></div>
 
       <div class="training-field-image-name">
-        <label for="imagename"
-          >Give your image a name:
+        <label for="imagelabel"
+          >Give your image an output label:
 
           <span v-if="modelValue.outputNames.length > 0">
-            <br />(or choose a name you've already created)
+            <br />(or choose a label you've already created)
           </span>
         </label>
 
         <input
           type="text"
-          id="imagename"
-          name="imagename"
-          ref="imagename"
-          list="imageNames"
+          id="imagelabel"
+          name="imagelabel"
+          ref="imagelabel"
+          list="imagelabels"
           placeholder="Name this image"
           :value="modelValue.currentOutputName"
-          @focus="imagename.value = ''"
+          @focus="imagelabel.value = ''"
           @blur="
-            if (!imagename.value) {
-              imagename.value = modelValue.currentOutputName;
+            if (!imagelabel.value) {
+              imagelabel.value = modelValue.currentOutputName;
             }
           "
           @change="
-            imagename.blur();
+            imagelabel.blur();
             onNameSelectorChange();
           "
         />
-        <datalist id="imageNames">
+        <datalist id="imagelabels">
           <option v-for="oname in modelValue.outputNames" :value="oname">{{ oname }}</option>
         </datalist>
       </div>
@@ -71,14 +71,33 @@ const onNameSelectorChange = () => {
 
     <div v-if="!modelValue.currentOutputName">
       <div class="training-no-labels-explanation">
-        <p>The perceptron</p>
+        <p>
+          The perceptron needs to be built with a set of named outputs, often called
+          <em>labels</em> or <em>classes</em>. These output labels describe the problem that the
+          human trainer or programmer is trying to "teach" the perceptron.
+        </p>
+        <p>
+          For example, if you're training it to distinguish shapes, then you could define three
+          output labels which you call <em>Square</em>, <em>Circle</em>, and <em>Triangle</em>. If
+          you want it to distinguish handwritten digits, then you would define ten output labels,
+          and call them <em>0</em>, <em>1</em>, <em>2</em>, and so on.
+        </p>
+        <p>
+          The perceptron, of course, doesn't magically know what a square is or what the written
+          number 2 looks like. Through training, the perceptron identifies certain pixels as having
+          a positive or negative contribution towards each output label. When shown an image, the
+          perceptron multiplies each pixel's activation level with that pixel's contribution, or
+          <em>connection strength</em> or <em>weight</em>, to each output. The output label with the
+          highest total score is declared as the perceptron's answer to the question, "What is this
+          image?"
+        </p>
       </div>
     </div>
 
     <div v-else>
       <div class="training-instructions">
-        By <strong>training</strong> the perceptron, you "teach" it to associate this image with
-        this name (or to dissociate them).
+        By <strong>training</strong> the perceptron, it "learns" to associate this image with this
+        name (or to dissociate them).
         <strong>Click one of the two buttons below to train your perceptron. </strong>
       </div>
 
@@ -181,6 +200,16 @@ const onNameSelectorChange = () => {
         color: #f88;
         background-color: #f886;
       }
+    }
+  }
+
+  .training-no-labels-explanation {
+    text-align: left;
+    margin-top: 1em;
+    font-size: 0.925rem;
+
+    p + p {
+      margin-top: 0.75em;
     }
   }
 }

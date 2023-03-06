@@ -32,8 +32,9 @@ const emit = defineEmits<{
 
     <div style="text-align: left; font-size: 0.875rem; margin-top: 1em">
       <p style="color: #888; margin-bottom: 1em">
-        The machine can't <em>see</em> the image like you or I can. It can only "see" a set of
-        values between 0 and 1, corresponding to brightness levels. In
+        The machine can't <em>see</em> the image like we do, with contiguous lines, curves, and
+        shapes. It can only "see" a set of values between 0 and 1, corresponding to brightness
+        levels. In
         <a href="https://towardsdatascience.com/a-concise-history-of-neural-networks-2070655d3fec">
           inventor Frank Rosenblatt's original Mark 1 Perceptron</a
         >, these values weren't even <em>numbers</em>; they were simply the electrical voltage
@@ -41,13 +42,16 @@ const emit = defineEmits<{
       </p>
       <p>Here's how your picture "looks" to the machine:</p>
 
-      <div class="vector-readout">
-        <span
-          class="vector-readout-value"
-          v-for="(v, i) in modelValue.input"
-          :style="{ opacity: v / 2 + 0.5 }"
-          >{{ v.toFixed(2) }}</span
-        >
+      <div class="vector-readout-holder">
+        <div class="vector-label"></div>
+        <div class="vector-readout">
+          <span
+            class="vector-readout-value"
+            v-for="(v, i) in modelValue.input"
+            :style="{ opacity: v / 2 + 0.5 }"
+            >{{ v.toFixed(2) }}</span
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -66,5 +70,10 @@ const emit = defineEmits<{
     font-size: 0.75rem;
     margin-bottom: 1em;
   }
+}
+
+.vector-readout-holder {
+  display: flex;
+  flex-direction: row;
 }
 </style>
