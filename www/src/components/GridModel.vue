@@ -8,7 +8,7 @@ const prop = defineProps<{
   dim: number;
 }>();
 const emit = defineEmits<{
-  (e: 'update:modelValue', v: number): void;
+  (e: 'update:modelValue', v: number[]): void;
 }>();
 
 const arrayDim = ref(Array(prop.dim));
@@ -19,7 +19,10 @@ const arrayDim = ref(Array(prop.dim));
     <div class="gridmodel-y" v-for="(vy, y) in arrayDim">
       <div class="gridmodel-x" v-for="(vx, x) in arrayDim">
         <div class="gridsquare-holder">
-          <GridSquare v-model="modelValue[y * dim + x]"></GridSquare>
+          <GridSquare
+            v-model="modelValue[y * dim + x]"
+            @update:model-value="$emit('update:modelValue', modelValue)"
+          ></GridSquare>
         </div>
       </div>
     </div>

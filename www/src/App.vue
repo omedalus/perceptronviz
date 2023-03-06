@@ -2,14 +2,22 @@
 import { ref, onMounted } from 'vue';
 
 import Header from '@/components/Header.vue';
-import GridSquare from '@/components/GridSquare.vue';
 import GridModel from './components/GridModel.vue';
 
 import Perceptron from '@/model/Perceptron';
 
 const thePerceptron = ref(new Perceptron(5));
 
-onMounted(() => {});
+// Using a disgusting hack to update deep visualizations.
+// The Perceptron object doesn't have deep bindings. So when
+// the input array is changed from the outside (such as with
+// load or clear), the visualizations don't know that they
+// need to refresh. This tricks them into doing so.
+const vizUpdateHack = ref(1);
+const updateViz = () => {
+  vizUpdateHack.value = Math.random();
+};
+updateViz();
 </script>
 
 <template>
@@ -19,9 +27,21 @@ onMounted(() => {});
     <div class="interactive-model mainblock">
       <div class="interactive-panel interactive-panel--grid">
         <h2>Input</h2>
-
         <div class="gridmodel-holder">
-          <GridModel v-model="thePerceptron.input" :dim="thePerceptron.dim"></GridModel>
+          <GridModel
+            v-model="thePerceptron.input"
+            :dim="thePerceptron.dim"
+            :key="vizUpdateHack"
+          ></GridModel>
+          <div class="gridmodel-clear-input">
+            <a
+              @click="
+                thePerceptron.clearInput();
+                updateViz();
+              "
+              >Clear</a
+            >
+          </div>
         </div>
 
         <div>
@@ -333,6 +353,14 @@ onMounted(() => {});
 
   .gridmodel-holder {
     margin: auto;
+  }
+
+  .gridmodel-clear-input {
+    width: 12em;
+    margin: auto;
+    text-align: right;
+    font-size: 0.875rem;
+    margin-bottom: 1em;
   }
 }
 

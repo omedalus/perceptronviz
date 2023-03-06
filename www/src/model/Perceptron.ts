@@ -15,6 +15,12 @@ class Perceptron {
   public get dim() {
     return this._dim;
   }
+
+  public clearInput() {
+    this.input.forEach((v, i) => {
+      this.input[i] = 0;
+    });
+  }
 }
 
 export default Perceptron;
