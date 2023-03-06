@@ -20,7 +20,8 @@ class Perceptron {
   public constructor(dim: number) {
     this._dim = dim;
 
-    this.input = _createZeroArray(dim * dim);
+    this.input = _createZeroArray(dim * dim + 1);
+    this.input[dim * dim] = 1;
     this.outputs = {};
   }
 

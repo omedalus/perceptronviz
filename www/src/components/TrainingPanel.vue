@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 
 import HeatGrid from './HeatGrid.vue';
 
@@ -21,6 +21,15 @@ const onNameSelectorChange = () => {
     return;
   }
   props.modelValue.currentOutputLabel = name;
+};
+
+const ixPopTallyDotProduct = ref(0);
+const intervalPopTallyDotProduct = ref(0);
+const MS_INTERVAL_POP_TALLY_DOT_PRODUCT = 150;
+const IX_POP_TALLY_DOT_PRODUCT_OVERDRIVE = 10;
+const fnPopTallyDotProduct = () => {
+  ixPopTallyDotProduct.value++;
+  ixPopTallyDotProduct.value %= props.modelValue.size + 1 + IX_POP_TALLY_DOT_PRODUCT_OVERDRIVE;
 };
 
 const timerTrainingAnimation = ref(0);
@@ -45,10 +54,16 @@ const train = (reinforcementFactor: number) => {
   }, MS_TRAINING_ANIMATION_DURATION);
 };
 
+onMounted(() => {
+  intervalPopTallyDotProduct.value = window.setInterval(
+    fnPopTallyDotProduct,
+    MS_INTERVAL_POP_TALLY_DOT_PRODUCT
+  );
+});
+
 onBeforeUnmount(() => {
-  if (timerTrainingAnimation.value) {
-    window.clearTimeout(timerTrainingAnimation.value);
-  }
+  window.clearInterval(intervalPopTallyDotProduct.value);
+  window.clearTimeout(timerTrainingAnimation.value);
 });
 
 // How to use an HTML5 datalist:
@@ -59,14 +74,12 @@ onBeforeUnmount(() => {
   <div class="training-panel">
     <h2>Training</h2>
     <div class="training-fields">
-      <div></div>
-
       <div class="training-field-image-name">
         <label for="imagelabel"
           ><strong>Give your image an output label:</strong>
 
           <span v-if="modelValue.outputLabels.length > 0">
-            <br />(or choose a label you've already created)
+            <br />(or choose an existing label)
           </span>
         </label>
 
@@ -147,9 +160,14 @@ onBeforeUnmount(() => {
             :vector="modelValue.input"
             :dim="modelValue.dim"
             :input-overlay="true"
+            :pop-index="ixPopTallyDotProduct"
           ></HeatGrid>
         </div>
-        <HeatGrid :vector="modelValue.currentOutputVector" :dim="modelValue.dim"></HeatGrid>
+        <HeatGrid
+          :vector="modelValue.currentOutputVector"
+          :dim="modelValue.dim"
+          :pop-index="ixPopTallyDotProduct"
+        ></HeatGrid>
       </div>
 
       <div class="training-instructions">

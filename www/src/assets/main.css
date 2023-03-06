@@ -34,11 +34,25 @@ p {
 
 .vector-readout {
   white-space: normal;
+  color: #fff;
 }
 .vector-readout .vector-readout-value {
   display: inline-block;
 }
-
 .vector-readout .vector-readout-value {
   margin-left: 0.5em;
+}
+.vector-readout-holder {
+  display: flex;
+  flex-direction: row;
+}
+.vector-readout-holder .vector-readout-label {
+  font-size: 1.5rem;
+}
+
+.hoverafter-trigger + .hoverafter-displayer {
+  display: none;
+}
+.hoverafter-trigger:hover + .hoverafter-displayer {
+  display: block;
 }

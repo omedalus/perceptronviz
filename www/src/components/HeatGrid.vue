@@ -8,6 +8,7 @@ const props = defineProps<{
   vector: number[];
   dim: number;
   inputOverlay?: boolean;
+  popIndex?: number;
 }>();
 const arrayDim = ref(Array(props.dim));
 
@@ -17,16 +18,6 @@ const vectorIndex = (x: number, y: number) => {
 
 const squareColorAtXY = (x: number, y: number) => {
   const vix = vectorIndex(x, y);
-  if (vix >= props.vector.length) {
-    if (!props.inputOverlay) {
-      throw new Error(
-        `We've been given a heat grid that's longer than our input vector. This is okay if we're showing an input overlay, but otherwise it's a no-no.`
-      );
-    }
-    // But we ARE an input overlay, so all is well.
-    return `rgb(255,255,255)`;
-  }
-
   let vRaw = props.vector[vix];
 
   if (props.inputOverlay) {
@@ -60,6 +51,7 @@ const squareColorAtXY = (x: number, y: number) => {
         <div
           class="heatgrid-square"
           :style="{ top: `${y}em`, left: `${x}em`, 'background-color': squareColorAtXY(x, y) }"
+          :class="{ pop: vectorIndex(x, y) === popIndex }"
         >
           <div class="heatgrid-square-hoverdetector"></div>
           <div class="heatgrid-square-tooltip">
@@ -71,13 +63,11 @@ const squareColorAtXY = (x: number, y: number) => {
     <div
       class="heatgrid-square"
       :style="{ top: `${dim}em`, left: `${0}em`, 'background-color': squareColorAtXY(0, dim) }"
+      :class="{ pop: popIndex === dim * dim }"
     >
       <div class="heatgrid-square-hoverdetector"></div>
       <div class="heatgrid-square-tooltip">
-        <span v-if="vector.length < dim * dim">
-          {{ vector[dim * dim] > 0 ? '+' : '' }}{{ vector[dim * dim].toFixed(2) }}
-        </span>
-        <span v-else> +1 </span>
+        {{ vector[dim * dim] > 0 ? '+' : '' }}{{ vector[dim * dim].toFixed(2) }}
       </div>
     </div>
   </div>
@@ -120,6 +110,10 @@ const squareColorAtXY = (x: number, y: number) => {
       &:hover + .heatgrid-square-tooltip {
         display: block;
       }
+    }
+
+    &.pop {
+      border: 2px solid blue !important;
     }
   }
 }

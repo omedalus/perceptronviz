@@ -49,18 +49,31 @@ const formula = ref('');
       <p>Here's how your picture "looks" to the machine:</p>
 
       <div class="vector-readout-holder">
-        <div class="vector-label" style="font-size: 1.5rem">
+        <div class="vector-label">
           <VueMathjax formula="$$\vec{x}=$$"></VueMathjax>
         </div>
         <div class="vector-readout">
           <span
             class="vector-readout-value"
             v-for="(v, i) in modelValue.input"
-            :style="{ opacity: v / 2 + 0.5 }"
+            :style="{ opacity: v * 0.75 + 0.25 }"
             >{{ v.toFixed(2) }}</span
           >
         </div>
       </div>
+
+      <div class="hoverafter-trigger" style="margin-top: 1em; text-align: right">
+        <a> Why is there an extra "1.00" on the end? </a>
+      </div>
+
+      <p class="hoverafter-displayer" style="margin-top: 0.5em; color: #888">
+        You might notice that there's an extra "1.00" tacked onto the end of that input vector. It
+        doesn't correspond to a pixel on the grid, and you can't change it. That's called the "bias
+        neuron". Its job is to give the output something to multiply by in order to set the output's
+        baseline activation level. Conceptually, you can think of the "bias neuron" as picking up
+        the slack for all other neurons when their total activity level is low. This permits the
+        perceptron to learn patterns that are defined by some pixels being <em>off</em>.)
+      </p>
     </div>
   </div>
 </template>
@@ -78,10 +91,5 @@ const formula = ref('');
     font-size: 0.75rem;
     margin-bottom: 1em;
   }
-}
-
-.vector-readout-holder {
-  display: flex;
-  flex-direction: row;
 }
 </style>
