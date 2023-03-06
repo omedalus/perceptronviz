@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "vue": "^3.2.47",
+    "vue-mathjax-next": "^0.0.4",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
