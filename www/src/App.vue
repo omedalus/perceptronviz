@@ -2,9 +2,11 @@
 import { ref, onMounted } from 'vue';
 
 import Header from '@/components/Header.vue';
-import GridModel from './components/GridModel.vue';
+
+import TrainingPanel from './components/TrainingPanel.vue';
 
 import Perceptron from '@/model/Perceptron';
+import InputPanel from './components/InputPanel.vue';
 
 const thePerceptron = ref(new Perceptron(5));
 
@@ -26,83 +28,17 @@ updateViz();
   <main>
     <div class="interactive-model mainblock">
       <div class="interactive-panel interactive-panel--grid">
-        <h2>Input</h2>
-        <div class="gridmodel-holder">
-          <GridModel
-            v-model="thePerceptron.input"
-            :dim="thePerceptron.dim"
-            :key="vizUpdateHack"
-          ></GridModel>
-          <div class="gridmodel-clear-input">
-            <a
-              @click="
-                thePerceptron.clearInput();
-                updateViz();
-              "
-              >Clear</a
-            >
-          </div>
-        </div>
-
-        <div>
-          <p>
-            <span style="font-weight: bold">Draw a 5x5-pixel picture.</span><br />
-            <span>Hold down on a pixel (square) to change its brightness value.</span>
-          </p>
-        </div>
-
-        <div style="text-align: left; font-size: 0.875rem; margin-top: 1em">
-          <p style="color: #888; margin-bottom: 1em">
-            The machine can't <em>see</em> the image like you or I can. It can only "see" a set of
-            values between 0 and 1, corresponding to brightness levels. In
-            <a
-              href="https://towardsdatascience.com/a-concise-history-of-neural-networks-2070655d3fec"
-            >
-              inventor Frank Rosenblatt's original Mark 1 Perceptron</a
-            >, these values weren't even <em>numbers</em>; they were simply the electrical voltage
-            coming out of a grid of analog photocells.
-          </p>
-          <p>Here's how your picture "looks" to the machine:</p>
-
-          <div class="vector-readout">
-            <span
-              class="vector-readout-value"
-              v-for="(v, i) in thePerceptron.input"
-              :style="{ opacity: v / 2 + 0.5 }"
-              >{{ v.toFixed(2) }}</span
-            >
-          </div>
-        </div>
+        <InputPanel
+          v-model="thePerceptron"
+          :key="vizUpdateHack"
+          @clear="
+            thePerceptron.clearInput();
+            updateViz();
+          "
+        ></InputPanel>
       </div>
       <div class="interactive-panel interactive-panel--training">
-        <h2>Training</h2>
-        <div class="training-fields">
-          <div class="training-field-enter-name">
-            <label for="currentimagelabel">Give your image a name: </label>
-            <input id="currentimagelabel" type="text" />
-          </div>
-          <div class="training-field-choose-name">
-            <label for="currentimagedropdown">Or choose a name you've already created: </label>
-            <select id="currentimagedropdown" />
-          </div>
-          <div class="training-delete-name">
-            <a @click="">Delete this name</a>
-          </div>
-        </div>
-        <div class="training-instructions">
-          By <strong>training</strong> the perceptron, you teach it to associate this image with
-          this name (or to dissociate them).
-        </div>
-        <div class="training-controls">
-          <div class="training-button training-button--associate">
-            <img src="@/assets/img/green-check.png" />
-            <strong>Yes</strong>, this image is ______.
-          </div>
-          <div class="training-button training-button--dissociate">
-            <img src="@/assets/img/red-x.png" />
-            <strong>No</strong>, this image is not ______.
-          </div>
-        </div>
+        <TrainingPanel :key="vizUpdateHack"></TrainingPanel>
       </div>
       <div class="interactive-panel interactive-panel--output">
         <h2>Output</h2>
@@ -372,97 +308,17 @@ updateViz();
 
   margin: 1em;
 
+  @media screen and (max-width: 960px) {
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .interactive-panel {
     flex: 1;
     margin: 1em;
     text-align: center;
     min-width: 16em;
-  }
-
-  .gridmodel-holder {
-    margin: auto;
-  }
-
-  .gridmodel-clear-input {
-    width: 15em;
-    margin: auto;
-    text-align: right;
-    font-size: 0.75rem;
-    margin-bottom: 1em;
-  }
-}
-
-.vector-readout {
-  white-space: normal;
-
-  .vector-readout-value {
-    display: inline-block;
-  }
-
-  .vector-readout-value {
-    margin-left: 0.5em;
-  }
-}
-
-.training-fields {
-  text-align: right;
-
-  label {
-    font-size: 0.875rem;
-  }
-
-  input {
-    width: 12ex;
-  }
-  select {
-    width: 13ex;
-  }
-
-  .training-delete-name {
-    font-size: 0.75rem;
-    margin-top: 0.25ex;
-  }
-}
-.training-instructions {
-  margin-top: 0.5em;
-}
-.training-controls {
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  margin-top: 1em;
-
-  .training-button {
-    flex: 1;
-    opacity: 0.8;
-    cursor: pointer;
-    border-radius: 1ex;
-    padding: 0.5em;
-    font-size: 0.875em;
-
-    img {
-      width: 1.5em;
-      float: left;
-      margin-right: 0.25em;
-    }
-
-    &:hover {
-      opacity: 1;
-    }
-
-    &:active {
-      filter: saturate(0.5) brightness(1.25);
-    }
-
-    &.training-button--associate {
-      color: #8f8;
-      background-color: #8f86;
-    }
-
-    &.training-button--dissociate {
-      color: #f88;
-      background-color: #f886;
-    }
   }
 }
 </style>

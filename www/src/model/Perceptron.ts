@@ -1,5 +1,5 @@
 class Perceptron {
-  private _dim: number;
+  public _dim: number;
 
   public input: number[];
 

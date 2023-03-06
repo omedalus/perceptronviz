@@ -31,3 +31,14 @@ p {
   margin-top: 0;
   margin-bottom: 0.25em;
 }
+
+.vector-readout {
+  white-space: normal;
+}
+.vector-readout .vector-readout-value {
+  display: inline-block;
+}
+
+.vector-readout .vector-readout-value {
+  margin-left: 0.5em;
+}
