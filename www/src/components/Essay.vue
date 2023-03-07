@@ -77,7 +77,7 @@ onMounted(() => {
       <a href="@/assets/rosenblatt-perceptron-probabilistic-1958.pdf">
         first electronic perceptron in 1958</a
       >
-      out of analog hardware using self-turning motorized knobs.
+      out of analog hardware using motorized knobs that turned their own resistance dials.
     </p>
     <p>
       As the world's first
