@@ -6,7 +6,7 @@ import VectorReadout from '@/components/VectorReadout.vue';
 
 import heatcolor from '@/model/heatcolor';
 
-import type Perceptron from '@/model/Perceptron';
+import Perceptron from '@/model/Perceptron';
 
 const props = defineProps<{
   modelValue: Perceptron;
@@ -29,6 +29,7 @@ const onNameSelectorChange = () => {
 const ixPopTallyDotProduct = ref(0);
 const intervalPopTallyDotProduct = ref(0);
 const poptallyRunningTotal = ref(0);
+const vecPopTally = ref([] as number[]);
 const MS_INTERVAL_POP_TALLY_DOT_PRODUCT = 300;
 const IX_POP_TALLY_DOT_PRODUCT_OVERDRIVE = 15;
 const fnPopTallyDotProduct = () => {
@@ -37,10 +38,12 @@ const fnPopTallyDotProduct = () => {
 
   if (ixPopTallyDotProduct.value === 0) {
     poptallyRunningTotal.value = 0;
+    vecPopTally.value = Perceptron.createZeroArray(props.modelValue.size);
   }
 
   if (!isPopTallyInOverdrive.value) {
     poptallyRunningTotal.value += poptallyCurrentTermProduct.value;
+    vecPopTally.value[ixPopTallyDotProduct.value] = poptallyCurrentTermProduct.value;
   }
 };
 
@@ -155,8 +158,8 @@ onBeforeUnmount(() => {
           of "understanding" shifts or rotations of an image. Indeed, this is correct: moving,
           rotating, or resizing an image all has to be done "out-of-band" for the perceptron. It
           only recognizes an image if a specific set of pixels in specific positions have expected
-          levels of brightness. Any rotated, translated, or scaled versions of the image need to be
-          trained independently.
+          levels of brightness. Any rotated, translated, or scaled versions of the image Will have
+          pixels in different positions, and will need to be trained independently.
         </p>
 
         <p>
@@ -194,7 +197,7 @@ onBeforeUnmount(() => {
             :pop-index="ixPopTallyDotProduct"
           ></HeatGrid>
         </div>
-        <div class="heatgrid-with-poptally">
+        <div class="heatgrid-with-poptally" style="margin: 0; width: 0">
           <div class="poptally-value">
             <div class="mathsymbols">
               <VueMathjax :formula="`$$*$$`"></VueMathjax>
@@ -230,22 +233,37 @@ onBeforeUnmount(() => {
             :vector="modelValue.currentOutputVector"
             :dim="modelValue.dim"
             :pop-index="ixPopTallyDotProduct"
+            :darkfloor="0"
+          ></HeatGrid>
+        </div>
+        <div class="heatgrid-with-poptally">
+          <div class="poptally-value">
+            <div
+              class="mathsymbols"
+              style="white-space: nowrap; font-size: 1.25rem; margin-top: 0.75em"
+            >
+              <span
+                v-if="!isPopTallyInOverdrive"
+                :style="{ color: heatcolor(poptallyCurrentTermProduct, modelValue.dim) }"
+              >
+                = {{ poptallyCurrentTermProduct >= 0 ? '+' : ''
+                }}{{ poptallyCurrentTermProduct.toFixed(2) }}
+              </span>
+            </div>
+          </div>
+          <HeatGrid
+            :vector="vecPopTally"
+            :dim="modelValue.dim"
+            :pop-index="ixPopTallyDotProduct"
+            :render-up-to-index="ixPopTallyDotProduct"
+            :darkfloor="0"
           ></HeatGrid>
         </div>
 
         <div class="heatgrid-with-poptally" style="margin-left: 2ex; min-width: 7em">
           <div class="poptally-value">
             <div class="mathsymbols"></div>
-            <div style="height: 2em">
-              <div
-                v-if="!isPopTallyInOverdrive"
-                :style="{ color: heatcolor(poptallyCurrentTermProduct, modelValue.dim) }"
-              >
-                =
-                {{ poptallyCurrentTermProduct >= 0 ? '+' : ''
-                }}{{ poptallyCurrentTermProduct.toFixed(2) }}
-              </div>
-            </div>
+            <div style="height: 2em"></div>
           </div>
           <div style="margin-top: 1ex">
             <VueMathjax formula="$$\vec{x}\cdot\vec{w}=$$"></VueMathjax>
@@ -434,6 +452,15 @@ onBeforeUnmount(() => {
     .heatgrid-with-poptally {
       display: flex;
       flex-direction: column;
+      margin-left: 2ex;
+      margin-right: 2ex;
+
+      &:first-child {
+        margin-left: none;
+      }
+      &:last-child {
+        margin-right: none;
+      }
     }
   }
 }

@@ -28,7 +28,7 @@ class Perceptron {
   }
 
   public get size() {
-    return this._dim * this._dim;
+    return this._dim * this._dim + 1;
   }
   public get dim() {
     return this._dim;
@@ -115,6 +115,8 @@ class Perceptron {
   public trainCurrentOutput(reinforcementFactor: number) {
     this.trainOutput(this.currentOutputLabel, reinforcementFactor);
   }
+
+  public static createZeroArray = _createZeroArray;
 }
 
 export default Perceptron;

@@ -8,6 +8,8 @@ const props = defineProps<{
   dim: number;
   inputOverlay?: boolean;
   popIndex?: number;
+  renderUpToIndex?: number;
+  darkfloor?: number;
 }>();
 const arrayDim = ref(Array(props.dim));
 
@@ -15,9 +17,14 @@ const vectorIndex = (x: number, y: number) => {
   return y * props.dim + x;
 };
 
-const squareColorAtXY = (x: number, y: number) => {
+const valueAtXY = (x: number, y: number) => {
   const vix = vectorIndex(x, y);
   let vRaw = props.vector[vix];
+  return vRaw || 0;
+};
+
+const squareColorAtXY = (x: number, y: number) => {
+  let vRaw = valueAtXY(x, y);
 
   if (props.inputOverlay) {
     // Raw value is between 0 and 1.
@@ -29,7 +36,7 @@ const squareColorAtXY = (x: number, y: number) => {
   // vRaw is -inf to +inf, but the juicy parts are
   // between -dim and +dim.
   // We treat the negative and positive cases differently.
-  const retval = heatcolor(vRaw, props.dim);
+  const retval = heatcolor(vRaw, props.dim, props.darkfloor);
   return retval;
 };
 </script>
@@ -40,24 +47,26 @@ const squareColorAtXY = (x: number, y: number) => {
       <div class="heatgrid-x" v-for="(vx, x) in arrayDim">
         <div
           class="heatgrid-square"
+          v-if="!renderUpToIndex || vectorIndex(x, y) <= renderUpToIndex"
           :style="{ top: `${y}em`, left: `${x}em`, 'background-color': squareColorAtXY(x, y) }"
           :class="{ pop: vectorIndex(x, y) === popIndex }"
         >
           <div class="heatgrid-square-hoverdetector"></div>
           <div class="heatgrid-square-tooltip">
-            {{ vector[vectorIndex(x, y)] > 0 ? '+' : '' }}{{ vector[vectorIndex(x, y)].toFixed(2) }}
+            {{ valueAtXY(x, y) > 0 ? '+' : '' }}{{ valueAtXY(x, y).toFixed(2) }}
           </div>
         </div>
       </div>
     </div>
     <div
       class="heatgrid-square"
+      v-if="!renderUpToIndex || vectorIndex(0, dim) <= renderUpToIndex"
       :style="{ top: `${dim}em`, left: `${0}em`, 'background-color': squareColorAtXY(0, dim) }"
       :class="{ pop: popIndex === dim * dim }"
     >
       <div class="heatgrid-square-hoverdetector"></div>
       <div class="heatgrid-square-tooltip">
-        {{ vector[dim * dim] > 0 ? '+' : '' }}{{ vector[dim * dim].toFixed(2) }}
+        {{ valueAtXY(0, dim) > 0 ? '+' : '' }}{{ valueAtXY(0, dim).toFixed(2) }}
       </div>
     </div>
   </div>
