@@ -55,12 +55,12 @@ onBeforeUnmount(() => {
     <h2>Output</h2>
     <div class="output-fields">
       <div class="output-field-image-name">
-        <div style="text-align: left">
+        <div style="text-align: right">
           <label for="imagelabel"
             ><strong>Give your image an output label</strong>
 
             <span v-if="modelValue.outputLabels.length > 0">
-              <br />(or choose an existing label)<br />
+              (or choose an existing label)<br />
             </span>
           </label>
         </div>
@@ -150,6 +150,12 @@ onBeforeUnmount(() => {
       <div class="output-forward-heatgrid-section">
         <div class="output-forward-heatgrid-input heatgrid-with-poptally">
           <div class="poptally-value">
+            <div class="mathsymbols">
+              <VueMathjax :formula="`$$x$$`"></VueMathjax>
+              <div class="mathjax-subscript-hack">
+                {{ ixPopTallyDotProduct < modelValue.input.length ? ixPopTallyDotProduct : 'i' }}
+              </div>
+            </div>
             {{
               ixPopTallyDotProduct < modelValue.input.length
                 ? modelValue.input[ixPopTallyDotProduct].toFixed(2)
@@ -164,18 +170,29 @@ onBeforeUnmount(() => {
           ></HeatGrid>
         </div>
         <div class="output-forward-heatgrid-weights heatgrid-with-poptally">
-          <div
-            class="poptally-value"
-            :style="{
-              color: heatcolor(modelValue.currentOutputVector[ixPopTallyDotProduct], modelValue.dim)
-            }"
-          >
-            {{ modelValue.currentOutputVector[ixPopTallyDotProduct] > 0 ? '+' : ''
-            }}{{
-              ixPopTallyDotProduct < modelValue.currentOutputVector.length
-                ? modelValue.currentOutputVector[ixPopTallyDotProduct].toFixed(2)
-                : ''
-            }}
+          <div class="poptally-value">
+            <div class="mathsymbols">
+              <VueMathjax :formula="`$$w$$`"></VueMathjax>
+              <div class="mathjax-subscript-hack">
+                {{ ixPopTallyDotProduct < modelValue.input.length ? ixPopTallyDotProduct : 'i' }}
+              </div>
+            </div>
+
+            <span
+              :style="{
+                color: heatcolor(
+                  modelValue.currentOutputVector[ixPopTallyDotProduct],
+                  modelValue.dim
+                )
+              }"
+            >
+              {{ modelValue.currentOutputVector[ixPopTallyDotProduct] > 0 ? '+' : ''
+              }}{{
+                ixPopTallyDotProduct < modelValue.currentOutputVector.length
+                  ? modelValue.currentOutputVector[ixPopTallyDotProduct].toFixed(2)
+                  : ''
+              }}
+            </span>
           </div>
           <HeatGrid
             :vector="modelValue.currentOutputVector"
@@ -342,6 +359,19 @@ onBeforeUnmount(() => {
 }
 .poptally-value {
   font-family: 'Cambria Math';
-  height: 1.5em;
+  height: 3.5em;
+  position: relative;
+
+  .mathsymbols {
+    font-size: 1.5rem;
+    position: relative;
+
+    .mathjax-subscript-hack {
+      font-size: 0.875rem;
+      position: absolute;
+      top: 1em;
+      left: calc(50% + 1ex);
+    }
+  }
 }
 </style>
