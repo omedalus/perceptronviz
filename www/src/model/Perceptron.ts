@@ -38,6 +38,8 @@ class Perceptron {
     this.input.forEach((v, i) => {
       this.input[i] = 0;
     });
+    // Don't clear the bias neuron!
+    this.input[this.input.length - 1] = 1.0;
   }
 
   public createOutput(label: string) {

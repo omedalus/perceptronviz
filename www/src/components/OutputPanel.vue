@@ -28,11 +28,20 @@ const onNameSelectorChange = () => {
 
 const ixPopTallyDotProduct = ref(0);
 const intervalPopTallyDotProduct = ref(0);
-const MS_INTERVAL_POP_TALLY_DOT_PRODUCT = 500;
-const IX_POP_TALLY_DOT_PRODUCT_OVERDRIVE = 10;
+const poptallyRunningTotal = ref(0);
+const MS_INTERVAL_POP_TALLY_DOT_PRODUCT = 300;
+const IX_POP_TALLY_DOT_PRODUCT_OVERDRIVE = 15;
 const fnPopTallyDotProduct = () => {
   ixPopTallyDotProduct.value++;
   ixPopTallyDotProduct.value %= props.modelValue.size + 1 + IX_POP_TALLY_DOT_PRODUCT_OVERDRIVE;
+
+  if (ixPopTallyDotProduct.value === 0) {
+    poptallyRunningTotal.value = 0;
+  }
+
+  if (!isPopTallyInOverdrive.value) {
+    poptallyRunningTotal.value += poptallyCurrentTermProduct.value;
+  }
 };
 
 const isPopTallyInOverdrive = computed(() => {
@@ -44,6 +53,11 @@ const poptallyCurrentTermProduct = computed(() => {
   if (isPopTallyInOverdrive.value) {
     return 0;
   }
+
+  if (!props.modelValue || !props.modelValue.currentOutputVector || !props.modelValue.input) {
+    return 0;
+  }
+
   const wi = props.modelValue.currentOutputVector[ixPopTallyDotProduct.value];
   const xi = props.modelValue.input[ixPopTallyDotProduct.value];
   const retval = wi * xi;
@@ -219,7 +233,7 @@ onBeforeUnmount(() => {
           ></HeatGrid>
         </div>
 
-        <div class="heatgrid-with-poptally">
+        <div class="heatgrid-with-poptally" style="margin-left: 2ex; min-width: 7em">
           <div class="poptally-value">
             <div class="mathsymbols"></div>
             <div style="height: 2em">
@@ -233,7 +247,41 @@ onBeforeUnmount(() => {
               </div>
             </div>
           </div>
+          <div style="margin-top: 1ex">
+            <VueMathjax formula="$$\vec{x}\cdot\vec{w}=$$"></VueMathjax>
+          </div>
+          <div style="margin-top: 1ex">
+            <VueMathjax formula="$$\sum_{i=1}^{n}x_i w_i=$$"></VueMathjax>
+          </div>
+          <div style="margin-top: 0.5ex">
+            <div
+              v-if="isPopTallyInOverdrive"
+              style="font-size: 0.75rem; color: #fff; font-style: italic; font-weight: bold"
+            >
+              Final sum:
+            </div>
+            <div v-else style="font-size: 0.75rem; color: #888; font-style: italic">
+              Running total:
+            </div>
+            <div
+              style="border: 2px solid transparent; border-radius: 50%"
+              :style="{
+                color: heatcolor(poptallyRunningTotal, modelValue.dim),
+                borderColor: isPopTallyInOverdrive ? 'currentColor' : 'transparent'
+              }"
+            >
+              {{ poptallyRunningTotal.toFixed(2) }}
+              <span v-if="isPopTallyInOverdrive" style="color: #ddd">
+                <span v-if="poptallyRunningTotal > 0"> &gt; 0</span>
+                <span v-else> &leq; 0</span>
+              </span>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div style="height: 2em">
+        <p>Final tally:</p>
       </div>
 
       <br />
