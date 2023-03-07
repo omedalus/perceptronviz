@@ -3,7 +3,8 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 
 import HeatGrid from '@/components/HeatGrid.vue';
 import VectorReadout from '@/components/VectorReadout.vue';
-import PopChange from '@/components/PopChange.vue';
+
+import heatcolor from '@/model/heatcolor';
 
 import type Perceptron from '@/model/Perceptron';
 
@@ -27,7 +28,7 @@ const onNameSelectorChange = () => {
 
 const ixPopTallyDotProduct = ref(0);
 const intervalPopTallyDotProduct = ref(0);
-const MS_INTERVAL_POP_TALLY_DOT_PRODUCT = 150;
+const MS_INTERVAL_POP_TALLY_DOT_PRODUCT = 500;
 const IX_POP_TALLY_DOT_PRODUCT_OVERDRIVE = 10;
 const fnPopTallyDotProduct = () => {
   ixPopTallyDotProduct.value++;
@@ -154,14 +155,13 @@ onBeforeUnmount(() => {
     <div v-else>
       <div class="training-forward-heatgrid-section">
         <div class="training-forward-heatgrid-input heatgrid-with-poptally">
-          <PopChange
-            :popkey="`${ixPopTallyDotProduct}`"
-            :text="
+          <div class="poptally-value">
+            {{
               ixPopTallyDotProduct < modelValue.input.length
                 ? modelValue.input[ixPopTallyDotProduct].toFixed(2)
                 : ''
-            "
-          ></PopChange>
+            }}
+          </div>
           <HeatGrid
             :vector="modelValue.input"
             :dim="modelValue.dim"
@@ -170,6 +170,19 @@ onBeforeUnmount(() => {
           ></HeatGrid>
         </div>
         <div class="training-forward-heatgrid-weights heatgrid-with-poptally">
+          <div
+            class="poptally-value"
+            :style="{
+              color: heatcolor(modelValue.currentOutputVector[ixPopTallyDotProduct], modelValue.dim)
+            }"
+          >
+            {{ modelValue.currentOutputVector[ixPopTallyDotProduct] > 0 ? '+' : ''
+            }}{{
+              ixPopTallyDotProduct < modelValue.currentOutputVector.length
+                ? modelValue.currentOutputVector[ixPopTallyDotProduct].toFixed(2)
+                : ''
+            }}
+          </div>
           <HeatGrid
             :vector="modelValue.currentOutputVector"
             :dim="modelValue.dim"
@@ -364,5 +377,9 @@ onBeforeUnmount(() => {
       margin-right: 1ex;
     }
   }
+}
+.poptally-value {
+  font-family: 'Cambria Math';
+  height: 1.5em;
 }
 </style>
