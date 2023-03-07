@@ -159,8 +159,8 @@ onMounted(() => {
       &mdash; those based on or inspired by the concepts of neural connectivity from biological
       brains &mdash; practically disappeared overnight. Through the 1970s and early 1980s, partly
       due to
-      <a href="https://dougenterprises.com/perceptron-history/">Minsky's influence</a>
-      research instead focused on the development of
+      <a href="https://dougenterprises.com/perceptron-history/">Minsky's influence</a>, research
+      instead focused on the development of
       <a href="https://en.wikipedia.org/wiki/Symbolic_artificial_intelligence"
         >symbolic artificial intelligence</a
       >, which included <a href="https://en.wikipedia.org/wiki/Expert_system">expert systems</a> and
@@ -203,15 +203,14 @@ onMounted(() => {
       linear separability, <em>combined stacks</em> or <em>layers</em> of perceptrons would not
       &mdash; if only the perceptron's elementary training procedure could somehow be adapted to
       operate through a series of layers. This adaptation came very quickly, when, in 1970, a
-      Finnish graduate student named
+      Finnish graduate mathematics student named
       <a href="https://people.idsia.ch/~juergen/who-invented-backpropagation-2014.html"
         >Seppo Linnainmaa</a
       >
-      published an algorithm called "backpropagation". Though simple in concept and honestly fairly
-      easy for a trained graduate-level mathematician, the equations behind backpropagation are far
-      beyond the grasp of laymen, requiring the ability to solve partial differential equations in
-      arbitrarily high-dimensional hyperspaces. (If you''d like to grasp what the equations are
-      doing, I recommend you start with
+      published an algorithm called "backpropagation". The equations behind backpropagation are
+      extremely complex both for computers and for most humans, requiring the ability to solve
+      partial derivatives in arbitrarily high-dimensional hyperspaces. (If you''d like to grasp what
+      the equations are doing, I recommend you start with
       <a href="https://www.youtube.com/watch?v=Ilg3gGewQ5U"
         >this excellent video series by 3Blue1Brown</a
       >
@@ -220,7 +219,12 @@ onMounted(() => {
       programming expertise and want to understand how to turn the equations into code,
       <a href="https://neptune.ai/blog/backpropagation-algorithm-in-neural-networks-guide"
         >Neptune.ai (no affiliation) has a detailed lesson.</a
-      >) Indeed, the backpropagation algorithm, which makes
+      >) Because of the AI winter, Linnainmaa's innovation went largely ignored for almost two
+      decades, only gaining attention again in the 1980s when computers became cheap and powerful
+      enough for renewed experimentation.
+    </p>
+    <p>
+      The backpropagation algorithm, which makes
       <a href="https://www.ibm.com/topics/deep-learning">Deep Learning</a> possible, remains the
       bedrock of neural network technology to this day. Though we've
       <a

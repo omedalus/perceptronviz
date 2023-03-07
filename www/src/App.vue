@@ -68,6 +68,8 @@ updateViz();
   padding-top: 1em;
   padding-bottom: 2em;
   max-width: 640px;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .interactive-model {

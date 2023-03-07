@@ -8,12 +8,24 @@ body {
 
 a {
   cursor: pointer;
-  color: #6ac;
+  color: #8cd;
   text-decoration: none;
 }
 a:hover {
   color: #8cf;
   text-decoration: underline;
+}
+p a,
+.caption a {
+  color: currentColor;
+  text-decoration: underline;
+  text-decoration-color: #777;
+}
+
+p a:hover,
+.caption a:hover {
+  color: #fff;
+  text-decoration-color: #fff;
 }
 
 h1,
