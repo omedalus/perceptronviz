@@ -35,6 +35,21 @@ const fnPopTallyDotProduct = () => {
   ixPopTallyDotProduct.value %= props.modelValue.size + 1 + IX_POP_TALLY_DOT_PRODUCT_OVERDRIVE;
 };
 
+const isPopTallyInOverdrive = computed(() => {
+  const retval = ixPopTallyDotProduct.value >= props.modelValue.input.length;
+  return retval;
+});
+
+const poptallyCurrentTermProduct = computed(() => {
+  if (isPopTallyInOverdrive.value) {
+    return 0;
+  }
+  const wi = props.modelValue.currentOutputVector[ixPopTallyDotProduct.value];
+  const xi = props.modelValue.input[ixPopTallyDotProduct.value];
+  const retval = wi * xi;
+  return retval;
+});
+
 onMounted(() => {
   intervalPopTallyDotProduct.value = window.setInterval(
     fnPopTallyDotProduct,
@@ -153,14 +168,10 @@ onBeforeUnmount(() => {
             <div class="mathsymbols">
               <VueMathjax :formula="`$$x$$`"></VueMathjax>
               <div class="mathjax-subscript-hack">
-                {{ ixPopTallyDotProduct < modelValue.input.length ? ixPopTallyDotProduct : 'i' }}
+                {{ isPopTallyInOverdrive ? 'i' : ixPopTallyDotProduct }}
               </div>
             </div>
-            {{
-              ixPopTallyDotProduct < modelValue.input.length
-                ? modelValue.input[ixPopTallyDotProduct].toFixed(2)
-                : ''
-            }}
+            {{ isPopTallyInOverdrive ? '' : modelValue.input[ixPopTallyDotProduct].toFixed(2) }}
           </div>
           <HeatGrid
             :vector="modelValue.input"
@@ -169,12 +180,19 @@ onBeforeUnmount(() => {
             :pop-index="ixPopTallyDotProduct"
           ></HeatGrid>
         </div>
+        <div class="heatgrid-with-poptally">
+          <div class="poptally-value">
+            <div class="mathsymbols">
+              <VueMathjax :formula="`$$*$$`"></VueMathjax>
+            </div>
+          </div>
+        </div>
         <div class="output-forward-heatgrid-weights heatgrid-with-poptally">
           <div class="poptally-value">
             <div class="mathsymbols">
               <VueMathjax :formula="`$$w$$`"></VueMathjax>
               <div class="mathjax-subscript-hack">
-                {{ ixPopTallyDotProduct < modelValue.input.length ? ixPopTallyDotProduct : 'i' }}
+                {{ isPopTallyInOverdrive ? 'i' : ixPopTallyDotProduct }}
               </div>
             </div>
 
@@ -188,9 +206,9 @@ onBeforeUnmount(() => {
             >
               {{ modelValue.currentOutputVector[ixPopTallyDotProduct] > 0 ? '+' : ''
               }}{{
-                ixPopTallyDotProduct < modelValue.currentOutputVector.length
-                  ? modelValue.currentOutputVector[ixPopTallyDotProduct].toFixed(2)
-                  : ''
+                isPopTallyInOverdrive
+                  ? ''
+                  : modelValue.currentOutputVector[ixPopTallyDotProduct].toFixed(2)
               }}
             </span>
           </div>
@@ -199,6 +217,22 @@ onBeforeUnmount(() => {
             :dim="modelValue.dim"
             :pop-index="ixPopTallyDotProduct"
           ></HeatGrid>
+        </div>
+
+        <div class="heatgrid-with-poptally">
+          <div class="poptally-value">
+            <div class="mathsymbols"></div>
+            <div style="height: 2em">
+              <div
+                v-if="!isPopTallyInOverdrive"
+                :style="{ color: heatcolor(poptallyCurrentTermProduct, modelValue.dim) }"
+              >
+                =
+                {{ poptallyCurrentTermProduct >= 0 ? '+' : ''
+                }}{{ poptallyCurrentTermProduct.toFixed(2) }}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -352,8 +386,6 @@ onBeforeUnmount(() => {
     .heatgrid-with-poptally {
       display: flex;
       flex-direction: column;
-      margin-left: 1ex;
-      margin-right: 1ex;
     }
   }
 }
@@ -365,6 +397,7 @@ onBeforeUnmount(() => {
   .mathsymbols {
     font-size: 1.5rem;
     position: relative;
+    height: 1.4em;
 
     .mathjax-subscript-hack {
       font-size: 0.875rem;
