@@ -9,7 +9,21 @@ const _createRandomArray = (n: number, r: number) => {
 };
 
 const _serializeVectorToFixedWidthJSON = (vec: number[]) => {
-  const s = '[' + vec.map((x) => x.toFixed(2)).join(',') + ']';
+  const s =
+    '[' +
+    vec
+      .map((x) => {
+        let s = x.toFixed(2);
+        while (s.endsWith('0')) {
+          s = s.slice(0, -1);
+        }
+        if (s.endsWith('.')) {
+          s = s.slice(0, -1);
+        }
+        return s;
+      })
+      .join(',') +
+    ']';
   return s;
 };
 
