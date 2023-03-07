@@ -3,10 +3,11 @@ import { ref, onMounted } from 'vue';
 
 import Header from '@/components/Header.vue';
 
+import InputPanel from './components/InputPanel.vue';
+import OutputPanel from './components/OutputPanel.vue';
 import TrainingPanel from './components/TrainingPanel.vue';
 
 import Perceptron from '@/model/Perceptron';
-import InputPanel from './components/InputPanel.vue';
 
 const thePerceptron = ref(new Perceptron(5));
 
@@ -37,11 +38,11 @@ updateViz();
           "
         ></InputPanel>
       </div>
+      <div class="interactive-panel interactive-panel--output">
+        <OutputPanel v-model="thePerceptron" :key="vizUpdateHack"></OutputPanel>
+      </div>
       <div class="interactive-panel interactive-panel--training">
         <TrainingPanel v-model="thePerceptron" :key="vizUpdateHack"></TrainingPanel>
-      </div>
-      <div class="interactive-panel interactive-panel--output">
-        <h2>Output</h2>
       </div>
     </div>
   </main>
