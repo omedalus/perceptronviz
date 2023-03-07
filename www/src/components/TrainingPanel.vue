@@ -74,39 +74,44 @@ onBeforeUnmount(() => {
     <h2>Training</h2>
     <div class="training-fields">
       <div class="training-field-image-name">
-        <label for="imagelabel"
-          ><strong>Give your image an output label:</strong>
+        <div style="text-align: left">
+          <label for="imagelabel"
+            ><strong>Give your image an output label</strong>
 
-          <span v-if="modelValue.outputLabels.length > 0">
-            <br />(or choose an existing label)
-          </span>
-        </label>
+            <span v-if="modelValue.outputLabels.length > 0">
+              <br />(or choose an existing label)<br />
+            </span>
+          </label>
+        </div>
 
-        <input
-          type="text"
-          id="imagelabel"
-          name="imagelabel"
-          ref="imagelabel"
-          list="imagelabels"
-          placeholder="Name this image"
-          :value="modelValue.currentOutputLabel"
-          @focus="imagelabel.value = ''"
-          @blur="
-            if (!imagelabel.value) {
-              imagelabel.value = modelValue.currentOutputLabel;
-            }
-          "
-          @change="
-            imagelabel.blur();
-            onNameSelectorChange();
-          "
-        />
-        <datalist id="imagelabels">
-          <option v-for="olabel in modelValue.outputLabels" :value="olabel">{{ olabel }}</option>
-        </datalist>
-      </div>
-      <div class="training-delete-name" v-if="modelValue.currentOutputLabel">
-        <a @click="modelValue.deleteCurrentOutput()">Delete this label</a>
+        <div style="text-align: right">
+          <input
+            type="text"
+            id="imagelabel"
+            name="imagelabel"
+            ref="imagelabel"
+            list="imagelabels"
+            placeholder="Name this image"
+            :value="modelValue.currentOutputLabel"
+            @focus="imagelabel.value = ''"
+            @blur="
+              if (!imagelabel.value) {
+                imagelabel.value = modelValue.currentOutputLabel;
+              }
+            "
+            @change="
+              imagelabel.blur();
+              onNameSelectorChange();
+            "
+            style="width: 15em; margin-top: 0.5ex"
+          />
+          <datalist id="imagelabels">
+            <option v-for="olabel in modelValue.outputLabels" :value="olabel">{{ olabel }}</option>
+          </datalist>
+          <div class="training-delete-name" v-if="modelValue.currentOutputLabel">
+            <a @click="modelValue.deleteCurrentOutput()">Delete this label</a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -257,8 +262,6 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 .training-panel {
   .training-fields {
-    text-align: right;
-
     label {
       font-size: 0.875rem;
     }
@@ -278,13 +281,7 @@ onBeforeUnmount(() => {
     }
 
     .training-field-image-name {
-      display: flex;
-      flex-direction: row;
-      gap: 1ex;
-
-      & > * {
-        flex: 1;
-      }
+      display: block;
     }
   }
 
