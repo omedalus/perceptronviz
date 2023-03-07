@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 
 import GridModel from '@/components/GridModel.vue';
+import VectorReadout from '@/components/VectorReadout.vue';
+
 import type Perceptron from '@/model/Perceptron';
 
 const prop = defineProps<{
@@ -48,25 +50,9 @@ const formula = ref('');
       </p>
       <p>Here's how your picture "looks" to the machine:</p>
 
-      <div class="vector-readout-holder">
-        <div class="vector-label">
-          <VueMathjax formula="$$\vec{x}=$$"></VueMathjax>
-        </div>
-        <div class="vector-readout">
-          <span
-            class="vector-readout-value"
-            v-for="(v, i) in modelValue.input"
-            :style="{ opacity: v * 0.75 + 0.25 }"
-            >{{ v.toFixed(2) }}</span
-          >
-        </div>
-      </div>
+      <VectorReadout :vector="modelValue.input" name="x"> </VectorReadout>
 
-      <div class="hoverafter-trigger" style="margin-top: 1em; text-align: right">
-        <a> Why is there an extra "1.00" on the end? </a>
-      </div>
-
-      <p class="hoverafter-displayer" style="margin-top: 0.5em; color: #888">
+      <p class="explanatory-text dimmed-text" style="margin-top: 1em">
         You might notice that there's an extra "1.00" tacked onto the end of that input vector. It
         doesn't correspond to a pixel on the grid, and you can't change it. That's called the "bias
         neuron". Its job is to give the output something to multiply by in order to set the output's

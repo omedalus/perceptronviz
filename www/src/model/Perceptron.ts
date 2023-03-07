@@ -17,6 +17,8 @@ class Perceptron {
 
   public _currentOutput = '';
 
+  public isInitRandomOutputWeights = true;
+
   public constructor(dim: number) {
     this._dim = dim;
 
@@ -40,7 +42,11 @@ class Perceptron {
 
   public createOutput(label: string) {
     if (!(label in this.outputs)) {
-      this.outputs[label] = _createZeroArray(this.size + 1);
+      if (this.isInitRandomOutputWeights) {
+        this.outputs[label] = _createRandomArray(this.size + 1, this.dim);
+      } else {
+        this.outputs[label] = _createZeroArray(this.size + 1);
+      }
     }
     return this.outputs[label];
   }

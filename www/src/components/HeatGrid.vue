@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-// @ts-ignore
-import colorBetween from 'color-between';
+import heatcolor from '@/model/heatcolor';
 
 const props = defineProps<{
   vector: number[];
@@ -30,16 +29,7 @@ const squareColorAtXY = (x: number, y: number) => {
   // vRaw is -inf to +inf, but the juicy parts are
   // between -dim and +dim.
   // We treat the negative and positive cases differently.
-  if (vRaw <= 0) {
-    const red = Math.min(-vRaw, props.dim) / props.dim;
-    const redInt = Math.floor(255 * red);
-    const retval = `rgb(${redInt}, 0, 0)`;
-    return retval;
-  }
-
-  const green = Math.min(vRaw, props.dim) / props.dim;
-  const greenInt = Math.floor(255 * green);
-  const retval = `rgb(0, ${greenInt}, 0)`;
+  const retval = heatcolor(vRaw, props.dim);
   return retval;
 };
 </script>

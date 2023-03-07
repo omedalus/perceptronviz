@@ -32,22 +32,12 @@ p {
   margin-bottom: 0.75em;
 }
 
-.vector-readout {
-  white-space: normal;
-  color: #fff;
+.explanation-text {
+  font-size: 0.875rem;
+  text-align: left;
 }
-.vector-readout .vector-readout-value {
-  display: inline-block;
-}
-.vector-readout .vector-readout-value {
-  margin-left: 0.5em;
-}
-.vector-readout-holder {
-  display: flex;
-  flex-direction: row;
-}
-.vector-readout-holder .vector-readout-label {
-  font-size: 1.5rem;
+.dimmed-text {
+  color: #888;
 }
 
 .hoverafter-trigger + .hoverafter-displayer {

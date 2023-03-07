@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 
 import HeatGrid from './HeatGrid.vue';
+import VectorReadout from './VectorReadout.vue';
 
 import type Perceptron from '@/model/Perceptron';
 
@@ -39,10 +40,6 @@ const isTrainingAnimationRunning = computed(() => {
 });
 
 const train = (reinforcementFactor: number) => {
-  console.log('randomize!');
-  props.modelValue.randomizeCurrentOutput();
-  return;
-
   if (timerTrainingAnimation.value) {
     // Training animation is still running.
     return;
@@ -154,7 +151,7 @@ onBeforeUnmount(() => {
     </div>
 
     <div v-else>
-      <div class="training-forward-heatgrid-section" style="display: flex">
+      <div class="training-forward-heatgrid-section">
         <div class="training-forward-heatgrid-input">
           <HeatGrid
             :vector="modelValue.input"
@@ -168,6 +165,39 @@ onBeforeUnmount(() => {
           :dim="modelValue.dim"
           :pop-index="ixPopTallyDotProduct"
         ></HeatGrid>
+      </div>
+
+      <div class="training-vector-explanation explanation-text dimmed-text">
+        <p>
+          When you create an output, the perceptron connects every input node (or "neuron") to the
+          new output "neuron". Each "neuronal" connection is initially created with a
+          <strong>random <em>weight</em></strong
+          >, which can be positive or negative. A strong
+          <span style="color: green">positive</span> connection is <em>excitatory</em> &mdash; it
+          means that, when the corresponding pixel is bright, the image probably matches the label.
+          A strong <span style="color: red">negative</span> connection is
+          <em>inhibitory</em> &mdash; it means that, when the pixel is bright, the image probably
+          <em>doesn't</em> match. (A
+          <span style="color: #666">weak</span>
+          connection means that the pixel is irrelevant to classifying the image.)
+        </p>
+      </div>
+      <div class="explanation-text">
+        <p>
+          The connection weights from the input to the
+          <strong>{{ modelValue.currentOutputLabel }} </strong>
+          output are a vector we'll call
+          <VueMathjax style="display: inline-block" formula="$$\vec{w}$$"></VueMathjax>. It has the
+          same number of elements as the input vector (counting the bias neuron). It looks like
+          this:
+        </p>
+
+        <VectorReadout
+          :vector="modelValue.currentOutputVector"
+          name="w"
+          :heatrange="modelValue.dim"
+        >
+        </VectorReadout>
       </div>
 
       <div class="training-instructions">
@@ -309,6 +339,12 @@ onBeforeUnmount(() => {
     p + p {
       margin-top: 0.75em;
     }
+  }
+
+  .training-forward-heatgrid-section {
+    margin-top: 0.5em;
+    display: flex;
+    flex-direction: row;
   }
 }
 </style>
