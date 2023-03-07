@@ -1,0 +1,279 @@
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+
+const theDiv = ref();
+
+onMounted(() => {
+  const elemDiv = theDiv.value as HTMLElement;
+  if (!elemDiv) {
+    return;
+  }
+  // Make all hyperlinks open in a new window.
+  [...elemDiv.querySelectorAll('a')].forEach((a) => {
+    a.target = '_blank';
+  });
+});
+</script>
+
+<template>
+  <div class="explando-essay-component" ref="theDiv">
+    <p>
+      A <a href="https://en.wikipedia.org/wiki/Perceptron"><em>perceptron</em></a> is the ancestral
+      form of modern machine learning systems. The
+      <a href="https://en.wikipedia.org/wiki/Artificial_neural_network"
+        >artificial neural networks</a
+      >
+      that we use today throughout the world of artificial intelligence &mdash; from
+      <a href="https://www.mathworks.com/discovery/deep-learning.html">Deep Learning </a>
+      to <a href="https://stablediffusionweb.com/"> image generation </a> to
+      <a href="https://openai.com/blog/chatgpt">Large Language Models (LLMs)</a>
+      &mdash; all derive directly from the perceptron. In fact, modern neural networks are often
+      called
+      <a href="https://en.wikipedia.org/wiki/Multilayer_perceptron"> "multilayer perceptrons"</a>.
+      The perceptron is a very simple algorithm, and understanding it will help you understand how
+      today's extraordinary AIs, like <a href="https://chat.openai.com/chat">ChatGPT</a> or
+      <a href="https://www.midjourney.com/home/">Midjourney</a>, work on a fundamental level.
+    </p>
+
+    <div class="explando-photo explando-photo-right">
+      <a
+        href="https://news.cornell.edu/stories/2019/09/professors-perceptron-paved-way-ai-60-years-too-soon"
+      >
+        <img src="@/assets/img/rosenblatt-wiring-perceptron.jpg" />
+      </a>
+      <div class="caption">
+        Frank Rosenblatt at age 32, 1960, wiring the Mark 1 Perceptron. Read more about
+        <a
+          href="https://news.cornell.edu/stories/2019/09/professors-perceptron-paved-way-ai-60-years-too-soon"
+          >Rosenblatt's contributions to AI in this article from Cornell University.
+        </a>
+        (Photo courtesey of Wikimedia Commons.)
+      </div>
+    </div>
+
+    <p>
+      Perceptrons were first developed "on paper" by
+      <a href="https://www.britannica.com/biography/Warren-S-McCulloch"
+        >neuroscientist Warren S. McCulloch</a
+      >
+      and
+      <a href="https://www.britannica.com/biography/Walter-Pitts">mathematician Walter Pitts</a>
+      in 1943. (This was two years before the first true computer,
+      <a href="https://www.computerhistory.org/revolution/birth-of-the-computer/4/78">the ENIAC</a>,
+      even came online!) The concept of the perceptron came from observations about the wiring
+      patterns of neurons in human and animal brains &mdash; specifically, the
+      <a href="https://thedecisionlab.com/reference-guide/neuroscience/hebbian-learning"
+        >Hebbian learning rule</a
+      >, which tells us that neurons that fire simultaneously tend to develop stronger connections
+      to one another. An early AI pioneer, a
+      <a href="http://csis.pace.edu/~ctappert/srd2011/rosenblatt-contributions.htm"
+        >psychologist named Frank Rosenblatt</a
+      >, using an engineering paradigm of corrective feedback signals that came to be called
+      <a
+        href="https://shahaliyev.medium.com/introduction-to-deep-learning-how-cybernetics-became-deep-learning-e46f8101053"
+      >
+        "cybernetics" </a
+      >, built the
+      <a href="@/assets/rosenblatt-perceptron-probabilistic-1958.pdf">
+        first electronic perceptron in 1958</a
+      >
+      out of analog hardware using self-turning motorized knobs.
+    </p>
+    <p>
+      As the world's first
+      <a href="@/assets/rosenblatt-perceptron-perceiving-1957.pdf"> machine capable of "learning"</a
+      >, the perceptron caused a storm of inspiration in both scientific and cultural circles. The
+      ubiquitous depiction of whirring, clacking sentient robots in
+      <a href="https://www.flickchart.com/charts.aspx?genre=cyborg+/+android+/+robot&decade=1960"
+        >movies and TV from the 1960s</a
+      >, with electronic brains made of relays and vacuum tubes, was due in no small part to the
+      incredible achievements that AI engineers were demonstrating in the real world. The perceptron
+      could perform tasks that many had considered impossible for a machine to do, such as
+      <a href="https://www.techtarget.com/whatis/definition/perceptron">recognize images</a>,
+      <a href="http://neuralnetworksanddeeplearning.com/chap1.html">read handwriting</a>, and
+      eventually
+      <a
+        href="https://towardsdatascience.com/the-1958-perceptron-as-a-breast-cancer-classifier-672556186156"
+        >diagnose cancer</a
+      >.
+      <a href="http://beamlab.org/deeplearning/2017/02/23/deep_learning_101_part1.html"
+        >Rosenblatt himself famously declared</a
+      >, "[The perceptron is] the embryo of an electronic computer that [the Navy] expects will be
+      able to walk, talk, see, write, reproduce itself and be conscious of its existence."
+    </p>
+    <p>
+      Unfortunately, this whirlwind of excitement proved immature. In the late 1960s, it was
+      becoming apparent that the perceptron could only learn a very specific format of problems:
+      ones that exhibited a mathematical property called
+      <a
+        href="https://subscription.packtpub.com/book/big-data-and-business-intelligence/9781788830577/2/ch02lvl1sec26/linear-separability"
+        >linear separability</a
+      >. If a pattern recognition assignment couldn't be expressed in linearly separable terms, then
+      a perceptron was simply mathematically incapable of ever learning the pattern &mdash; no
+      matter how many neurons it had, no matter how densely connected it was, and no matter how many
+      training examples it was shown.
+    </p>
+    <p>
+      In 1969, legendary AI scientist
+      <a href="https://en.wikipedia.org/wiki/Marvin_Minsky">Marvin Minsky</a>,
+
+      <a
+        href="https://medium.com/codex/the-perceptron-and-the-rivalry-between-frank-rosenblatt-and-marvin-minsky-e68fb3e0e3b6"
+      >
+        a lifelong rival of Rosenblatt since they were boys</a
+      >, co-authored a highly critical book with
+      <a
+        href="https://news.mit.edu/2016/seymour-papert-pioneer-of-constructionist-learning-dies-0801"
+        >mathematician and educator (and would-be philanthropist) Seymour Papert</a
+      >
+      titled
+      <a href="https://mitpress.mit.edu/9780262630221/perceptrons/"
+        ><em>Perceptrons: An Introduction to Computational Geometry</em></a
+      >. This book presented a rigorous and elegant proof of the perceptron's limitations &mdash; a
+      proof so straightforward, in fact, that many researchers were shocked and frankly embarrassed
+      that the perceptron's shortcomings weren't obvious to them the whole time.
+    </p>
+
+    <div class="explando-photo explando-photo-left">
+      <a
+        href="https://news.cornell.edu/stories/2019/09/professors-perceptron-paved-way-ai-60-years-too-soon"
+      >
+        <img src="@/assets/img/rosenblatt-cameras.jpg" />
+      </a>
+      <div class="caption">
+        Frank Rosenblatt working on automated image recognition, attaching a camera system to his
+        Mark 1 Perceptron at Cornell University. (Photo courtesey of Wikimedia Commons.)
+      </div>
+    </div>
+
+    <p>
+      Minsky and Papert's book had a profound &mdash; and some would even say
+      <em>catastrophic</em> &mdash; influence on the history of artificial intelligence.
+    </p>
+
+    <p>
+      On the one hand, this revelation devastated the AI community. Research into
+      <a href="https://www.britannica.com/technology/connectionism-artificial-intelligence"
+        >"connectionist" approaches to AI</a
+      >
+      &mdash; those based on or inspired by the concepts of neural connectivity from biological
+      brains &mdash; practically disappeared overnight. Through the 1970s and early 1980s, partly
+      due to
+      <a href="https://dougenterprises.com/perceptron-history/">Minsky's influence</a>
+      research instead focused on the development of
+      <a href="https://en.wikipedia.org/wiki/Symbolic_artificial_intelligence"
+        >symbolic artificial intelligence</a
+      >, which included <a href="https://en.wikipedia.org/wiki/Expert_system">expert systems</a> and
+      <a href="https://en.wikipedia.org/wiki/Automated_theorem_proving"
+        >automated mathematical theorem-provers</a
+      >. These systems could explicitly mimic human decision-making and possibly even exceed human
+      performance. However, they had very little means of adapting to novel situations, and were
+      incapable of doing anything that their human programmers didn't explicitly tell them to.
+      During this time, connectionism was generally regarded as naive and perhaps childish &mdash;
+      but at the same time, practically nobody believed that expert systems would ever lead to
+      "self-aware" machinery. This was known as the
+      <a href="https://builtin.com/artificial-intelligence/ai-winter">AI winter</a>, and during this
+      time many people both in industry and in culture came to believe that the development of a
+      "true" machine intelligence was ultimately impossible.
+    </p>
+
+    <div class="explando-photo explando-photo-right">
+      <a href="https://www.newyorker.com/magazine/1981/12/14/a-i">
+        <img src="@/assets/img/Lives-MinskyNew.jpg" />
+      </a>
+      <div class="caption">
+        <a href="https://www.newyorker.com/magazine/1981/12/14/a-i">Marvin Minsky</a>, co-founder of
+        the
+        <a
+          href="https://capd.mit.edu/organizations/mit-computer-science-artificial-intelligence-lab/"
+          >MIT AI Lab</a
+        >, advocated a radically different approach to AI than Rosenblatt. He and
+        <a href="https://en.wikipedia.org/wiki/Seymour_Papert">Seymour Papert</a>
+        published
+        <a href="https://mitpress.mit.edu/9780262630221/perceptrons/"><em>Perceptrons</em></a> in
+        1969. This book crushed all faith in neural networks for an entire generation of
+        researchers, but it also described the innovations that would need to take place &mdash; and
+        ultimately <em>did</em> take place &mdash; to bring connectionist AI to fruition.
+      </div>
+    </div>
+
+    <p>
+      On the other hand, Minsky and Papert left a glimmering promise amidst this flood of despair.
+      In the book, they posited that, even though individual perceptrons had this limitation of
+      linear separability, <em>combined stacks</em> or <em>layers</em> of perceptrons would not
+      &mdash; if only the perceptron's elementary training procedure could somehow be adapted to
+      operate through a series of layers. This adaptation came very quickly, when, in 1970, a
+      Finnish graduate student named
+      <a href="https://people.idsia.ch/~juergen/who-invented-backpropagation-2014.html"
+        >Seppo Linnainmaa</a
+      >
+      published an algorithm called "backpropagation". Though simple in concept and honestly fairly
+      easy for a trained graduate-level mathematician, the equations behind backpropagation are far
+      beyond the grasp of laymen, requiring the ability to solve partial differential equations in
+      arbitrarily high-dimensional hyperspaces. (If you''d like to grasp what the equations are
+      doing, I recommend you start with
+      <a href="https://www.youtube.com/watch?v=Ilg3gGewQ5U"
+        >this excellent video series by 3Blue1Brown</a
+      >
+      (no affiliation)). Fortunately, though backpropagation's equations may be difficult to
+      <em>understand</em>, they are relatively easy to <em>implement</em>. (If you have some
+      programming expertise and want to understand how to turn the equations into code,
+      <a href="https://neptune.ai/blog/backpropagation-algorithm-in-neural-networks-guide"
+        >Neptune.ai (no affiliation) has a detailed lesson.</a
+      >) Indeed, the backpropagation algorithm, which makes
+      <a href="https://www.ibm.com/topics/deep-learning">Deep Learning</a> possible, remains the
+      bedrock of neural network technology to this day. Though we've
+      <a
+        href="https://www.analyticsvidhya.com/blog/2021/06/the-challenge-of-vanishing-exploding-gradients-in-deep-neural-networks/"
+      >
+        encountered corner-cases
+      </a>
+      and developed
+      <a href="https://www.mygreatlearning.com/blog/relu-activation-function/"
+        >optimizations and simplifications</a
+      >, the backpropagation algorithm itself remains essentially unchanged from Linnainmaa's
+      original formulation. With ever-increasing hardware capabilities and
+      <a
+        href="https://towardsdatascience.com/what-is-a-gpu-and-do-you-need-one-in-deep-learning-718b9597aa0d"
+      >
+        parallelization techniques</a
+      >, our computers run the computationally expensive backpropagation algorithm
+      <a href="https://towardsdatascience.com/language-model-scaling-laws-and-gpt-3-5cdc034e67bb"
+        >at scales scarcely imaginable</a
+      >
+      to the engineers of 1943, and Frank Rosenblatt's prophecy that his analog contraption would be
+      the "embryo" of sentient machinery may yet come to fruition &mdash; and soon.
+    </p>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.explando-essay-component {
+  .explando-photo {
+    margin: 1em 3em 1em;
+
+    &.explando-photo-right {
+      float: right;
+      margin-right: 0;
+    }
+
+    &.explando-photo-left {
+      float: left;
+      margin-left: 0;
+    }
+
+    width: 15em;
+    max-width: 33vw;
+
+    img {
+      width: 100%;
+    }
+
+    .caption {
+      font-size: 0.875rem;
+      font-style: italic;
+      color: #aaa;
+    }
+  }
+}
+</style>
