@@ -259,47 +259,64 @@ onBeforeUnmount(() => {
             :darkfloor="0"
           ></HeatGrid>
         </div>
+      </div>
 
-        <div class="heatgrid-with-poptally" style="margin-left: 2ex; min-width: 7em">
-          <div class="poptally-value">
-            <div class="mathsymbols"></div>
-            <div style="height: 2em"></div>
+      <div style="display: flex; flex-direction: row; justify-content: center; margin-top: 1em">
+        <VueMathjax formula="$$\vec{x}\cdot\vec{w}=\sum_{i=1}^{n}x_i w_i=$$"></VueMathjax>
+        <div style="margin-top: 0.5ex; min-width: 7em">
+          <div
+            v-if="isPopTallyInOverdrive"
+            style="font-size: 0.75rem; color: #fff; font-style: italic; font-weight: bold"
+          >
+            Final sum:
           </div>
-          <div style="margin-top: 1ex">
-            <VueMathjax formula="$$\vec{x}\cdot\vec{w}=$$"></VueMathjax>
+          <div v-else style="font-size: 0.75rem; color: #888; font-style: italic">
+            Running total:
           </div>
-          <div style="margin-top: 1ex">
-            <VueMathjax formula="$$\sum_{i=1}^{n}x_i w_i=$$"></VueMathjax>
-          </div>
-          <div style="margin-top: 0.5ex">
-            <div
+          <div
+            style="
+              border: 2px solid transparent;
+              border-radius: 50%;
+              padding: 0.25ex;
+              position: relative;
+            "
+            :style="{
+              color: heatcolor(poptallyRunningTotal, modelValue.dim),
+              borderColor: isPopTallyInOverdrive ? 'currentColor' : 'transparent'
+            }"
+          >
+            {{ poptallyRunningTotal.toFixed(2) }}
+            <span
               v-if="isPopTallyInOverdrive"
-              style="font-size: 0.75rem; color: #fff; font-style: italic; font-weight: bold"
+              style="color: #ddd; position: absolute; right: 1ex; top: 0.25ex"
             >
-              Final sum:
-            </div>
-            <div v-else style="font-size: 0.75rem; color: #888; font-style: italic">
-              Running total:
-            </div>
-            <div
-              style="border: 2px solid transparent; border-radius: 50%"
-              :style="{
-                color: heatcolor(poptallyRunningTotal, modelValue.dim),
-                borderColor: isPopTallyInOverdrive ? 'currentColor' : 'transparent'
-              }"
-            >
-              {{ poptallyRunningTotal.toFixed(2) }}
-              <span v-if="isPopTallyInOverdrive" style="color: #ddd">
-                <span v-if="poptallyRunningTotal > 0"> &gt; 0</span>
-                <span v-else> &leq; 0</span>
-              </span>
-            </div>
+              <span v-if="poptallyRunningTotal > 0"> &gt; 0</span>
+              <span v-else> &leq; 0</span>
+            </span>
           </div>
         </div>
       </div>
 
-      <div style="height: 2em">
-        <p>Final tally:</p>
+      <div style="margin-top: 1em; height: 3.5em">
+        <div v-if="isPopTallyInOverdrive">
+          <div style="color: green" v-if="poptallyRunningTotal > 0">
+            Verdict: This perceptron "thinks"<br />
+            this image <strong>is </strong>
+            {{ modelValue.currentOutputLabel }}
+          </div>
+          <div style="color: red" v-else>
+            Verdict: This perceptron "thinks"<br />
+            this image <strong>is not</strong>
+            {{ modelValue.currentOutputLabel }}
+          </div>
+        </div>
+        <div v-else>
+          <div style="font-style: italic">The perceptron is still computing...</div>
+          <div style="font-size: 0.75rem; color: #888">
+            (Not really. It's just an animation cycle that's <br />
+            intentionally slowed down so you can see what's happening.)<br />
+          </div>
+        </div>
       </div>
 
       <br />
@@ -448,6 +465,7 @@ onBeforeUnmount(() => {
     margin-top: 0.5em;
     display: flex;
     flex-direction: row;
+    justify-content: center;
 
     .heatgrid-with-poptally {
       display: flex;
