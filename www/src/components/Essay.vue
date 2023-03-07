@@ -108,10 +108,17 @@ onMounted(() => {
       <a
         href="https://subscription.packtpub.com/book/big-data-and-business-intelligence/9781788830577/2/ch02lvl1sec26/linear-separability"
         >linear separability</a
-      >. If a pattern recognition assignment couldn't be expressed in linearly separable terms, then
-      a perceptron was simply mathematically incapable of ever learning the pattern &mdash; no
-      matter how many neurons it had, no matter how densely connected it was, and no matter how many
-      training examples it was shown.
+      >. This limitation meant that a perceptron could only identify a pattern as long as that
+      pattern could always strictly be described by the sum of its parts &mdash; that is, as long as
+      no <em>combination</em> of individual examples of the pattern constitute an
+      <em>exception</em> to the pattern. For example, if a perceptron were being trained on lists of
+      food ingredients to recognize the property of "deliciousness", then it could learn that
+      chocolate and tuna are each individually delicious, but it could never discern that the
+      <em>combination</em> of chocolate and tuna isn't the sum of chocolate's and tuna's individual
+      deliciousness values. If a pattern recognition assignment couldn't be expressed in linearly
+      separable terms, then a perceptron was simply mathematically incapable of ever learning the
+      pattern &mdash; no matter how many neurons it had, no matter how densely connected it was, and
+      no matter how many training examples it was shown.
     </p>
     <p>
       In 1969, legendary AI scientist
@@ -120,11 +127,11 @@ onMounted(() => {
       <a
         href="https://medium.com/codex/the-perceptron-and-the-rivalry-between-frank-rosenblatt-and-marvin-minsky-e68fb3e0e3b6"
       >
-        a lifelong rival of Rosenblatt since they were boys</a
+        a lifelong rival of Rosenblatt since boyhood</a
       >, co-authored a highly critical book with
       <a
         href="https://news.mit.edu/2016/seymour-papert-pioneer-of-constructionist-learning-dies-0801"
-        >mathematician and educator (and would-be philanthropist) Seymour Papert</a
+        >mathematician and educator (and eventual philanthropist) Seymour Papert</a
       >
       titled
       <a href="https://mitpress.mit.edu/9780262630221/perceptrons/"
@@ -147,7 +154,7 @@ onMounted(() => {
     </div>
 
     <p>
-      Minsky and Papert's book had a profound &mdash; and some would even say
+      Minsky and Papert's book had a profound &mdash; arguably even
       <em>catastrophic</em> &mdash; influence on the history of artificial intelligence.
     </p>
 
@@ -245,8 +252,9 @@ onMounted(() => {
       <a href="https://towardsdatascience.com/language-model-scaling-laws-and-gpt-3-5cdc034e67bb"
         >at scales scarcely imaginable</a
       >
-      to the engineers of 1943, and Frank Rosenblatt's prophecy that his analog contraption would be
-      the "embryo" of sentient machinery may yet come to fruition &mdash; and soon.
+      to the engineers of previous generations, and Frank Rosenblatt's prophecy that his analog
+      contraption would be the "embryo" of sentient machinery may yet come to fruition &mdash; and
+      soon.
     </p>
   </div>
 </template>
