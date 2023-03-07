@@ -36,6 +36,7 @@ updateViz();
             thePerceptron.clearInput();
             updateViz();
           "
+          @save="thePerceptron.saveInput()"
         ></InputPanel>
       </div>
       <div class="interactive-panel interactive-panel--output">

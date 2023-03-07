@@ -8,10 +8,17 @@ const _createRandomArray = (n: number, r: number) => {
   return a;
 };
 
+const _serializeVectorToFixedWidthJSON = (vec: number[]) => {
+  const s = '[' + vec.map((x) => x.toFixed(2)).join(',') + ']';
+  return s;
+};
+
 class Perceptron {
   public _dim: number;
 
   public input: number[];
+
+  public savedInputs = [] as string[];
 
   public outputs: { [key: string]: number[] };
 
@@ -40,6 +47,28 @@ class Perceptron {
     });
     // Don't clear the bias neuron!
     this.input[this.input.length - 1] = 1.0;
+  }
+
+  public saveInput() {
+    const currentInputSerialized = _serializeVectorToFixedWidthJSON(this.input);
+    if (this.savedInputs.includes(currentInputSerialized)) {
+      // This pattern is already saved.
+      return true;
+    }
+    this.savedInputs.push(currentInputSerialized);
+    return true;
+  }
+
+  public loadInput(serializedVector: string) {
+    // If it's going to throw, let it throw.
+    let vec = [] as number[];
+    vec = JSON.parse(serializedVector);
+    this.input = vec;
+    return true;
+  }
+
+  public get numSavedInputs() {
+    return this.savedInputs.length;
   }
 
   public createOutput(label: string) {

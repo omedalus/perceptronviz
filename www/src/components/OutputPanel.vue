@@ -158,7 +158,7 @@ onBeforeUnmount(() => {
           of "understanding" shifts or rotations of an image. Indeed, this is correct: moving,
           rotating, or resizing an image all has to be done "out-of-band" for the perceptron. It
           only recognizes an image if a specific set of pixels in specific positions have expected
-          levels of brightness. Any rotated, translated, or scaled versions of the image Will have
+          levels of brightness. Any rotated, translated, or scaled versions of the image will have
           pixels in different positions, and will need to be trained independently.
         </p>
 

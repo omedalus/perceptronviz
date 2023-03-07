@@ -12,6 +12,8 @@ const prop = defineProps<{
 const emit = defineEmits<{
   (e: 'update:modelValue', v: Perceptron): void;
   (e: 'clear'): void;
+  (e: 'save'): void;
+  (e: 'load'): void;
 }>();
 
 const formula = ref('');
@@ -22,12 +24,29 @@ const formula = ref('');
     <h2>Input</h2>
     <div class="gridmodel-holder">
       <GridModel v-model="modelValue.input" :dim="modelValue.dim"></GridModel>
-      <div class="gridmodel-clear-input">
-        <a @click="$emit('clear')">Clear</a>
+      <div class="gridmodel-controls">
+        <div style="text-align: left">
+          <a @click="$emit('save')">Save image</a>
+
+          <span :style="{ filter: !modelValue.numSavedInputs ? 'saturate(0)' : 'none' }">
+            <br />
+            <a
+              @click="
+                if (modelValue.numSavedInputs) {
+                  $emit('load');
+                }
+              "
+              >Load image ({{ modelValue.numSavedInputs }} saved)</a
+            >
+          </span>
+        </div>
+        <div style="margin-left: auto">
+          <a @click="$emit('clear')">Clear</a>
+        </div>
       </div>
     </div>
 
-    <div>
+    <div style="margin-top: 1em">
       <p>
         <span style="font-weight: bold">Draw a 5x5-pixel picture.</span><br />
         <span>Hold down on a pixel (square) to change its brightness value.</span>
@@ -70,12 +89,13 @@ const formula = ref('');
     margin: auto;
   }
 
-  .gridmodel-clear-input {
+  .gridmodel-controls {
     width: 15em;
     margin: auto;
-    text-align: right;
     font-size: 0.75rem;
-    margin-bottom: 1em;
+
+    display: flex;
+    flex-direction: row;
   }
 }
 </style>
