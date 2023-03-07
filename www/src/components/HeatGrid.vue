@@ -76,6 +76,7 @@ const squareColorAtXY = (x: number, y: number) => {
     background-color: #000;
     box-sizing: border-box;
     border: 1px solid #666;
+    transition: transform 250ms;
 
     .heatgrid-square-tooltip {
       z-index: 1;
@@ -103,7 +104,8 @@ const squareColorAtXY = (x: number, y: number) => {
     }
 
     &.pop {
-      border: 2px solid blue !important;
+      z-index: 1;
+      transform: scale(1.5);
     }
   }
 }

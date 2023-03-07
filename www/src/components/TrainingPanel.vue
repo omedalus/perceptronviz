@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 
-import HeatGrid from './HeatGrid.vue';
-import VectorReadout from './VectorReadout.vue';
+import HeatGrid from '@/components/HeatGrid.vue';
+import VectorReadout from '@/components/VectorReadout.vue';
+import PopChange from '@/components/PopChange.vue';
 
 import type Perceptron from '@/model/Perceptron';
 
@@ -152,7 +153,15 @@ onBeforeUnmount(() => {
 
     <div v-else>
       <div class="training-forward-heatgrid-section">
-        <div class="training-forward-heatgrid-input">
+        <div class="training-forward-heatgrid-input heatgrid-with-poptally">
+          <PopChange
+            :popkey="`${ixPopTallyDotProduct}`"
+            :text="
+              ixPopTallyDotProduct < modelValue.input.length
+                ? modelValue.input[ixPopTallyDotProduct].toFixed(2)
+                : ''
+            "
+          ></PopChange>
           <HeatGrid
             :vector="modelValue.input"
             :dim="modelValue.dim"
@@ -160,11 +169,13 @@ onBeforeUnmount(() => {
             :pop-index="ixPopTallyDotProduct"
           ></HeatGrid>
         </div>
-        <HeatGrid
-          :vector="modelValue.currentOutputVector"
-          :dim="modelValue.dim"
-          :pop-index="ixPopTallyDotProduct"
-        ></HeatGrid>
+        <div class="training-forward-heatgrid-weights heatgrid-with-poptally">
+          <HeatGrid
+            :vector="modelValue.currentOutputVector"
+            :dim="modelValue.dim"
+            :pop-index="ixPopTallyDotProduct"
+          ></HeatGrid>
+        </div>
       </div>
 
       <div class="training-vector-explanation explanation-text dimmed-text">
@@ -345,6 +356,13 @@ onBeforeUnmount(() => {
     margin-top: 0.5em;
     display: flex;
     flex-direction: row;
+
+    .heatgrid-with-poptally {
+      display: flex;
+      flex-direction: column;
+      margin-left: 1ex;
+      margin-right: 1ex;
+    }
   }
 }
 </style>
