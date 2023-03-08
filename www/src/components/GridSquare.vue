@@ -38,7 +38,7 @@ onBeforeUnmount(() => {
 const theValue = computed(() => {
   let v = msTotalHoldTime.value / 1000;
   if (v > 1) {
-    v = (2000 - msTotalHoldTime.value) / 1000;
+    v = 0;
   }
   return v;
 });
