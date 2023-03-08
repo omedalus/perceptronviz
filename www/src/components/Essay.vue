@@ -79,9 +79,9 @@ onMounted(() => {
         href="https://shahaliyev.medium.com/introduction-to-deep-learning-how-cybernetics-became-deep-learning-e46f8101053"
       >
         "cybernetics" </a
-      >, built the
-      <a :href="linkRosenblatt1958PDF"> first electronic perceptron in 1958</a>
-      out of analog hardware using motorized knobs that turned their own resistance dials.
+      >, built the <a :href="linkRosenblatt1958PDF"> first electronic perceptron in 1958</a>. His
+      invention was an analog machine comprised of self-adjusting "neuronal units" &mdash; each of
+      which consisted of a motor that turned its own resistance dial to set its connection weight.
     </p>
     <p>
       As the world's first
@@ -173,7 +173,7 @@ onMounted(() => {
       &mdash; those based on or inspired by the concepts of neural connectivity from biological
       brains &mdash; practically disappeared overnight. Through the 1970s and early 1980s, partly
       due to
-      <a href="https://dougenterprises.com/perceptron-history/">Minsky's influence</a>, research
+      <a href="https://dougenterprises.com/perceptron-history/">Minsky's advocacy</a>, research
       instead focused on the development of
       <a href="https://en.wikipedia.org/wiki/Symbolic_artificial_intelligence"
         >symbolic artificial intelligence</a
@@ -311,7 +311,7 @@ onMounted(() => {
     <p>
       It's long been known that
       <a href="https://en.wikipedia.org/wiki/Moore%27s_law">
-        the trend for computing power is to grow exponentially</a
+        computing power grows on an exponential trend</a
       >, so it was arguably inevitable that backpropagation-trained neural networks would become
       more viable for bigger problems over time. However, two noteworthy developments accelerated
       the timetable considerably.
@@ -339,9 +339,10 @@ onMounted(() => {
       neuron can't simply be the sum of its inputs. The "activation function" is the function that
       converts the neuron's input summation into an activity level. Since the adoption of
       backpropagation, neural networks have tended to use activation functions that come from
-      backprop's roots in control theory &mdash; which tend to be extremely complex trigonometric
-      functions requiring floating-point computation to many digits of precision. Not only were
-      these functions costly both in memory and in CPU cycles, they were also
+      backprop's roots in control theory &mdash; which tend to be extremely complex trigonometric or
+      inverse-exponential functions requiring floating-point computation to many digits of
+      precision. Not only were these functions costly both in memory and in CPU cycles, they were
+      also
       <a
         href="https://www.analyticsvidhya.com/blog/2021/06/the-challenge-of-vanishing-exploding-gradients-in-deep-neural-networks/"
         >rather poor at doing their only job</a
@@ -352,13 +353,13 @@ onMounted(() => {
         Rectified Linear Unit, or ReLU</a
       >, solved all of the propagation problems of more conventional activation functions, while
       <em>also</em> requiring much less precision (i.e. less memory) <em>and</em> being dramatically
-      easier to compute. (The ReLU function is literally: "Set the neuron's activity level to the
-      sum of its inputs. If the level is less than 0, set it to 0.") The ReLU function isn't
+      easier to compute. (The ReLU function is literally just this: "Set the neuron's activity level
+      to the sum of its inputs. If the level is less than 0, set it to 0.") The ReLU function isn't
       "mathematically pure" for the purposes of usage in backpropagation (specifically, it has a
-      point at which it's nondifferentiable), and as such, though it had been known about since
-      1960, it had often been overlooked for use in neural networks. However, the Montréal team's
-      results were undeniable, and the use of ReLU for Deep Learning has been nearly ubiquitous ever
-      since.
+      point, x=0, at which it's nondifferentiable), and as such, though it had been known about
+      since 1960, it had often been overlooked for use in neural networks. However, the Montréal
+      team's results were undeniable, and the use of ReLU for Deep Learning has been nearly
+      ubiquitous ever since.
     </p>
     <p>
       The other major advancement was a hardware innovation that had been growing for decades, and
@@ -372,15 +373,16 @@ onMounted(() => {
         >Graphics Processing Units, or GPUs</a
       >, have evolved into astonishingly powerful workhorses for massively parallel mathematical
       operations. The equations that drive the rendering of visually realistic environments largely
-      describe the rotation, scaling, and translation of points in space, and can be expressed in
-      terms of linear algebra &mdash; that is, vector and matrix (or "tensor") multiplication. Thus,
-      GPUs generally aren't good at performing general-purpose mathematical operations, but they are
-      literally built for the express purpose of executing incredibly large tensor multiplication
-      and reduction operations at blinding speeds. As it so happens, almost every equation involved
-      in the running and training of neural networks can be expressed as a tensor multiplication and
-      reduction operation. (In fact, the only part of neural networks that <em>can't</em> be
-      expressed with linear algebra is, as described above, the activation function!)
-      Unsurprisingly, the migration of all neural network research to GPUs began almost immediately.
+      describe the rotation, scaling, and translation of points in space, and these equations can be
+      expressed in terms of linear algebra &mdash; that is, vector and matrix (or "tensor")
+      multiplication, addition, and unit-wise summation ("reduction"). Thus, GPUs generally aren't
+      good at performing general-purpose mathematical operations, but they are literally built for
+      the express purpose of executing incredibly large tensor operations at blinding speeds. As it
+      so happens, almost every equation involved in the running and training of neural networks can
+      be expressed as a tensor operation. (In fact, the only part of neural networks that
+      <em>can't</em> be expressed with linear algebra is, as described above, the activation
+      function &mdash; which the Montréal team optimized!) Unsurprisingly, the migration of all
+      neural network research to GPUs began almost immediately.
     </p>
     <p>
       Unfortunately, CUDA also allowed massive parallelization for another computationally expensive
@@ -446,9 +448,9 @@ onMounted(() => {
     <p>But it's not <em>far off</em>, either.</p>
 
     <p>
-      The feedforward multilayer perceptron design, with backpropagation for its training algorithm,
-      remains the ubiquitous neural network architecture to this day. Both the software and the
-      hardware continue to improve at an exponential rate. As you read these words, somewhere at
+      The feedforward multilayer perceptron design, with backpropagation as its training algorithm,
+      remains the overwhelmingly dominant neural network architecture to this day, and its
+      capabilities continue to improve at an exponential rate. As you read these words, somewhere at
       this moment there are
       <a href="https://ai.googleblog.com/2020/04/chip-design-with-deep-reinforcement.html">
         hardware engineers using neural networks to design the next generation of computing
@@ -457,10 +459,16 @@ onMounted(() => {
       <a
         href="https://www.zdnet.com/article/chatgpt-can-write-code-now-researchers-say-its-good-at-fixing-bugs-too/"
       >
-        software developers using ChatGPT to help them write the next augmentation to machine
+        software developers using ChatGPT to help them code the next breakthrough in machine
         learning algorithms</a
-      >. Frank Rosenblatt's prophecy that his analog contraption would be the "embryo" of sentient
-      machinery may yet come to fruition &mdash; and soon.
+      >. Software toolkits such as Google's
+      <a href="https://www.tensorflow.org/">TensorFlow library</a> and rentable cloud computing
+      environments such as Amazon's <a href="https://aws.amazon.com/sagemaker/">AWS Sagemaker</a>
+      allow aspiring Machine Learning programmers to quickly and easily get started with building
+      their own neural networks without needing a prerequisite doctorate, thus bringing millions of
+      new creative minds to the field of AI research. Frank Rosenblatt's prophecy that his analog
+      contraption would be the "embryo" of sentient machinery may yet come to fruition &mdash; and
+      soon.
     </p>
   </div>
 </template>
