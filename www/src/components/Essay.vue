@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import linkBeyondRegressionPDF from '@/assets/PJW_thesis_Beyond_Regression_1974.pdf';
 import linkReLUPDF from '@/assets/glorot11a-deep-sparse-ReLU-2011.pdf';
+import linkRosenblatt1958PDF from '@/assets/rosenblatt-perceptron-probabilistic-1958.pdf';
+import linkRosenblatt1957PDF from '@/assets/rosenblatt-perceptron-perceiving-1957.pdf';
+import linkHinton1986 from '@/assets/rumelhart-hinton-williams-backprop-1986.pdf';
 
 import { ref, onMounted } from 'vue';
 
@@ -77,16 +80,14 @@ onMounted(() => {
       >
         "cybernetics" </a
       >, built the
-      <a href="@/assets/rosenblatt-perceptron-probabilistic-1958.pdf">
-        first electronic perceptron in 1958</a
-      >
+      <a :href="linkRosenblatt1958PDF"> first electronic perceptron in 1958</a>
       out of analog hardware using motorized knobs that turned their own resistance dials.
     </p>
     <p>
       As the world's first
-      <a href="@/assets/rosenblatt-perceptron-perceiving-1957.pdf"> machine capable of "learning"</a
-      >, the perceptron caused a storm of inspiration in both scientific and cultural circles. The
-      ubiquitous depiction of whirring, clacking sentient robots in
+      <a :href="linkRosenblatt1957PDF"> machine capable of "learning"</a>, the perceptron caused a
+      storm of inspiration in both scientific and cultural circles. The ubiquitous depiction of
+      whirring, clacking sentient robots in
       <a href="https://www.flickchart.com/charts.aspx?genre=cyborg+/+android+/+robot&decade=1960"
         >movies and TV from the 1960s</a
       >, with electronic brains made of relays and vacuum tubes, was due in no small part to the
@@ -265,8 +266,8 @@ onMounted(() => {
       &mdash; most notably sociologist
       <a href="https://en.wikipedia.org/wiki/Paul_Werbos"> Paul Werbos </a>in his
       <a :href="linkBeyondRegressionPDF">1974 dissertation for his Ph.D. in statistics.</a>
-      But Rumelhart, Hinton, and Williams were the first to experimentally demonstrate it. Computer
-      scientist
+      But Rumelhart, Hinton, and Williams were the first to
+      <a :href="linkHinton1986">experimentally demonstrate it</a>. Computer scientist
       <a href="http://yann.lecun.com/ex/research/index.html">Yann LeCun</a>, in 1987, produced
       significant refinements both to the implementation and to the theoretical framework for using
       backpropagation in this manner. It is from this work that the technology we now call "neural
