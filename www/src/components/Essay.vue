@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import linkBeyondRegressionPDF from '@/assets/PJW_thesis_Beyond_Regression_1974.pdf';
+import linkReLUPDF from '@/assets/glorot11a-deep-sparse-ReLU-2011.pdf';
+
 import { ref, onMounted } from 'vue';
 
 const theDiv = ref();
@@ -108,17 +111,20 @@ onMounted(() => {
       <a
         href="https://subscription.packtpub.com/book/big-data-and-business-intelligence/9781788830577/2/ch02lvl1sec26/linear-separability"
         >linear separability</a
-      >. This limitation meant that a perceptron could only identify a pattern as long as that
+      >. This constraint meant that a perceptron could only identify a pattern as long as that
       pattern could always strictly be described by the sum of its parts &mdash; that is, as long as
       no <em>combination</em> of individual examples of the pattern constitute an
-      <em>exception</em> to the pattern. For example, if a perceptron were being trained on lists of
-      food ingredients to recognize the property of "deliciousness", then it could learn that
-      chocolate and tuna are each individually delicious, but it could never discern that the
+      <em>exception</em> to it. For instance, if a perceptron were being trained on lists of food
+      ingredients to recognize the property of "deliciousness", then it could learn that chocolate
+      and tuna are each individually delicious, but it could never discern that the
       <em>combination</em> of chocolate and tuna isn't the sum of chocolate's and tuna's individual
-      deliciousness values. If a pattern recognition assignment couldn't be expressed in linearly
-      separable terms, then a perceptron was simply mathematically incapable of ever learning the
-      pattern &mdash; no matter how many neurons it had, no matter how densely connected it was, and
-      no matter how many training examples it was shown.
+      deliciousness values. (This example showcases the concept of an
+      <a href="https://dev.to/jbahire/demystifying-the-xor-problem-1blk">"exclusive OR", or "XOR"</a
+      >, operation, which became the quintessential demonstration of something that a perceptron
+      cannot do.) If a pattern recognition assignment couldn't be expressed in linearly separable
+      terms, then a perceptron was simply mathematically incapable of ever learning the pattern
+      &mdash; no matter how many neurons it had, no matter how densely connected it was, and no
+      matter how many training examples it was shown.
     </p>
     <p>
       In 1969, legendary AI scientist
@@ -205,56 +211,255 @@ onMounted(() => {
     </div>
 
     <p>
-      On the other hand, Minsky and Papert left a glimmering promise amidst this flood of despair.
-      In the book, they posited that, even though individual perceptrons had this limitation of
-      linear separability, <em>combined stacks</em> or <em>layers</em> of perceptrons would not
-      &mdash; if only the perceptron's elementary training procedure could somehow be adapted to
-      operate through a series of layers. This adaptation came very quickly, when, in 1970, a
-      Finnish graduate mathematics student named
-      <a href="https://people.idsia.ch/~juergen/who-invented-backpropagation-2014.html"
-        >Seppo Linnainmaa</a
+      On the other hand, Minsky and Papert left a glimmer of hope amid this flood of despair. In the
+      book, they posited that, even though individual perceptrons had this limitation of linear
+      separability, <em>combined stacks</em> or <em>layers</em> of perceptrons would not. In a
+      layered configuration, each layer of the machine could be trained to recognize groupings of a
+      pattern's individual compoments, and then assign separate connection weights to the group
+      independently from the weights of the original components. Per the above example of training a
+      perceptron to learn the property of "deliciousness" in chocolate XOR tuna (that is, in
+      chocolate <em>or</em> tuna <em>but not both</em>), the simultaneous activation of the two
+      inputs representing "chocolate" and "tuna" could trigger the activation of a third implicit or
+      "hidden" unit that represents "chocolate-AND-tuna". This "chocolate-AND-tuna" node could then
+      have a strongly negative connection to the "deliciousness" output &mdash; so strong that it
+      completely suppresses whatever positive activation might otherwise come from the sum of the
+      two "chocolate" and "tuna" inputs individually.
+    </p>
+    <p>
+      Unfortunately, the question still remained about how exactly to <em>train</em> a multilayered
+      perceptron. Training a single-layered perceptron is easy &mdash; it simply involves increasing
+      the weights of the connections from active inputs to the desired output, and decreasing the
+      weights of the connections from active inputs to erroneous outputs. In the multilayered case,
+      the machine first needs to learn that "special-case" or "exception" groupings exist; then it
+      needs to learn which group activations contribute to or detract from which outputs; and,
+      lastly, it needs to learn which inputs should merge into which groupings. If these groupings
+      were hard-wired by human programmers, then the training problem reduced to that of the
+      single-layer case &mdash; but it also defeated the purpose of having a machine that could
+      learn patterns on its own. The challenge of how to get a machine to discover and assemble
+      these groupings <em>by itself</em> remained unresolved.
+    </p>
+    <p>
+      The answer finally came in 1986, when three researchers &mdash; psychologists
+      <a href="https://en.wikipedia.org/wiki/David_Rumelhart"> David Rumelhart</a> and
+      <a href="https://en.wikipedia.org/wiki/Geoffrey_Hinton"> Geoffrey Hinton</a> and computer
+      scientist
+      <a href="https://en.wikipedia.org/wiki/Ronald_J._Williams">Ronald J. Williams</a>
+      &mdash; revealed an algorithm they called
+      <a href="https://en.wikipedia.org/wiki/Backpropagation">"backpropagation"</a>. As its name
+      suggests, the backpropagation algorithm involves assigning portions of an error signal, or
+      "blame" for an incorrect result, incrementally across multiple chains of processing units
+      backwards from output to input. This concept was not original to this trio; the operating
+      principles of backpropagation stretch back at least to the work of aeronautics engineer
+      <a href="https://en.wikipedia.org/wiki/Henry_J._Kelley">Henry J. Kelley</a> in 1960, and its
+      earliest software implementation to mathematician
+      <a href="https://en.wikipedia.org/wiki/Seppo_Linnainmaa">Seppo Linnainmaa</a> in 1970, with
+      <a href="https://people.idsia.ch/~juergen/who-invented-backpropagation.html"
+        >many contributors making many improvements</a
       >
-      published an algorithm called "backpropagation". The equations behind backpropagation are
-      extremely complex both for computers and for most humans, requiring the ability to solve
-      partial derivatives in arbitrarily high-dimensional hyperspaces. (If you''d like to grasp what
-      the equations are doing, I recommend you start with
+      in subsequent years. However, this principle of backpropagation (which previously went by
+      various different unwieldy names, such as "reverse accumulation in automatic differentiation")
+      was intended for use in
+      <a href="https://en.wikipedia.org/wiki/Control_theory">control theory</a>, primarily in the
+      domain of aerospace engineering, and had little to do with computer science. Some had
+      discussed the possibility of applying backpropagation to training multilayered perceptrons
+      &mdash; most notably sociologist
+      <a href="https://en.wikipedia.org/wiki/Paul_Werbos"> Paul Werbos </a>in his
+      <a :href="linkBeyondRegressionPDF">1974 dissertation for his Ph.D. in statistics.</a>
+      But Rumelhart, Hinton, and Williams were the first to experimentally demonstrate it. Computer
+      scientist
+      <a href="http://yann.lecun.com/ex/research/index.html">Yann LeCun</a>, in 1987, produced
+      significant refinements both to the implementation and to the theoretical framework for using
+      backpropagation in this manner. It is from this work that the technology we now call "neural
+      networks" took shape.
+    </p>
+    <p style="color: #888">
+      If you''d like to see how backpropagation works on a conceptual level, I recommend you start
+      with
       <a href="https://www.youtube.com/watch?v=Ilg3gGewQ5U"
         >this excellent video series by 3Blue1Brown</a
       >
-      (no affiliation)). Fortunately, though backpropagation's equations may be difficult to
-      <em>understand</em>, they are relatively easy to <em>implement</em>. (If you have some
-      programming expertise and want to understand how to turn the equations into code,
+      (no affiliation). If you have some programming expertise and want to understand how to turn
+      the equations into code,
       <a href="https://neptune.ai/blog/backpropagation-algorithm-in-neural-networks-guide"
         >Neptune.ai (no affiliation) has a detailed lesson.</a
-      >) Because of the AI winter, Linnainmaa's innovation went largely ignored for almost two
-      decades, only gaining attention again in the 1980s when computers became cheap and powerful
-      enough for renewed experimentation.
+      >
     </p>
     <p>
-      The backpropagation algorithm, which makes
-      <a href="https://www.ibm.com/topics/deep-learning">Deep Learning</a> possible, remains the
-      bedrock of neural network technology to this day. Though we've
+      Though these developments in the mid to late 1980s breathed new life into the study of neural
+      networks, they didn't end the AI winter. The equations of backpropagation are extremely
+      complex both for computers and for most humans, requiring the solving of partial derivatives
+      in arbitrarily high-dimensional hyperspaces. Rumelhart et. al. had found a solution to the
+      problem of training multilayered perceptrons, but the solution required tremendous computing
+      power in order to do anything useful. Interest in neural networks rose again in the 1990s,
+      only to dwindle back down again in the 2000s when little commercial application could be found
+      due to extremely slow and error-prone real-world performance. Tasks such as real-time speech
+      or image recognition were far beyond the processing capabilities of consumer-grade hardware
+      &mdash; and offloading neural network operations to data centers was infeasible because, with
+      broadband still uncommon and cellphones still primarily being voice communication devices with
+      limited data capabilities, the network infrastructure for cloud computing didn't exist at the
+      time. During this period, neural networks were generally regarded as laboratory tools, useful
+      for exploratory analysis and investigation rather than end-goal solutions &mdash; for example,
+      a hedge fund might run a large neural network on a supercomputer to identify a trading pattern
+      for some set of stocks, but then the hedge fund would build an expert system to actually
+      perform live trades using the pattern. In the apocryphal words of researcher
+      <a href="https://math.illinoisstate.edu/actuary/downloads/ClintonAboagye-PinnacleU-2021.pptx"
+        >John S. Denker from around 1994</a
+      >, "A neural network is the second best way to solve any problem. The best way is to actually
+      understand the problem."
+    </p>
+    <p>
+      It's long been known that
+      <a href="https://en.wikipedia.org/wiki/Moore%27s_law">
+        the trend for computing power is to grow exponentially</a
+      >, so it was arguably inevitable that backpropagation-trained neural networks would become
+      more viable for bigger problems over time. However, two noteworthy developments accelerated
+      the timetable considerably.
+    </p>
+
+    <div class="explando-photo explando-photo-right">
+      <a
+        href="https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/"
+      >
+        <img src="@/assets/img/ReLU-vs-logistic-Sigmoid.png" />
+      </a>
+      <div class="caption">
+        The logistic sigmoid function (a functionm commonly used for neuronal activation prior to
+        2011), compared to ReLU. (Image courtesy of ResearchGate)
+      </div>
+    </div>
+
+    <p>
+      One was the adoption of the
+      <a href="https://en.wikipedia.org/wiki/Rectifier_(neural_networks)"
+        >ReLU activation function</a
+      >
+      &mdash; a somewhat tiny technical detail with enormous implications. For multilayered
+      perceptrons to be able to solve linearly inseparable problems, the activity level of each
+      neuron can't simply be the sum of its inputs. The "activation function" is the function that
+      converts the neuron's input summation into an activity level. Since the adoption of
+      backpropagation, neural networks have tended to use activation functions that come from
+      backprop's roots in control theory &mdash; which tend to be extremely complex trigonometric
+      functions requiring floating-point computation to many digits of precision. Not only were
+      these functions costly both in memory and in CPU cycles, they were also
       <a
         href="https://www.analyticsvidhya.com/blog/2021/06/the-challenge-of-vanishing-exploding-gradients-in-deep-neural-networks/"
+        >rather poor at doing their only job</a
+      >: propagating corrective signals iteratively up a chain of neural layers. In 2011,
+      <a :href="linkReLUPDF">researchers at the University of Montréal</a> showed that a
+      ridiculously simple formula called the
+      <a href="https://www.mygreatlearning.com/blog/relu-activation-function/">
+        Rectified Linear Unit, or ReLU</a
+      >, solved all of the propagation problems of more conventional activation functions, while
+      <em>also</em> requiring much less precision (i.e. less memory) <em>and</em> being dramatically
+      easier to compute. (The ReLU function is literally: "Set the neuron's activity level to the
+      sum of its inputs. If the level is less than 0, set it to 0.") The ReLU function isn't
+      "mathematically pure" for the purposes of usage in backpropagation (specifically, it has a
+      point at which it's nondifferentiable), and as such, though it had been known about since
+      1960, it had often been overlooked for use in neural networks. However, the Montréal team's
+      results were undeniable, and the use of ReLU for Deep Learning has been nearly ubiquitous ever
+      since.
+    </p>
+    <p>
+      The other major advancement was a hardware innovation that had been growing for decades, and
+      finally came to fruition in 2007. That was the year that NVIDIA, the company that produces a
+      significant share of the world's graphics cards, released
+      <a href="https://en.wikipedia.org/wiki/CUDA"
+        >the Compute Unified Device Architecture, or CUDA</a
+      >, a framework for developing general-purpose software to run directly on graphics processors.
+      Driven almost entirely by the demands of the video game industry,
+      <a href="https://www.investopedia.com/terms/g/graphics-processing-unit-gpu.asp"
+        >Graphics Processing Units, or GPUs</a
+      >, have evolved into astonishingly powerful workhorses for massively parallel mathematical
+      operations. The equations that drive the rendering of visually realistic environments largely
+      describe the rotation, scaling, and translation of points in space, and can be expressed in
+      terms of linear algebra &mdash; that is, vector and matrix (or "tensor") multiplication. Thus,
+      GPUs generally aren't good at performing general-purpose mathematical operations, but they are
+      literally built for the express purpose of executing incredibly large tensor multiplication
+      and reduction operations at blinding speeds. As it so happens, almost every equation involved
+      in the running and training of neural networks can be expressed as a tensor multiplication and
+      reduction operation. (In fact, the only part of neural networks that <em>can't</em> be
+      expressed with linear algebra is, as described above, the activation function!)
+      Unsurprisingly, the migration of all neural network research to GPUs began almost immediately.
+    </p>
+    <p>
+      Unfortunately, CUDA also allowed massive parallelization for another computationally expensive
+      task: cryptography. And
+      <a href="https://money.usnews.com/investing/articles/the-history-of-bitcoin"
+        >with Bitcoin launching in 2009</a
       >
-        encountered corner-cases
-      </a>
-      and developed
-      <a href="https://www.mygreatlearning.com/blog/relu-activation-function/"
-        >optimizations and simplifications</a
-      >, the backpropagation algorithm itself remains essentially unchanged from Linnainmaa's
-      original formulation. With ever-increasing hardware capabilities and
+      followed by <a href="https://en.wikipedia.org/wiki/Ethereum">Ethereum in 2015</a>, it wasn't
+      long before
       <a
-        href="https://towardsdatascience.com/what-is-a-gpu-and-do-you-need-one-in-deep-learning-718b9597aa0d"
+        href="https://www.reddit.com/r/nvidia/comments/n6i8hq/an_attempt_to_quantify_how_many_gpus_are_out/"
+        >the world's supply of GPUs was being primarily directed towards crypto mining</a
       >
-        parallelization techniques</a
-      >, our computers run the computationally expensive backpropagation algorithm
-      <a href="https://towardsdatascience.com/language-model-scaling-laws-and-gpt-3-5cdc034e67bb"
-        >at scales scarcely imaginable</a
+      &mdash; not gaming, and certainly not AI research.
+    </p>
+
+    <div class="explando-photo explando-photo-left">
+      <a
+        href="https://www.digitalinformationworld.com/2023/01/chat-gpt-achieved-one-million-users-in.html"
       >
-      to the engineers of previous generations, and Frank Rosenblatt's prophecy that his analog
-      contraption would be the "embryo" of sentient machinery may yet come to fruition &mdash; and
-      soon.
+        <img src="@/assets/img/statista-chatgpt-1M-5d.jpg" />
+      </a>
+      <div class="caption">
+        Counting from the day it launched, ChatGPT reached a million registered users in five days.
+        The closest speed of mass adoption was achieved by Instagram, which took 2.5 months to reach
+        the one-million user mark. (Image courtesy of Statista)
+      </div>
+    </div>
+
+    <p>
+      Though the crypto market has crashed, computing technology is still not at the point at which
+      individual consumers can afford to run their own Large Language Model rigs. The unprecedented
+      popularity of ChatGPT &mdash; jumping to
+      <a
+        href="https://www.digitalinformationworld.com/2023/01/chat-gpt-achieved-one-million-users-in.html"
+      >
+        a million active users in a mere five days</a
+      >, is due primarily to the uncannily (some would say <em>terrifyingly</em>) high quality of
+      its output. And that quality, in turn, is due primarily to the sheer size of its neural
+      network components. Its famed 175 billion neural connection weights (called "parameters" for
+      reasons of mathematical nomenclature) need over
+      <a href="https://www.hyro.ai/glossary/gpt-3">700 GB of RAM just to load into memory</a>.
+      <a href="https://hackernoon.com/a-deep-dive-into-how-many-gpus-it-takes-to-run-chatgpt">
+        One analyst estimates</a
+      >
+      that the servers running each instance of ChatGPT probably have between 5 to 8 GPUs apiece,
+      which would cost a private consumer tens of thousands of dollars &mdash; achievable, but only
+      for either the very dedicated or the very wealthy (these kinds of servers are sold
+      <a href="https://www.gigabyte.com/Enterprise/GPU-Server?fid=2235"
+        >on the kinds of websites that don't list prices</a
+      >). Nonetheless, this would only permit real-time interaction with an already-trained model.
+      The <em>training</em> process for GPT-3 involved storing and processing over
+      <a href="https://duradigital.io/building-the-future-an-overview-of-gpt-3/"
+        >45 terabytes of text</a
+      >
+      and burning
+      <a href="https://medium.com/@mertsurucu/analyses-of-gpt-3-paper-a9e478c3d7e7">
+        as much electricity as an average American home uses in the course of 18 years (190,000
+        kWh)</a
+      >. The day when the average consumer can carry around their very own personal learning-enabled
+      GPT instance in their pockets isn't around the corner.
+    </p>
+    <p>But it's not <em>far off</em>, either.</p>
+
+    <p>
+      The feedforward multilayer perceptron design, with backpropagation for its training algorithm,
+      remains the ubiquitous neural network architecture to this day. Both the software and the
+      hardware continue to improve at an exponential rate. As you read these words, somewhere at
+      this moment there are
+      <a href="https://ai.googleblog.com/2020/04/chip-design-with-deep-reinforcement.html">
+        hardware engineers using neural networks to design the next generation of computing
+        technology</a
+      >, and
+      <a
+        href="https://www.zdnet.com/article/chatgpt-can-write-code-now-researchers-say-its-good-at-fixing-bugs-too/"
+      >
+        software developers using ChatGPT to help them write the next augmentation to machine
+        learning algorithms</a
+      >. Frank Rosenblatt's prophecy that his analog contraption would be the "embryo" of sentient
+      machinery may yet come to fruition &mdash; and soon.
     </p>
   </div>
 </template>
