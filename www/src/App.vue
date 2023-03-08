@@ -22,6 +22,8 @@ const updateViz = () => {
   vizUpdateHack.value = Math.random();
 };
 updateViz();
+
+const isImageLoaderShowing = ref(false);
 </script>
 
 <template>
@@ -38,6 +40,7 @@ updateViz();
             updateViz();
           "
           @save="thePerceptron.saveInput()"
+          @load="isImageLoaderShowing = true"
         ></InputPanel>
       </div>
       <div class="interactive-panel interactive-panel--output">
@@ -57,6 +60,8 @@ updateViz();
   <div class="explando-essay mainblock">
     <Essay></Essay>
   </div>
+
+  <ImageLoader v-model="isImageLoaderShowing" :perceptron="thePerceptron"></ImageLoader>
 </template>
 
 <style scoped lang="scss">

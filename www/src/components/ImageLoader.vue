@@ -13,10 +13,31 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div v-if="modelValue" class="image-loader-component">HI KIDS</div>
+  <div v-if="modelValue" class="image-loader-overlay" @click="$emit('update:modelValue', false)">
+    <div class="image-loader-holder" @click.stop>haahahahaha</div>
+  </div>
 </template>
 
 <style scoped lang="scss">
-.image-loader-component {
+.image-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+
+  background-color: #000a;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .image-loader-holder {
+    background-color: #000;
+    border: 2px solid #ccc;
+    border-radius: 1em;
+    padding: 1em;
+  }
 }
 </style>
