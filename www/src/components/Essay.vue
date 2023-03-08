@@ -4,6 +4,7 @@ import linkReLUPDF from '@/assets/glorot11a-deep-sparse-ReLU-2011.pdf';
 import linkRosenblatt1958PDF from '@/assets/rosenblatt-perceptron-probabilistic-1958.pdf';
 import linkRosenblatt1957PDF from '@/assets/rosenblatt-perceptron-perceiving-1957.pdf';
 import linkHinton1986 from '@/assets/rumelhart-hinton-williams-backprop-1986.pdf';
+import linkKelley1960 from '@/assets/1960-kelley.pdf';
 
 import { ref, onMounted } from 'vue';
 
@@ -261,9 +262,11 @@ onMounted(() => {
       various different unwieldy names, such as "reverse accumulation in automatic differentiation")
       was intended for use in
       <a href="https://en.wikipedia.org/wiki/Control_theory">control theory</a>, primarily in the
-      domain of aerospace engineering, and had little to do with computer science. Some had
-      discussed the possibility of applying backpropagation to training multilayered perceptrons
-      &mdash; most notably sociologist
+      domain of aerospace engineering &mdash; <a :href="linkKelley1960">Kelley's original paper</a>,
+      for example, demonstrated how to use the technique to compute an orbital transfer trajectory
+      for a spacecraft flying via solar-sail propulsion. It had little to do with computer science.
+      A few people had discussed the possibility of applying these ideas to the task of training
+      multilayered perceptrons &mdash; most notably sociologist
       <a href="https://en.wikipedia.org/wiki/Paul_Werbos"> Paul Werbos </a>in his
       <a :href="linkBeyondRegressionPDF">1974 dissertation for his Ph.D. in statistics.</a>
       But Rumelhart, Hinton, and Williams were the first to
@@ -334,15 +337,14 @@ onMounted(() => {
       <a href="https://en.wikipedia.org/wiki/Rectifier_(neural_networks)"
         >ReLU activation function</a
       >
-      &mdash; a somewhat tiny technical detail with enormous implications. For multilayered
-      perceptrons to be able to solve linearly inseparable problems, the activity level of each
-      neuron can't simply be the sum of its inputs. The "activation function" is the function that
-      converts the neuron's input summation into an activity level. Since the adoption of
-      backpropagation, neural networks have tended to use activation functions that come from
-      backprop's roots in control theory &mdash; which tend to be extremely complex trigonometric or
-      inverse-exponential functions requiring floating-point computation to many digits of
-      precision. Not only were these functions costly both in memory and in CPU cycles, they were
-      also
+      &mdash; a tiny technical detail with enormous implications. For multilayered perceptrons to be
+      able to solve linearly inseparable problems, the activity level of each neuron can't simply be
+      the sum of its inputs. The "activation function" is the function that converts the neuron's
+      input summation into an activity level. Since the adoption of backpropagation, neural networks
+      have tended to use activation functions that come from backprop's roots in control theory
+      &mdash; which tend to be extremely complex trigonometric or inverse-exponential functions
+      requiring floating-point computation to many digits of precision. Not only were these
+      functions costly both in memory and in CPU cycles, they were also
       <a
         href="https://www.analyticsvidhya.com/blog/2021/06/the-challenge-of-vanishing-exploding-gradients-in-deep-neural-networks/"
         >rather poor at doing their only job</a
@@ -354,9 +356,9 @@ onMounted(() => {
       >, solved all of the propagation problems of more conventional activation functions, while
       <em>also</em> requiring much less precision (i.e. less memory) <em>and</em> being dramatically
       easier to compute. (The ReLU function is literally just this: "Set the neuron's activity level
-      to the sum of its inputs. If the level is less than 0, set it to 0.") The ReLU function isn't
-      "mathematically pure" for the purposes of usage in backpropagation (specifically, it has a
-      point, x=0, at which it's nondifferentiable), and as such, though it had been known about
+      to the sum of its inputs; but if it drops to negative, floor it out at 0.") The ReLU function
+      isn't "mathematically pure" for the purposes of usage in backpropagation (specifically, it has
+      a point, x=0, at which it's nondifferentiable), and as such, though it had been known about
       since 1960, it had often been overlooked for use in neural networks. However, the Montréal
       team's results were undeniable, and the use of ReLU for Deep Learning has been nearly
       ubiquitous ever since.
@@ -375,14 +377,13 @@ onMounted(() => {
       operations. The equations that drive the rendering of visually realistic environments largely
       describe the rotation, scaling, and translation of points in space, and these equations can be
       expressed in terms of linear algebra &mdash; that is, vector and matrix (or "tensor")
-      multiplication, addition, and unit-wise summation ("reduction"). Thus, GPUs generally aren't
-      good at performing general-purpose mathematical operations, but they are literally built for
-      the express purpose of executing incredibly large tensor operations at blinding speeds. As it
-      so happens, almost every equation involved in the running and training of neural networks can
-      be expressed as a tensor operation. (In fact, the only part of neural networks that
-      <em>can't</em> be expressed with linear algebra is, as described above, the activation
-      function &mdash; which the Montréal team optimized!) Unsurprisingly, the migration of all
-      neural network research to GPUs began almost immediately.
+      multiplication, addition, and unit-wise summation ("reduction"). Thus, GPUs aren't good at
+      performing general-purpose mathematical operations, but they excel at executing incredibly
+      large tensor operations at blinding speeds. As it so happens, almost every equation involved
+      in the running and training of neural networks can be expressed as a tensor operation. (In
+      fact, the only part of neural networks that <em>can't</em> be expressed with linear algebra
+      is, as described above, the activation function &mdash; which the Montréal team optimized!)
+      Unsurprisingly, the migration of all neural network research to GPUs began almost immediately.
     </p>
     <p>
       Unfortunately, CUDA also allowed massive parallelization for another computationally expensive
@@ -438,7 +439,8 @@ onMounted(() => {
       <a href="https://duradigital.io/building-the-future-an-overview-of-gpt-3/"
         >45 terabytes of text</a
       >
-      and burning
+      (a volume of data that would take over a month of continuous downloading to transfer over the
+      average home broadband connection) and burning
       <a href="https://medium.com/@mertsurucu/analyses-of-gpt-3-paper-a9e478c3d7e7">
         as much electricity as an average American home uses in the course of 18 years (190,000
         kWh)</a
