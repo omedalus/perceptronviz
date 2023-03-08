@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import HeatGrid from '@/components/HeatGrid.vue';
+
 import type Perceptron from '@/model/Perceptron';
 
 const prop = defineProps<{
@@ -8,13 +10,34 @@ const prop = defineProps<{
   perceptron: Perceptron;
 }>();
 const emit = defineEmits<{
-  (e: 'update:modelValue', v: number[]): void;
+  (e: 'update:modelValue', v: boolean): void;
+  (e: 'imageJSON', imageJSON: string): void;
 }>();
+
+const selectImage = (imageJSON: string) => {
+  emit('imageJSON', imageJSON);
+  emit('update:modelValue', false);
+};
 </script>
 
 <template>
   <div v-if="modelValue" class="image-loader-overlay" @click="$emit('update:modelValue', false)">
-    <div class="image-loader-holder" @click.stop>haahahahaha</div>
+    <div class="image-loader-holder" @click.stop>
+      <div class="image-loader-content">
+        <div
+          class="image-loader-item"
+          v-for="(imageJSON, i) in perceptron.savedInputs"
+          @click="selectImage(imageJSON)"
+        >
+          <HeatGrid
+            :vector="JSON.parse(imageJSON)"
+            :dim="perceptron.dim"
+            input-overlay
+            skip-bias
+          ></HeatGrid>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -38,6 +61,19 @@ const emit = defineEmits<{
     border: 2px solid #ccc;
     border-radius: 1em;
     padding: 1em;
+
+    width: 20em;
+    max-width: 90w;
+  }
+
+  .image-loader-content {
+    text-align: center;
+  }
+
+  .image-loader-item {
+    display: inline-block;
+    padding: 1ex;
+    cursor: pointer;
   }
 }
 </style>

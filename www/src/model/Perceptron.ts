@@ -77,6 +77,13 @@ class Perceptron {
     // If it's going to throw, let it throw.
     let vec = [] as number[];
     vec = JSON.parse(serializedVector);
+    if (vec.length !== this.input.length) {
+      throw new Error('Trying to unpack a saved input that has different size than current.');
+    }
+    if (vec[vec.length - 1] !== 1) {
+      throw new Error('A valid input has to have a bias neuron.');
+    }
+
     this.input = vec;
     return true;
   }

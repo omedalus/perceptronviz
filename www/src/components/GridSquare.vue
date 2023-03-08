@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onBeforeUnmount } from 'vue';
+import { ref, computed, onBeforeUnmount, onMounted, watch } from 'vue';
 const msTotalHoldTime = ref(0);
 
 let intervalHold = 0;
@@ -43,12 +43,26 @@ const theValue = computed(() => {
   return v;
 });
 
-const prop = defineProps<{
+const props = defineProps<{
   modelValue: number;
 }>();
 const emit = defineEmits<{
   (e: 'update:modelValue', v: number): void;
 }>();
+
+const setHoldTimeToMatchModelValue = () => {
+  msTotalHoldTime.value = props.modelValue * 1000;
+};
+
+onMounted(() => {
+  setHoldTimeToMatchModelValue();
+});
+watch(
+  () => props.modelValue,
+  (newval, oldval) => {
+    setHoldTimeToMatchModelValue();
+  }
+);
 </script>
 
 <template>

@@ -61,7 +61,14 @@ const isImageLoaderShowing = ref(false);
     <Essay></Essay>
   </div>
 
-  <ImageLoader v-model="isImageLoaderShowing" :perceptron="thePerceptron"></ImageLoader>
+  <ImageLoader
+    v-model="isImageLoaderShowing"
+    :perceptron="thePerceptron"
+    @imageJSON="
+      thePerceptron.loadInput($event);
+      updateViz();
+    "
+  ></ImageLoader>
 </template>
 
 <style scoped lang="scss">

@@ -10,6 +10,7 @@ const props = defineProps<{
   popIndex?: number;
   renderUpToIndex?: number;
   darkfloor?: number;
+  skipBias?: boolean;
 }>();
 const arrayDim = ref(Array(props.dim));
 
@@ -60,7 +61,7 @@ const squareColorAtXY = (x: number, y: number) => {
     </div>
     <div
       class="heatgrid-square"
-      v-if="!renderUpToIndex || vectorIndex(0, dim) <= renderUpToIndex"
+      v-if="!skipBias && (!renderUpToIndex || vectorIndex(0, dim) <= renderUpToIndex)"
       :style="{ top: `${dim}em`, left: `${0}em`, 'background-color': squareColorAtXY(0, dim) }"
       :class="{ pop: popIndex === dim * dim }"
     >

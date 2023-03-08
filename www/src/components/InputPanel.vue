@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, getCurrentInstance } from 'vue';
 
 import GridModel from '@/components/GridModel.vue';
 import VectorReadout from '@/components/VectorReadout.vue';
@@ -15,8 +15,6 @@ const emit = defineEmits<{
   (e: 'save'): void;
   (e: 'load'): void;
 }>();
-
-const formula = ref('');
 </script>
 
 <template>
