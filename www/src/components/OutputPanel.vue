@@ -11,7 +11,7 @@ import Perceptron from '@/model/Perceptron';
 const props = defineProps<{
   modelValue: Perceptron;
 }>();
-const emit = defineEmits<{
+defineEmits<{
   (e: 'update:modelValue', v: Perceptron): void;
 }>();
 
@@ -119,7 +119,9 @@ onBeforeUnmount(() => {
             style="width: 15em; margin-top: 0.5ex"
           />
           <datalist id="imagelabels">
-            <option v-for="olabel in modelValue.outputLabels" :value="olabel">{{ olabel }}</option>
+            <option v-for="olabel in modelValue.outputLabels" :value="olabel" :key="olabel">
+              {{ olabel }}
+            </option>
           </datalist>
           <div class="output-delete-name" v-if="modelValue.currentOutputLabel">
             <a @click="modelValue.deleteCurrentOutput()">Delete this label</a>
@@ -178,7 +180,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <div v-else>
+    <div v-if="modelValue.currentOutputLabel">
       <div class="output-forward-heatgrid-section">
         <div class="output-forward-heatgrid-input heatgrid-with-poptally">
           <div class="poptally-value">

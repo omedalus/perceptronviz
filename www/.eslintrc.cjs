@@ -11,5 +11,8 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest'
+  },
+  rules: {
+    'vue/no-mutating-props': 0
   }
 }
