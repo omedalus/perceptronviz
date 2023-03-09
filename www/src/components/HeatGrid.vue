@@ -44,8 +44,8 @@ const squareColorAtXY = (x: number, y: number) => {
 
 <template>
   <div class="heatgrid" :style="{ height: `${dim + 1}em`, width: `${dim}em` }">
-    <div class="heatgrid-y" v-for="(vy, y) in arrayDim">
-      <div class="heatgrid-x" v-for="(vx, x) in arrayDim">
+    <div class="heatgrid-y" v-for="(vy, y) in arrayDim" :key="y">
+      <div class="heatgrid-x" v-for="(vx, x) in arrayDim" :key="x">
         <div
           class="heatgrid-square"
           v-if="!renderUpToIndex || vectorIndex(x, y) <= renderUpToIndex"

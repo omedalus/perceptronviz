@@ -26,7 +26,7 @@ const getStyle = (v: number) => {
       <VueMathjax :formula="`$$\\vec{${name}}=$$`"></VueMathjax>
     </div>
     <div class="vector-readout">
-      <span class="vector-readout-value" v-for="(v, i) in vector" :style="getStyle(v)">{{
+      <span class="vector-readout-value" v-for="(v, i) in vector" :key="i" :style="getStyle(v)">{{
         v.toFixed(2)
       }}</span>
     </div>

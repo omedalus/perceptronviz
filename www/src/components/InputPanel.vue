@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import { ref, getCurrentInstance } from 'vue';
-
 import GridModel from '@/components/GridModel.vue';
 import VectorReadout from '@/components/VectorReadout.vue';
 
 import type Perceptron from '@/model/Perceptron';
 
-const prop = defineProps<{
+defineProps<{
   modelValue: Perceptron;
 }>();
-const emit = defineEmits<{
+defineEmits<{
   (e: 'update:modelValue', v: Perceptron): void;
   (e: 'clear'): void;
   (e: 'save'): void;
