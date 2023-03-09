@@ -181,6 +181,14 @@ onBeforeUnmount(() => {
     </div>
 
     <div v-if="modelValue.currentOutputLabel">
+      <div class="explanation-text">
+        <p>
+          The perceptron decides if this image matches this label by going through each pixel,
+          multiplying its brightness level by its connection weight to the label's output node, and
+          adding up the results.
+        </p>
+      </div>
+
       <div class="output-forward-heatgrid-section">
         <div class="output-forward-heatgrid-input heatgrid-with-poptally">
           <div class="poptally-value">
