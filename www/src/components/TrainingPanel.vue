@@ -2,9 +2,6 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 
 import HeatGrid from '@/components/HeatGrid.vue';
-import VectorReadout from '@/components/VectorReadout.vue';
-
-import heatcolor from '@/model/heatcolor';
 
 import type Perceptron from '@/model/Perceptron';
 
@@ -43,29 +40,62 @@ onBeforeUnmount(() => {
     <h2>Training</h2>
 
     <div class="training-instructions">
-      By <strong>training</strong> the perceptron, it "learns" to associate this image with this
-      label (or to dissociate them).
-      <strong>Click one of the two buttons below to train your perceptron. </strong>
+      <p>
+        The vector of connection weights
+        <span v-if="modelValue.currentOutputLabel">
+          for the <strong>{{ modelValue.currentOutputLabel }}</strong> output
+        </span>
+
+        (which we're calling
+        <VueMathjax style="display: inline-block" formula="$$\vec{w}$$"></VueMathjax>) is initially
+        set to random values.
+      </p>
+      <p>
+        By <strong>training</strong> the perceptron, you strengthen connections that lead to the
+        correct output, and weaken connections that lead to incorrect ones. As a result, the
+        perceptron "learns" to assign the correct label to the image.
+      </p>
     </div>
 
-    <div
-      class="training-controls"
-      :class="{
-        'training-animation-is-running': isTrainingAnimationRunning,
-        'training-animation-is-not-running': !isTrainingAnimationRunning
-      }"
-    >
-      <div class="training-button training-button--associate" @click="train(1)">
-        <img src="@/assets/img/green-check.png" />
-        <strong>Yes</strong>, this image is
-        <span class="outputlabel">{{ modelValue.currentOutputLabel }}</span
-        >.
+    <div v-if="modelValue && modelValue.currentOutputLabel">
+      <div class="training-heatgrid">
+        <div class="training-heatgrid-positioner">
+          <HeatGrid
+            :vector="modelValue.currentOutputVector"
+            :dim="modelValue.dim"
+            :darkfloor="0"
+          ></HeatGrid>
+          <div class="training-heatgrid-overlay">
+            <HeatGrid :vector="modelValue.input" :dim="modelValue.dim" input-overlay></HeatGrid>
+          </div>
+        </div>
       </div>
-      <div class="training-button training-button--dissociate" @click="train(-1)">
-        <img src="@/assets/img/red-x.png" />
-        <strong>No</strong>, this image is not
-        <span class="outputlabel">{{ modelValue.currentOutputLabel }}</span
-        >.
+
+      <div class="training-current-assessment">
+        <HeatGrid :vector="modelValue.input" :dim="modelValue.dim" input-overlay></HeatGrid>
+
+        <div v-if="modelValue.assess()">The perceptron currently thinks that</div>
+      </div>
+
+      <div
+        class="training-controls"
+        :class="{
+          'training-animation-is-running': isTrainingAnimationRunning,
+          'training-animation-is-not-running': !isTrainingAnimationRunning
+        }"
+      >
+        <div class="training-button training-button--associate" @click="train(1)">
+          <img src="@/assets/img/green-check.png" />
+          <strong>Yes</strong>, this image is
+          <span class="outputlabel">{{ modelValue.currentOutputLabel }}</span
+          >.
+        </div>
+        <div class="training-button training-button--dissociate" @click="train(-1)">
+          <img src="@/assets/img/red-x.png" />
+          <strong>No</strong>, this image is not
+          <span class="outputlabel">{{ modelValue.currentOutputLabel }}</span
+          >.
+        </div>
       </div>
     </div>
   </div>
@@ -73,30 +103,6 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .training-panel {
-  .training-fields {
-    label {
-      font-size: 0.875rem;
-    }
-
-    input {
-      width: 12ex;
-      height: 1.5em;
-      align-self: flex-end;
-    }
-    select {
-      width: 13ex;
-    }
-
-    .training-delete-name {
-      font-size: 0.75rem;
-      margin-top: 0.25ex;
-    }
-
-    .training-field-image-name {
-      display: block;
-    }
-  }
-
   .training-instructions {
     margin-top: 0.5em;
     font-size: 0.875rem;
@@ -174,21 +180,27 @@ onBeforeUnmount(() => {
     }
   }
 
-  .training-forward-heatgrid-section {
-    margin-top: 0.5em;
-    display: flex;
-    flex-direction: row;
+  .training-heatgrid {
+    margin-top: 1em;
+    margin-bottom: 1em;
 
-    .heatgrid-with-poptally {
-      display: flex;
-      flex-direction: column;
-      margin-left: 1ex;
-      margin-right: 1ex;
+    .training-heatgrid-positioner {
+      display: inline-block;
+      position: relative;
+
+      .training-heatgrid-overlay {
+        border: 1px solid red;
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        z-index: 10;
+        transform: scale(1.2);
+      }
     }
   }
-}
-.poptally-value {
-  font-family: 'Cambria Math';
-  height: 1.5em;
 }
 </style>
