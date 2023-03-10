@@ -166,6 +166,18 @@ class Perceptron {
     this.trainOutput(this.currentOutputLabel, reinforcementFactor);
   }
 
+  public assess() {
+    if (!this.currentOutputVector) {
+      return false;
+    }
+
+    const piecewiseMult = this.input.map((x, i) => x * this.currentOutputVector[i]);
+    const dotprod = piecewiseMult.reduce((acc, v) => acc + v, 0);
+
+    const retval = dotprod > 0;
+    return retval;
+  }
+
   public static createZeroArray = _createZeroArray;
 }
 
