@@ -78,7 +78,12 @@ onBeforeUnmount(() => {
             class="training-heatgrid-overlay"
             :class="{ 'overlay-showing': trainingHeatgridOverlayDirection !== 'none' }"
           >
-            <HeatGrid :vector="modelValue.input" :dim="modelValue.dim" input-overlay></HeatGrid>
+            <HeatGrid
+              :vector="modelValue.input"
+              :dim="modelValue.dim"
+              input-overlay
+              :input-overlay-channel="trainingHeatgridOverlayDirection === 'up' ? 'g' : 'r'"
+            ></HeatGrid>
             <div class="training-heatgrid-overlay-actual training-heatgrid-overlay-add"></div>
           </div>
         </div>

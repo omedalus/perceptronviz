@@ -7,6 +7,7 @@ const props = defineProps<{
   vector: number[];
   dim: number;
   inputOverlay?: boolean;
+  inputOverlayChannel?: string;
   popIndex?: number;
   renderUpToIndex?: number;
   darkfloor?: number;
@@ -29,8 +30,22 @@ const squareColorAtXY = (x: number, y: number) => {
 
   if (props.inputOverlay) {
     // Raw value is between 0 and 1.
-    const b = Math.floor(vRaw * 255);
-    const retval = `rgb(${b}, ${b}, ${b})`;
+    const v = Math.floor(vRaw * 255);
+    const channels = {
+      r: v,
+      g: v,
+      b: v
+    };
+    if (props.inputOverlayChannel) {
+      [...Object.keys(channels)].forEach((channel) => {
+        if (channel !== props.inputOverlayChannel) {
+          // @ts-ignore
+          channels[channel] = 0;
+        }
+      });
+    }
+
+    const retval = `rgb(${channels.r}, ${channels.g}, ${channels.b})`;
     return retval;
   }
 
