@@ -133,7 +133,7 @@ onBeforeUnmount(() => {
     <div v-if="!modelValue.currentOutputLabel">
       <div class="output-no-labels-explanation">
         <p>
-          When you build a perceptron, you assign it a set of named outputs, called
+          A perceptron "learns" to associate images with named outputs called called
           <em>labels</em> or <em>classes</em> (which is why it's a type of AI called a
           <em><a href="https://monkeylearn.com/blog/what-is-a-classifier/">classifer</a></em
           >). These labels describe the results that the human trainer wants to "teach" the
@@ -171,8 +171,8 @@ onBeforeUnmount(() => {
             href="https://towardsdatascience.com/rosenblatts-perceptron-the-very-first-neural-network-37a3ec09038a"
           >
             this article by Jean-Christophe B. Loiseau</a
-          >. For a longer and more technical dive that's still nonetheless geared for beginners and
-          laymen, check out
+          >. For a longer and more technical dive that's still geared for beginners and laymen,
+          check out
           <a href="https://www.simplilearn.com/tutorials/deep-learning-tutorial/perceptron">
             this course on Simplilearn</a
           >.
