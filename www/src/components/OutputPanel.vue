@@ -181,11 +181,11 @@ onBeforeUnmount(() => {
     </div>
 
     <div v-if="modelValue.currentOutputLabel">
-      <div class="explanation-text">
+      <div class="explanation-text" style="margin-top: 1ex">
         <p>
-          The perceptron decides if this image matches this label by going through each pixel,
-          multiplying its brightness level by its connection weight to the label's output node, and
-          adding up the results.
+          The perceptron decides if this image matches this label by adding up every input node's
+          signal to the output node. The signal from each input node is the brightness level of its
+          pixel, multiplied by its connection weight.
         </p>
       </div>
 
