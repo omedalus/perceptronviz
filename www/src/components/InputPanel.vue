@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import GridModel from '@/components/GridModel.vue';
 import VectorReadout from '@/components/VectorReadout.vue';
+import Tex from './Tex.vue';
 
 import type Perceptron from '@/model/Perceptron';
 
@@ -61,7 +62,7 @@ defineEmits<{
       </p>
       <p>
         The machine's input is a vector we'll call
-        <VueMathjax style="display: inline-block" formula="$$\vec{x}$$"></VueMathjax>.
+        <Tex inline formula="\vec{x}"></Tex>.
       </p>
       <p>Here's how your picture "looks" to the machine:</p>
 
