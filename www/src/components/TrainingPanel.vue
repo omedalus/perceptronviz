@@ -64,6 +64,15 @@ onBeforeUnmount(() => {
         the correct output, and weaken active connections that lead to incorrect ones. As a result,
         the perceptron "learns" to assign the correct label to the image.
       </p>
+      <p style="color: #888">
+        Repeated training will eventually make the connection weights of the pixels that are part of
+        <strong>{{ modelValue.currentOutputLabel }}</strong> to get
+        <span style="color: green">greener</span>, and those that <em>aren't</em> a part of
+        <strong>{{ modelValue.currentOutputLabel }}</strong> will get
+        <span style="color: red">redder</span>. (Pixels that sometimes are part of
+        <strong>{{ modelValue.currentOutputLabel }}</strong> and sometimes aren't, will remain
+        <span style="color: #666">black</span>.)
+      </p>
     </div>
 
     <div v-if="modelValue && modelValue.currentOutputLabel">
@@ -160,7 +169,7 @@ onBeforeUnmount(() => {
             <em>reduces</em> the current active pixels' stimulation of the
             <strong>{{ modelValue.currentOutputLabel }}</strong> output.
           </p>
-          <VueMathjax formula="$$\vec{w} {\prime} = \vec{w}-\vec{x}$$"></VueMathjax>
+          <VueMathjax formula="$$\vec{w} <sup>{\prime}</sup> = \vec{w}-\vec{x}$$"></VueMathjax>
         </div>
         <div v-else>
           <p>
@@ -171,7 +180,7 @@ onBeforeUnmount(() => {
             <em>increases</em> the current active pixels' stimulation of the
             <strong>{{ modelValue.currentOutputLabel }}</strong> output.
           </p>
-          <VueMathjax formula="$$\vec{w} {\prime} = \vec{w}+\vec{x}$$"></VueMathjax>
+          <VueMathjax formula="$$\vec{w}^{\prime}=\vec{w}+\vec{x}$$"></VueMathjax>
         </div>
       </div>
     </div>
