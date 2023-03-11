@@ -17,6 +17,7 @@ defineEmits<{
 }>();
 
 const imagelabel = ref();
+const showLesson = ref(false);
 
 const onNameSelectorChange = () => {
   const elemInput = imagelabel.value as HTMLInputElement;
@@ -25,6 +26,7 @@ const onNameSelectorChange = () => {
     return;
   }
   props.modelValue.currentOutputLabel = name;
+  showLesson.value = false;
 };
 
 const ixPopTallyDotProduct = ref(0);
@@ -73,6 +75,10 @@ const poptallyCurrentTermProduct = computed(() => {
   const xi = props.modelValue.input[ixPopTallyDotProduct.value];
   const retval = wi * xi;
   return retval;
+});
+
+const shouldShowLesson = computed(() => {
+  return showLesson.value || !props.modelValue.currentOutputLabel;
 });
 
 onMounted(() => {
@@ -132,13 +138,16 @@ onBeforeUnmount(() => {
             </option>
           </datalist>
           <div class="output-delete-name" v-if="modelValue.currentOutputLabel">
+            <a v-if="!showLesson" @click="showLesson = true">Show lesson</a>
+            <a v-else @click="showLesson = false">Return to interactive</a>
+            <div style="width: 100%"></div>
             <a @click="modelValue.deleteCurrentOutput()">Delete this label</a>
           </div>
         </div>
       </div>
     </div>
 
-    <div v-if="!modelValue.currentOutputLabel">
+    <div v-if="shouldShowLesson" class="output-lesson">
       <div class="output-no-labels-explanation">
         <p>
           A perceptron "learns" to associate images with named outputs called called
@@ -188,7 +197,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <div v-if="modelValue.currentOutputLabel">
+    <div v-else>
       <div class="explanation-text" style="margin-top: 1ex">
         <p>
           The perceptron adds up every input node's signal. The signal from each input node is the
@@ -292,12 +301,7 @@ onBeforeUnmount(() => {
             Running total:
           </div>
           <div
-            style="
-              border: 2px solid transparent;
-              border-radius: 50%;
-              padding: 0.25ex;
-              position: relative;
-            "
+            class="runningtotal"
             :style="{
               color: heatcolor(poptallyRunningTotal, modelValue.dim),
               borderColor: isPopTallyInOverdrive ? 'currentColor' : 'transparent'
@@ -394,6 +398,9 @@ onBeforeUnmount(() => {
     .output-delete-name {
       font-size: 0.75rem;
       margin-top: 0.25ex;
+      display: flex;
+      flex-direction: row;
+      white-space: nowrap;
     }
 
     .output-field-image-name {
@@ -516,5 +523,12 @@ onBeforeUnmount(() => {
       left: calc(50% + 1ex);
     }
   }
+}
+
+.runningtotal {
+  border: 2px solid transparent;
+  border-radius: 50%;
+  padding: 0.25ex;
+  position: relative;
 }
 </style>
