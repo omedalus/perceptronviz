@@ -38,7 +38,14 @@ watch(isShowingExplanation, (newval) => {
   <header ref="elemHeader">
     <div class="header-contents">
       <div class="header-title">Perceptron visualizer</div>
-      <div class="header-text">Learn the basics of how very simple neural networks work</div>
+      <div class="header-text">
+        <div style="font-style: italic">Learn how very simple neural networks work</div>
+        <div style="font-size: 0.75rem; display: flex">
+          <a href="mailto:perceptronviz@gmail.com">Contact the developer</a>
+          <div style="width: 100%"></div>
+          <a href="https://github.com/omedalus/perceptronviz">See the source code</a>
+        </div>
+      </div>
 
       <div class="header-controls">
         <div v-if="isShowingExplanation">
@@ -101,7 +108,9 @@ header {
   white-space: nowrap;
 }
 .header-text {
-  font-style: italic;
+  a {
+    white-space: nowrap;
+  }
 }
 
 .header-controls {
