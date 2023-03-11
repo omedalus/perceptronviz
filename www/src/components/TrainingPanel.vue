@@ -4,6 +4,7 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import HeatGrid from '@/components/HeatGrid.vue';
 
 import type Perceptron from '@/model/Perceptron';
+import Tex from './Tex.vue';
 
 const props = defineProps<{
   modelValue: Perceptron;
@@ -55,23 +56,23 @@ onBeforeUnmount(() => {
           for the <strong>{{ modelValue.currentOutputLabel }}</strong> output
         </span>
 
-        (which we're calling
-        <VueMathjax style="display: inline-block" formula="$$\vec{w}$$"></VueMathjax>) is initially
-        set to random values.
+        (which we're calling <Tex inline formula="\vec{w}"></Tex>) is initially set to
+        <strong>random values</strong>.
       </p>
       <p>
-        By <strong>training</strong> the perceptron, you strengthen active connections that lead to
-        the correct output, and weaken active connections that lead to incorrect ones. As a result,
-        the perceptron "learns" to assign the correct label to the image.
+        By applying corrective <strong>training</strong> to the perceptron, you strengthen active
+        connections that lead to the correct output, and weaken active connections that lead to
+        incorrect ones. As a result, the perceptron "learns" to assign the correct label to the
+        image.
       </p>
       <p style="color: #888">
         Repeated training will eventually make the connection weights of the pixels that are part of
         <strong>{{ modelValue.currentOutputLabel }}</strong> to get
-        <span style="color: green">greener</span>, and those that <em>aren't</em> a part of
+        <span style="color: green">greener</span>, and those that <em>aren't</em> part of
         <strong>{{ modelValue.currentOutputLabel }}</strong> will get
-        <span style="color: red">redder</span>. (Pixels that sometimes are part of
-        <strong>{{ modelValue.currentOutputLabel }}</strong> and sometimes aren't, will remain
-        <span style="color: #666">black</span>.)
+        <span style="color: red">redder</span>. Pixels that are irrelevant to
+        <strong>{{ modelValue.currentOutputLabel }}</strong> will have connection weights near 0, so
+        they'll remain <span style="color: #666">black</span>.
       </p>
     </div>
 
@@ -163,24 +164,22 @@ onBeforeUnmount(() => {
         <div v-if="modelValue.assess()">
           <p>
             Training <em>subtracts</em> the current input
-            <VueMathjax style="display: inline-block" formula="$$\vec{x}$$"></VueMathjax>
+            <Tex inline formula="\vec{x}"></Tex>
             from the connection weights
-            <VueMathjax style="display: inline-block" formula="$$\vec{w}$$"></VueMathjax>. This
-            <em>reduces</em> the current active pixels' stimulation of the
-            <strong>{{ modelValue.currentOutputLabel }}</strong> output.
+            <Tex inline formula="\vec{w}"></Tex>. This <em>reduces</em> the current active pixels'
+            stimulation of the <strong>{{ modelValue.currentOutputLabel }}</strong> output.
           </p>
-          <VueMathjax formula="$$\vec{w} <sup>{\prime}</sup> = \vec{w}-\vec{x}$$"></VueMathjax>
+          <Tex formula="\vec{w} \gets  \vec{w}-\vec{x}"></Tex>
         </div>
         <div v-else>
           <p>
             Training <em>adds</em> the current input
-            <VueMathjax style="display: inline-block" formula="$$\vec{x}$$"></VueMathjax>
+            <Tex inline formula="\vec{x}"></Tex>
             to the connection weights
-            <VueMathjax style="display: inline-block" formula="$$\vec{w}$$"></VueMathjax>. This
-            <em>increases</em> the current active pixels' stimulation of the
-            <strong>{{ modelValue.currentOutputLabel }}</strong> output.
+            <Tex inline formula="\vec{w}"></Tex>. This <em>increases</em> the current active pixels'
+            stimulation of the <strong>{{ modelValue.currentOutputLabel }}</strong> output.
           </p>
-          <VueMathjax formula="$$\vec{w}^{\prime}=\vec{w}+\vec{x}$$"></VueMathjax>
+          <Tex formula="\vec{w} \gets \vec{w}+\vec{x}"></Tex>
         </div>
       </div>
     </div>

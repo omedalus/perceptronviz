@@ -7,6 +7,7 @@ import VectorReadout from '@/components/VectorReadout.vue';
 import heatcolor from '@/model/heatcolor';
 
 import Perceptron from '@/model/Perceptron';
+import Tex from './Tex.vue';
 
 const props = defineProps<{
   modelValue: Perceptron;
@@ -190,9 +191,8 @@ onBeforeUnmount(() => {
     <div v-if="modelValue.currentOutputLabel">
       <div class="explanation-text" style="margin-top: 1ex">
         <p>
-          The perceptron decides if this image matches this label by adding up every input node's
-          signal to the output node. The signal from each input node is the brightness level of its
-          pixel, multiplied by its connection weight.
+          The perceptron adds up every input node's signal. The signal from each input node is the
+          brightness level of its pixel, multiplied by its connection weight.
         </p>
       </div>
 
@@ -200,7 +200,7 @@ onBeforeUnmount(() => {
         <div class="output-forward-heatgrid-input heatgrid-with-poptally">
           <div class="poptally-value">
             <div class="mathsymbols">
-              <VueMathjax :formula="`$$x$$`"></VueMathjax>
+              <Tex formula="x"></Tex>
               <div class="mathjax-subscript-hack">
                 {{ isPopTallyInOverdrive ? 'i' : ixPopTallyDotProduct }}
               </div>
@@ -217,14 +217,14 @@ onBeforeUnmount(() => {
         <div class="heatgrid-with-poptally" style="margin: 0; width: 0">
           <div class="poptally-value">
             <div class="mathsymbols">
-              <VueMathjax :formula="`$$*$$`"></VueMathjax>
+              <Tex formula="*"></Tex>
             </div>
           </div>
         </div>
         <div class="output-forward-heatgrid-weights heatgrid-with-poptally">
           <div class="poptally-value">
             <div class="mathsymbols">
-              <VueMathjax :formula="`$$w$$`"></VueMathjax>
+              <Tex formula="w"></Tex>
               <div class="mathjax-subscript-hack">
                 {{ isPopTallyInOverdrive ? 'i' : ixPopTallyDotProduct }}
               </div>
@@ -279,7 +279,8 @@ onBeforeUnmount(() => {
       </div>
 
       <div style="display: flex; flex-direction: row; justify-content: center; margin-top: 1em">
-        <VueMathjax formula="$$\vec{x}\cdot\vec{w}=\sum_{i=1}^{n}x_i w_i=$$"></VueMathjax>
+        <Tex formula="\vec{x}\cdot\vec{w}=\sum_{i=1}^{n}x_i w_i="></Tex>
+
         <div style="margin-top: 0.5ex; min-width: 7em">
           <div
             v-if="isPopTallyInOverdrive"
@@ -342,9 +343,8 @@ onBeforeUnmount(() => {
           The connection weights from the input to the
           <strong>{{ modelValue.currentOutputLabel }} </strong>
           output are a vector we'll call
-          <VueMathjax style="display: inline-block" formula="$$\vec{w}$$"></VueMathjax>. It has the
-          same number of elements as the input vector (counting the bias neuron). It looks like
-          this:
+          <Tex formula="\vec{w}" inline></Tex>. It has the same number of elements as the input
+          vector (counting the bias neuron). It looks like this:
         </p>
 
         <VectorReadout

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import heatcolor from '@/model/heatcolor';
+import Tex from './Tex.vue';
 
 const props = defineProps<{
   vector: number[];
@@ -23,7 +24,7 @@ const getStyle = (v: number) => {
 <template>
   <div class="vector-readout-holder">
     <div class="vector-label">
-      <VueMathjax :formula="`$$\\vec{${name}}=$$`"></VueMathjax>
+      <Tex :formula="`\\vec{${name}}=`"></Tex>
     </div>
     <div class="vector-readout">
       <span class="vector-readout-value" v-for="(v, i) in vector" :key="i" :style="getStyle(v)">{{
