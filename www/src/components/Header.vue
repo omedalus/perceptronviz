@@ -26,11 +26,22 @@ onBeforeUnmount(() => {
 
 const emit = defineEmits<{
   (e: 'showExplanations', show: boolean): void;
+  (e: 'save'): void;
 }>();
 
 watch(isShowingExplanation, (newval) => {
   emit('showExplanations', newval);
 });
+
+const isSaveMessageShowing = ref(false);
+
+const onSaveClicked = () => {
+  emit('save');
+  isSaveMessageShowing.value = true;
+  window.setTimeout(() => {
+    isSaveMessageShowing.value = false;
+  }, 10000);
+};
 </script>
 
 <template>
@@ -59,6 +70,23 @@ watch(isShowingExplanation, (newval) => {
             ><span style="animation-delay: 1.4s" class="animated-punctuation">?</span>
           </div>
           Hiding text explanations. <a @click="isShowingExplanation = true">Show</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="saveload-controls">
+      <div>
+        <a @click="onSaveClicked()">Save this perceptron</a>
+        <div
+          class="savemessage"
+          :class="{
+            'savemessage-showing': isSaveMessageShowing,
+            'savemessage-not-showing': !isSaveMessageShowing
+          }"
+        >
+          The URL of this perceptron (in its current state) has been copied to your clipboard. You
+          can paste it into another browser window, link it on your website, or share it to social
+          media.
         </div>
       </div>
     </div>
@@ -159,5 +187,27 @@ header {
   display: inline-block;
   position: relative;
   animation: animated-punctuation 2s infinite;
+}
+
+.saveload-controls {
+  font-size: 0.75rem;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background-color: #333;
+  padding: 0.5ex 1ex;
+  border: 1.5px solid #666;
+  border-top: none;
+  border-left: none;
+  border-radius: 0 0 1em 0;
+  text-align: left;
+  max-width: 30ex;
+
+  .savemessage {
+    display: none;
+    &.savemessage-showing {
+      display: block;
+    }
+  }
 }
 </style>

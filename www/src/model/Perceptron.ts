@@ -190,6 +190,23 @@ class Perceptron {
   }
 
   public static createZeroArray = _createZeroArray;
+
+  public serialize(zip?: boolean) {
+    let retval = '[' + _serializeVectorToFixedWidthJSON(this.input) + ',{';
+    this.outputLabels.forEach((outputLabel, ixOutput) => {
+      if (ixOutput !== 0) {
+        retval += ',';
+      }
+      const outputVector = this.outputs[outputLabel];
+      retval += JSON.stringify(outputLabel) + ':' + _serializeVectorToFixedWidthJSON(outputVector);
+    });
+    retval += '},' + JSON.stringify(this.currentOutputLabel) + ',[';
+    retval += this.savedInputs.join(',') + ']]';
+
+    if (!zip) {
+      return retval;
+    }
+  }
 }
 
 export default Perceptron;

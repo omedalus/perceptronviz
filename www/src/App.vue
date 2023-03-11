@@ -32,10 +32,15 @@ const areExplanationsShowing = ref(null as boolean | null);
 const inputIncrement = (i: number) => {
   thePerceptron.value.input[i] = (thePerceptron.value.input[i] + 0.05) % 1.0;
 };
+
+const onSave = () => {
+  const perceptronStr = thePerceptron.value.serialize();
+  console.log(perceptronStr);
+};
 </script>
 
 <template>
-  <Header @showExplanations="areExplanationsShowing = $event"></Header>
+  <Header @showExplanations="areExplanationsShowing = $event" @save="onSave()"></Header>
 
   <main
     :class="{
