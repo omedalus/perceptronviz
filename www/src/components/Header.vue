@@ -17,6 +17,9 @@ onMounted(() => {
   window.addEventListener('scroll', adjustSpacerSizeToMatchHeader);
   window.addEventListener('resize', adjustSpacerSizeToMatchHeader);
   adjustSpacerSizeToMatchHeader.bind(window)(new Event('scroll'));
+
+  // Make sure that our caller is synced with our explanation showage state.
+  emit('showExplanations', isShowingExplanation.value);
 });
 
 onBeforeUnmount(() => {

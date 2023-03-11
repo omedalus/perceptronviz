@@ -52,17 +52,46 @@ p {
   color: #888;
 }
 
+@keyframes hide-explanation {
+  from {
+    max-height: 100vh;
+    opacity: 1;
+    display: block;
+  }
+  to {
+    max-height: 0;
+    opacity: 0.2;
+    display: none;
+  }
+}
+@keyframes show-explanation {
+  0% {
+    max-height: 0;
+    opacity: 0.2;
+    display: block;
+  }
+  99% {
+    max-height: 100vh;
+    opacity: 1;
+  }
+  100% {
+    max-height: unset;
+  }
+}
+
+.explanation-hideable {
+  overflow: hidden;
+}
+.explanations-are-showing .explanation-hideable {
+  animation: show-explanation 1s ease-in-out forwards;
+}
+.explanations-are-not-showing .explanation-hideable {
+  animation: hide-explanation 1s ease-in-out forwards;
+}
+
 .hoverafter-trigger + .hoverafter-displayer {
   display: none;
 }
 .hoverafter-trigger:hover + .hoverafter-displayer {
   display: block;
-}
-
-/* Prevent Mathjax from showing the unformatted formula before it renders. */
-script[type='math/tex; mode=display'] {
-  display: none;
-}
-.MathJax_Preview {
-  display: none;
 }

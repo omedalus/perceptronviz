@@ -203,7 +203,7 @@ onBeforeUnmount(() => {
     </div>
 
     <div v-else>
-      <div class="explanation-text" style="margin-top: 1ex">
+      <div class="explanation-text explanation-hideable" style="margin-top: 1ex">
         <p>
           The perceptron adds up every input node's signal. The signal from each input node is the
           brightness level of its pixel, multiplied by its connection weight.
