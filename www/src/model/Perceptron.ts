@@ -166,16 +166,27 @@ class Perceptron {
     this.trainOutput(this.currentOutputLabel, reinforcementFactor);
   }
 
-  public assess() {
-    if (!this.currentOutputVector) {
-      return false;
+  public assess(output?: number[] | string) {
+    let outputVector = [] as number[];
+    if (Array.isArray(output)) {
+      outputVector = output;
+    } else if (typeof output === 'undefined') {
+      outputVector = this.currentOutputVector;
+    } else if (typeof output === 'string') {
+      outputVector = this.outputs[output];
     }
 
-    const piecewiseMult = this.input.map((x, i) => x * this.currentOutputVector[i]);
+    if (!outputVector || !outputVector.length) {
+      return 0;
+    }
+
+    const piecewiseMult = this.input.map((x, i) => x * outputVector[i]);
     const dotprod = piecewiseMult.reduce((acc, v) => acc + v, 0);
 
-    const retval = dotprod > 0;
-    return retval;
+    //const retval = dotprod > 0;
+    //return retval;
+
+    return dotprod;
   }
 
   public static createZeroArray = _createZeroArray;

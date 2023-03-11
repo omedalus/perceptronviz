@@ -125,7 +125,7 @@ onBeforeUnmount(() => {
             ></HeatGrid>
           </div>
           <div style="text-align: left">
-            <div v-if="modelValue.assess()">
+            <div v-if="modelValue.assess() > 0">
               <div style="color: green">
                 The perceptron currently "thinks" that this image depicts
                 <strong>{{ modelValue.currentOutputLabel }}</strong>
@@ -170,7 +170,7 @@ onBeforeUnmount(() => {
       </div>
 
       <div style="margin-top: 0.5em; margin-bottom: 0.5em; text-align: left">
-        <div v-if="modelValue.assess()">
+        <div v-if="modelValue.assess() > 0">
           <p>
             Training <em>subtracts</em> the current input
             <Tex inline formula="\vec{x}"></Tex>
@@ -254,6 +254,7 @@ onBeforeUnmount(() => {
       font-size: 0.875em;
       user-select: none;
       margin-top: 1ex;
+      text-align: center;
 
       transition: opacity 0.25s, filter 0.25s;
 

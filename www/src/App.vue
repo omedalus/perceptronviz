@@ -7,8 +7,10 @@ import OutputPanel from '@/components/OutputPanel.vue';
 import TrainingPanel from '@/components/TrainingPanel.vue';
 import ImageLoader from '@/components/ImageLoader.vue';
 import Essay from '@/components/Essay.vue';
+import SvgViz from './components/SvgViz.vue';
 
 import Perceptron from '@/model/Perceptron';
+import Tex from './components/Tex.vue';
 
 const thePerceptron = ref(new Perceptron(5));
 
@@ -59,9 +61,11 @@ const areExplanationsShowing = ref(null as boolean | null);
     </div>
   </main>
 
-  <div>
-    <hr />
-    {{ thePerceptron }}
+  <div class="network-visualization-section">
+    <div style="font-family: MathJax_Math-italic; font-size: 1.25rem; margin-bottom: 1em">
+      Network view
+    </div>
+    <SvgViz style="max-width: 90vw" v-model="thePerceptron"></SvgViz>
   </div>
 
   <div class="explando-essay mainblock">
@@ -110,5 +114,9 @@ const areExplanationsShowing = ref(null as boolean | null);
     text-align: center;
     min-width: 16em;
   }
+}
+
+.network-visualization-section {
+  text-align: center;
 }
 </style>
