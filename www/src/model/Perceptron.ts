@@ -1,3 +1,8 @@
+// @ts-ignore
+import pako from 'pako';
+// @ts-ignore
+import * as Uint8ToBase64 from 'uint8-to-base64';
+
 const _createZeroArray = (n: number) => {
   const a = Array.from({ length: n }, (v, i) => 0);
   return a;
@@ -206,6 +211,18 @@ class Perceptron {
     if (!zip) {
       return retval;
     }
+
+    const zippedBuffer = pako.deflate(retval);
+    const zippedStr = Uint8ToBase64.encode(zippedBuffer);
+    return zippedStr;
+  }
+
+  public deserialize(from: string | Uint8Array | any[]) {
+    let jsondata = null;
+    if (Array.isArray(from)) {
+      jsondata = from;
+    }
+    // TODO: Left off here.
   }
 }
 

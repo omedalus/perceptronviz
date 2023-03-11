@@ -34,8 +34,14 @@ const inputIncrement = (i: number) => {
 };
 
 const onSave = () => {
-  const perceptronStr = thePerceptron.value.serialize();
-  console.log(perceptronStr);
+  const perceptronStr = thePerceptron.value.serialize(true);
+
+  // https://stackoverflow.com/questions/5817505/is-there-any-method-to-get-the-url-without-query-string
+  const currentPath = window.location.href.split('?')[0];
+  const url = `${currentPath}?perceptron=${perceptronStr}`;
+
+  navigator.clipboard.writeText(url);
+  console.log(`Path copied to clipboard: ${url}`);
 };
 </script>
 
