@@ -174,11 +174,16 @@ onBeforeUnmount(() => {
         </p>
         <p>
           If you think about it, you might realize that this means that the perceptron is incapable
-          of "understanding" shifts or rotations of an image. Indeed, this is correct: moving,
-          rotating, or resizing an image all has to be done "out-of-band" for the perceptron. It
-          only recognizes an image if a specific set of pixels in specific positions have expected
-          levels of brightness. Any rotated, translated, or scaled versions of the image will have
-          pixels in different positions, and will need to be trained independently.
+          of "understanding" shifts or rotations of an image. It only recognizes an image by
+          specific pixels in specific positions. Any rotated, translated, or scaled versions of the
+          image will have active pixels in different positions, and need to be trained as if they
+          were separate images. In modern practice, the recognition of images in spite of rotations,
+          translations, and other transformations is handled by
+          <a
+            href="https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53"
+            ><em>convolutional neural networks</em></a
+          >
+          &mdash; which are, of course, still evolutionary descendants of the perceptron.
         </p>
 
         <p>

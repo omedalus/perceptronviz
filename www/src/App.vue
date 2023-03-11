@@ -24,12 +24,19 @@ const updateViz = () => {
 updateViz();
 
 const isImageLoaderShowing = ref(false);
+
+const areExplanationsShowing = ref(false);
 </script>
 
 <template>
-  <Header></Header>
+  <Header @showExplanations="areExplanationsShowing = $event"></Header>
 
-  <main>
+  <main
+    :class="{
+      'explanations-are-showing': areExplanationsShowing,
+      'explanations-are-not-showing': !areExplanationsShowing
+    }"
+  >
     <div class="interactive-model mainblock">
       <div class="interactive-panel interactive-panel--grid">
         <InputPanel

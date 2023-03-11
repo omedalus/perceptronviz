@@ -4,7 +4,7 @@ import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 const elemSpacer = ref();
 const elemHeader = ref();
 
-const isShowingExplanation = ref(false);
+const isShowingExplanation = ref(true);
 
 function adjustSpacerSizeToMatchHeader(this: Window, event: Event) {
   if (!elemHeader.value || !elemSpacer.value) {
