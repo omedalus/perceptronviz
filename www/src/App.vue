@@ -28,6 +28,10 @@ updateViz();
 const isImageLoaderShowing = ref(false);
 
 const areExplanationsShowing = ref(null as boolean | null);
+
+const inputIncrement = (i: number) => {
+  thePerceptron.value.input[i] = (thePerceptron.value.input[i] + 0.05) % 1.0;
+};
 </script>
 
 <template>
@@ -65,7 +69,11 @@ const areExplanationsShowing = ref(null as boolean | null);
     <div style="font-family: MathJax_Math-italic; font-size: 1.25rem; margin-bottom: 1em">
       Network view
     </div>
-    <SvgViz style="max-width: 90vw" v-model="thePerceptron"></SvgViz>
+    <SvgViz
+      style="max-width: 90vw"
+      :perceptron="thePerceptron"
+      @input-increment="inputIncrement($event)"
+    ></SvgViz>
   </div>
 
   <div class="explando-essay mainblock">

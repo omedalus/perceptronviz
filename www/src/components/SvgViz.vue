@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
 
 import type Perceptron from '@/model/Perceptron';
 import heatcolor from '@/model/heatcolor';
 
 const props = defineProps<{
-  modelValue: Perceptron;
+  perceptron: Perceptron;
 }>();
-defineEmits<{
-  (e: 'update:modelValue', v: Perceptron): void;
+const emit = defineEmits<{
+  (e: 'input-increment', i: number): void;
 }>();
 
 const inputX = (ixInput: number) => {
-  const retval = 10 + ixInput * 20 + Math.floor(ixInput / props.modelValue.dim) * 20;
+  const retval = 10 + ixInput * 20 + Math.floor(ixInput / props.perceptron.dim) * 20;
   return retval;
 };
 
@@ -23,22 +23,22 @@ const inputColor = (activityLevel: number) => {
 };
 
 const svgWidth = computed(() => {
-  const retval = (props.modelValue.size + props.modelValue.dim) * 20;
+  const retval = (props.perceptron.size + props.perceptron.dim) * 20;
   return retval;
 });
 
 const centerX = computed(() => svgWidth.value / 2);
 
 const outputX = (ixOutput: number) => {
-  const numOutputs = props.modelValue.outputLabels.length;
+  const numOutputs = props.perceptron.outputLabels.length;
   const ixCenter = (numOutputs - 1) / 2;
   const retval = centerX.value + (ixOutput - ixCenter) * 50;
   return retval;
 };
 
 const outputColor = (outputLabel: string, floor?: number) => {
-  const assessment = props.modelValue.assess(outputLabel);
-  const color = heatcolor(assessment, props.modelValue.dim, floor);
+  const assessment = props.perceptron.assess(outputLabel);
+  const color = heatcolor(assessment, props.perceptron.dim, floor);
   return color;
 };
 
@@ -49,9 +49,9 @@ const inputOutputWeights = computed(() => {
     weight: number;
     inputActivity: number;
   }[];
-  props.modelValue.outputLabels.forEach((outputLabel, ixOutput) => {
-    props.modelValue.input.forEach((inputActivity, ixInput) => {
-      const outputVector = props.modelValue.outputs[outputLabel];
+  props.perceptron.outputLabels.forEach((outputLabel, ixOutput) => {
+    props.perceptron.input.forEach((inputActivity, ixInput) => {
+      const outputVector = props.perceptron.outputs[outputLabel];
       const wio = outputVector[ixInput];
       const item = {
         inputActivity,
@@ -64,10 +64,32 @@ const inputOutputWeights = computed(() => {
   });
   return retval;
 });
+
+const inputIndexGettingIncremented = ref(-1);
+
+const intervalActivityIncrementor = ref(0);
+const MS_INCREMENTOR_INTERVAL = 50;
+const fnActivityIncrementor = () => {
+  if (inputIndexGettingIncremented.value < 0) {
+    return;
+  }
+  emit('input-increment', inputIndexGettingIncremented.value);
+};
+
+onMounted(() => {
+  intervalActivityIncrementor.value = window.setInterval(
+    fnActivityIncrementor,
+    MS_INCREMENTOR_INTERVAL
+  );
+});
+
+onBeforeUnmount(() => {
+  window.clearInterval(intervalActivityIncrementor.value);
+});
 </script>
 
 <template>
-  <svg :viewBox="`0 0 ${svgWidth} 320`" height="320" width="100%">
+  <svg :viewBox="`0 0 ${svgWidth} 320`" height="320" width="100%" class="perceptron-svg-viz">
     <line
       v-for="(weightRecord, ixWeightRecord) in inputOutputWeights"
       :key="ixWeightRecord"
@@ -76,12 +98,13 @@ const inputOutputWeights = computed(() => {
       :x2="outputX(weightRecord.outputIndex)"
       y2="260"
       stroke-width="1"
-      :stroke="heatcolor(weightRecord.weight, modelValue.dim)"
+      :stroke="heatcolor(weightRecord.weight, perceptron.dim)"
       :opacity="0.15 + 0.85 * weightRecord.inputActivity"
     />
 
     <circle
-      v-for="(inputValue, ixInput) in modelValue.input"
+      v-for="(inputValue, ixInput) in perceptron.input"
+      class="perceptron-svg-viz-inputnode"
       :key="ixInput"
       :cx="inputX(ixInput)"
       cy="10"
@@ -89,10 +112,13 @@ const inputOutputWeights = computed(() => {
       stroke="#888"
       stroke-width="2"
       :fill="inputColor(inputValue)"
+      @mousedown="inputIndexGettingIncremented = ixInput"
+      @mouseup="inputIndexGettingIncremented = -1"
+      @mouseout="inputIndexGettingIncremented = -1"
     />
 
     <circle
-      v-for="(outputLabel, ixOutput) in modelValue.outputLabels"
+      v-for="(outputLabel, ixOutput) in perceptron.outputLabels"
       :key="ixOutput"
       :cx="outputX(ixOutput)"
       cy="260"
@@ -103,7 +129,7 @@ const inputOutputWeights = computed(() => {
     />
 
     <text
-      v-for="(outputLabel, ixOutput) in modelValue.outputLabels"
+      v-for="(outputLabel, ixOutput) in perceptron.outputLabels"
       :key="ixOutput"
       :x="outputX(ixOutput)"
       y="280"
@@ -117,7 +143,7 @@ const inputOutputWeights = computed(() => {
     </text>
 
     <text
-      v-for="(outputLabel, ixOutput) in modelValue.outputLabels"
+      v-for="(outputLabel, ixOutput) in perceptron.outputLabels"
       :key="ixOutput"
       :x="outputX(ixOutput)"
       y="300"
@@ -126,9 +152,15 @@ const inputOutputWeights = computed(() => {
       font-size=".75rem"
       :fill="outputColor(outputLabel, 0.2)"
     >
-      {{ modelValue.assess(outputLabel).toFixed(2) }}
+      {{ perceptron.assess(outputLabel).toFixed(2) }}
     </text>
   </svg>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.perceptron-svg-viz {
+  .perceptron-svg-viz-inputnode {
+    cursor: url('@/assets/pen-cursor.svg'), pointer;
+  }
+}
+</style>
