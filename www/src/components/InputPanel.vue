@@ -51,24 +51,28 @@ defineEmits<{
     </div>
 
     <div style="text-align: left; font-size: 0.875rem; margin-top: 1em">
-      <p style="color: #888; margin-bottom: 1em">
-        The machine can't <em>see</em> the image like we do. It can't see contiguous lines, curves,
-        and shapes. It can only "see" a set of values between 0 and 1, corresponding to brightness
-        levels. In
-        <a href="https://towardsdatascience.com/a-concise-history-of-neural-networks-2070655d3fec">
-          inventor Frank Rosenblatt's original Mark 1 Perceptron</a
-        >, these values weren't even <em>numbers</em>; they were simply the electrical voltages
-        coming out of a grid of analog photocells.
-      </p>
-      <p>
-        The machine's input is a vector we'll call
-        <Tex inline formula="\vec{x}"></Tex>.
-      </p>
-      <p>Here's how your picture "looks" to the machine:</p>
+      <div class="explanation-hideable">
+        <p style="color: #888; margin-bottom: 1em">
+          The machine can't <em>see</em> the image like we do. It can't see contiguous lines,
+          curves, and shapes. It can only "see" a set of values between 0 and 1, corresponding to
+          brightness levels. In
+          <a
+            href="https://towardsdatascience.com/a-concise-history-of-neural-networks-2070655d3fec"
+          >
+            inventor Frank Rosenblatt's original Mark 1 Perceptron</a
+          >, these values weren't even <em>numbers</em>; they were simply the electrical voltages
+          coming out of a grid of analog photocells.
+        </p>
+        <p>
+          The machine's input is a vector we'll call
+          <Tex inline formula="\vec{x}"></Tex>.
+        </p>
+        <p>Here's how your picture "looks" to the machine:</p>
+      </div>
 
       <VectorReadout :vector="modelValue.input" name="x"> </VectorReadout>
 
-      <p class="explanatory-text dimmed-text" style="margin-top: 1em">
+      <p class="explanation-hideable explanatory-text dimmed-text" style="margin-top: 1em">
         You might notice that there's an extra "1.00" tacked onto the end of that input vector. It
         doesn't correspond to a pixel on the grid, and you can't change it. That's called the "bias
         neuron". Its job is to give the output something to multiply by in order to set the output's

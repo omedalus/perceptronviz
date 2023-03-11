@@ -49,7 +49,7 @@ onBeforeUnmount(() => {
   <div class="training-panel">
     <h2>Training</h2>
 
-    <div class="training-instructions">
+    <div class="training-instructions explanation-hideable">
       <p>
         The vector of connection weights
         <span v-if="modelValue.currentOutputLabel">
@@ -192,7 +192,7 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <div class="explanation-text dimmed-text">
+      <div class="explanation-hideable explanation-text dimmed-text">
         <p>
           You, the human operator of the perceptron, need to tell it when it's wrong or right in
           order for it to learn. For this reason, the perceptron is called a

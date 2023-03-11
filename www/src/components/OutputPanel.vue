@@ -348,7 +348,7 @@ onBeforeUnmount(() => {
 
       <br />
       <div class="explanation-text">
-        <p>
+        <p class="explanation-hideable">
           The connection weights from the input to the
           <strong>{{ modelValue.currentOutputLabel }} </strong>
           output are a vector we'll call
@@ -365,7 +365,7 @@ onBeforeUnmount(() => {
       </div>
 
       <br />
-      <div class="output-vector-explanation explanation-text dimmed-text">
+      <div class="explanation-hideable output-vector-explanation explanation-text dimmed-text">
         <p>
           When you create an output, the perceptron connects every input node (or "neuron") to the
           new output "neuron". Each "neuronal" connection is initially created with a

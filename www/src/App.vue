@@ -25,7 +25,7 @@ updateViz();
 
 const isImageLoaderShowing = ref(false);
 
-const areExplanationsShowing = ref(false);
+const areExplanationsShowing = ref(null as boolean | null);
 </script>
 
 <template>
@@ -33,8 +33,8 @@ const areExplanationsShowing = ref(false);
 
   <main
     :class="{
-      'explanations-are-showing': areExplanationsShowing,
-      'explanations-are-not-showing': !areExplanationsShowing
+      'explanations-are-showing': areExplanationsShowing === true,
+      'explanations-are-not-showing': areExplanationsShowing === false
     }"
   >
     <div class="interactive-model mainblock">

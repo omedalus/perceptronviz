@@ -81,12 +81,15 @@ p {
 
 .explanation-hideable {
   overflow: hidden;
+  display: none;
 }
 .explanations-are-showing .explanation-hideable {
   animation: show-explanation 1s ease-in-out forwards;
+  display: block;
 }
 .explanations-are-not-showing .explanation-hideable {
   animation: hide-explanation 1s ease-in-out forwards;
+  display: block;
 }
 
 .hoverafter-trigger + .hoverafter-displayer {

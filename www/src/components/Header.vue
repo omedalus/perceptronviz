@@ -4,7 +4,7 @@ import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 const elemSpacer = ref();
 const elemHeader = ref();
 
-const isShowingExplanation = ref(true);
+const isShowingExplanation = ref(false);
 
 function adjustSpacerSizeToMatchHeader(this: Window, event: Event) {
   if (!elemHeader.value || !elemSpacer.value) {
@@ -17,9 +17,6 @@ onMounted(() => {
   window.addEventListener('scroll', adjustSpacerSizeToMatchHeader);
   window.addEventListener('resize', adjustSpacerSizeToMatchHeader);
   adjustSpacerSizeToMatchHeader.bind(window)(new Event('scroll'));
-
-  // Make sure that our caller is synced with our explanation showage state.
-  emit('showExplanations', isShowingExplanation.value);
 });
 
 onBeforeUnmount(() => {
@@ -45,9 +42,17 @@ watch(isShowingExplanation, (newval) => {
 
       <div class="header-controls">
         <div v-if="isShowingExplanation">
+          <div class="funny-explanation-controls-caption">Holy wall of text, Batman!</div>
           Showing text explanations. <a @click="isShowingExplanation = false">Hide</a>
         </div>
-        <div v-else>Hiding text explanations. <a @click="isShowingExplanation = true">Show</a></div>
+        <div v-else>
+          <div class="funny-explanation-controls-caption">
+            I'm confused! What's happening<span class="animated-punctuation">?</span
+            ><span style="animation-delay: 0.33s" class="animated-punctuation">!</span
+            ><span style="animation-delay: 1.4s" class="animated-punctuation">?</span>
+          </div>
+          Hiding text explanations. <a @click="isShowingExplanation = true">Show</a>
+        </div>
       </div>
     </div>
   </header>
@@ -102,5 +107,44 @@ header {
 .header-controls {
   margin-left: auto;
   font-size: 0.875rem;
+  text-align: left;
+
+  .funny-explanation-controls-caption {
+    font-weight: bold;
+    color: white;
+    font-style: italic;
+  }
+}
+
+@keyframes animated-punctuation {
+  0% {
+    transform: rotate(-30deg);
+    left: 0;
+    top: 0;
+  }
+  25% {
+    transform: rotate(30deg);
+    top: -0.25ex;
+  }
+  50% {
+    transform: rotate(-30deg);
+    left: 1ex;
+    top: 0;
+  }
+  75% {
+    transform: rotate(30deg);
+    top: 0.25ex;
+  }
+  100% {
+    transform: rotate(-30deg);
+    left: 0;
+    top: 0;
+  }
+}
+
+.animated-punctuation {
+  display: inline-block;
+  position: relative;
+  animation: animated-punctuation 2s infinite;
 }
 </style>
