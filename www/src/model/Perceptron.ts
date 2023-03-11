@@ -212,17 +212,57 @@ class Perceptron {
       return retval;
     }
 
+    console.info(`Zipping and Base64 encoding: ${retval}`);
+
     const zippedBuffer = pako.deflate(retval);
     const zippedStr = Uint8ToBase64.encode(zippedBuffer);
     return zippedStr;
   }
 
-  public deserialize(from: string | Uint8Array | any[]) {
-    let jsondata = null;
-    if (Array.isArray(from)) {
-      jsondata = from;
+  public static deserialize(from: string | Uint8Array | any[]) {
+    try {
+      let jsondata = null;
+      if (Array.isArray(from)) {
+        jsondata = from;
+      } else if (from instanceof Uint8Array) {
+        const jsonStr = pako.inflate(from);
+        jsondata = JSON.parse(jsonStr);
+      } else if (typeof from === 'string') {
+        try {
+          jsondata = JSON.parse(from);
+        } catch (ex) {
+          const zippedBuffer = Uint8ToBase64.decode(from);
+          const unzippedBuffer = pako.inflate(zippedBuffer);
+
+          let decoder = new TextDecoder('utf-8');
+          const jsonStr = decoder.decode(unzippedBuffer);
+
+          jsondata = JSON.parse(jsonStr);
+        }
+      }
+
+      const inputVector = jsondata[0];
+      // Rounding is needed to avoid floating point sadness.
+      const dim = Math.round(Math.sqrt(inputVector.length - 1));
+
+      const newPerceptron = new Perceptron(dim);
+      newPerceptron.input = inputVector;
+
+      newPerceptron.outputs = jsondata[1];
+      newPerceptron._currentOutput = jsondata[2];
+
+      const savedInputs = jsondata[3];
+      // They're actually stored as strings!
+      newPerceptron.savedInputs = savedInputs.map((savedInput: number[]) =>
+        _serializeVectorToFixedWidthJSON(savedInput)
+      );
+
+      return newPerceptron;
+    } catch (ex) {
+      throw ex;
+      console.error(ex);
+      return null;
     }
-    // TODO: Left off here.
   }
 }
 

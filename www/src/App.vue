@@ -43,6 +43,21 @@ const onSave = () => {
   navigator.clipboard.writeText(url);
   console.log(`Path copied to clipboard: ${url}`);
 };
+
+onMounted(() => {
+  // https://www.js-howto.com/how-to-parse-a-url-query-parameters-in-javascript/
+  const searchParams = new URLSearchParams(
+    window.location.href.substring(window.location.href.indexOf('?'))
+  );
+
+  const perceptronQueryParam = searchParams.get('perceptron')?.replace(/ /g, '+');
+  if (perceptronQueryParam) {
+    const newPerceptron = Perceptron.deserialize(perceptronQueryParam);
+    if (newPerceptron) {
+      thePerceptron.value = newPerceptron;
+    }
+  }
+});
 </script>
 
 <template>
