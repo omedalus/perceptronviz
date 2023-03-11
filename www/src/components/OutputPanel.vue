@@ -151,8 +151,8 @@ onBeforeUnmount(() => {
       <div class="output-no-labels-explanation">
         <p>
           A perceptron "learns" to associate images with named outputs called called
-          <em>labels</em> or <em>classes</em> (which is why it's a type of AI called a
-          <em><a href="https://monkeylearn.com/blog/what-is-a-classifier/">classifer</a></em
+          <em>labels</em> or <em>classes</em> (i.e. it can be used as a
+          <em><a href="https://monkeylearn.com/blog/what-is-a-classifier/">classifier</a></em
           >). These labels describe the results that the human trainer wants to "teach" the
           perceptron.
         </p>

@@ -60,10 +60,19 @@ onBeforeUnmount(() => {
         <strong>random values</strong>.
       </p>
       <p>
-        By applying corrective <strong>training</strong> to the perceptron, you strengthen active
-        connections that lead to the correct output, and weaken active connections that lead to
-        incorrect ones. As a result, the perceptron "learns" to assign the correct label to the
-        image.
+        You <strong>train</strong> a perceptron through a process that, in psychology, is referred
+        to as
+        <a href="https://www.verywellmind.com/what-is-negative-reinforcement-2795410"
+          >negative reinforcement</a
+        >. When the perceptron emits a correct output, you do nothing; but if it emits a wrong
+        answer, you give it an "error signal". By applying
+
+        <a href="https://www.techtarget.com/searchenterpriseai/definition/reinforcement-learning"
+          >reinforcement learning</a
+        >
+        to the perceptron, you strengthen active connections that lead to the correct output, and
+        weaken active connections that lead to incorrect ones. As a result, the perceptron "learns"
+        to assign the correct label to the image.
       </p>
       <p style="color: #888">
         Repeated training will eventually make the connection weights of the pixels that are part of
@@ -160,7 +169,7 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <div style="margin-top: 0.5em; text-align: left">
+      <div style="margin-top: 0.5em; margin-bottom: 0.5em; text-align: left">
         <div v-if="modelValue.assess()">
           <p>
             Training <em>subtracts</em> the current input
@@ -181,6 +190,15 @@ onBeforeUnmount(() => {
           </p>
           <Tex formula="\vec{w} \gets \vec{w}+\vec{x}"></Tex>
         </div>
+      </div>
+
+      <div class="explanation-text dimmed-text">
+        <p>
+          You, the human operator of the perceptron, need to tell it when it's wrong or right in
+          order for it to learn. For this reason, the perceptron is called a
+          <a href="https://www.ibm.com/topics/supervised-learning">supervised learning</a>
+          algorithm.
+        </p>
       </div>
     </div>
   </div>
