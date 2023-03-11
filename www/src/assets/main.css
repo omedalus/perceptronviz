@@ -58,3 +58,11 @@ p {
 .hoverafter-trigger:hover + .hoverafter-displayer {
   display: block;
 }
+
+/* Prevent Mathjax from showing the unformatted formula before it renders. */
+script[type='math/tex; mode=display'] {
+  display: none;
+}
+.MathJax_Preview {
+  display: none;
+}
