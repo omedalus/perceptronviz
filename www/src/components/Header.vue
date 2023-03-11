@@ -118,6 +118,10 @@ header {
   font-size: 0.875rem;
   text-align: left;
 
+  @media screen and (max-width: 1024px) {
+    text-align: center;
+  }
+
   .funny-explanation-controls-caption {
     font-weight: bold;
     color: white;
