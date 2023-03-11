@@ -33,6 +33,13 @@ const vecPopTally = ref([] as number[]);
 const MS_INTERVAL_POP_TALLY_DOT_PRODUCT = 300;
 const IX_POP_TALLY_DOT_PRODUCT_OVERDRIVE = 15;
 const fnPopTallyDotProduct = () => {
+  const elementWithFocus = document.activeElement;
+  if (elementWithFocus === imagelabel.value) {
+    // Don't incremenet the counter when we're in the process of changing outputs.
+    // It messes up the value of the input label.
+    return;
+  }
+
   ixPopTallyDotProduct.value++;
   ixPopTallyDotProduct.value %= props.modelValue.size + 1 + IX_POP_TALLY_DOT_PRODUCT_OVERDRIVE;
 
