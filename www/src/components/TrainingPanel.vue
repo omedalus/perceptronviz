@@ -149,6 +149,31 @@ onBeforeUnmount(() => {
           </div>
         </div>
       </div>
+
+      <div style="margin-top: 0.5em; text-align: left">
+        <div v-if="modelValue.assess()">
+          <p>
+            Training <em>subtracts</em> the current input
+            <VueMathjax style="display: inline-block" formula="$$\vec{x}$$"></VueMathjax>
+            from the connection weights
+            <VueMathjax style="display: inline-block" formula="$$\vec{w}$$"></VueMathjax>. This
+            <em>reduces</em> the current active pixels' stimulation of the
+            <strong>{{ modelValue.currentOutputLabel }}</strong> output.
+          </p>
+          <VueMathjax formula="$$\vec{w} {\prime} = \vec{w}-\vec{x}$$"></VueMathjax>
+        </div>
+        <div v-else>
+          <p>
+            Training <em>adds</em> the current input
+            <VueMathjax style="display: inline-block" formula="$$\vec{x}$$"></VueMathjax>
+            to the connection weights
+            <VueMathjax style="display: inline-block" formula="$$\vec{w}$$"></VueMathjax>. This
+            <em>increases</em> the current active pixels' stimulation of the
+            <strong>{{ modelValue.currentOutputLabel }}</strong> output.
+          </p>
+          <VueMathjax formula="$$\vec{w} {\prime} = \vec{w}+\vec{x}$$"></VueMathjax>
+        </div>
+      </div>
     </div>
   </div>
 </template>
