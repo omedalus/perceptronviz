@@ -18,6 +18,7 @@ defineEmits<{
 
 const imagelabel = ref();
 const showLesson = ref(false);
+const weightInitializationMethod = ref('zero');
 
 const onNameSelectorChange = () => {
   const elemInput = imagelabel.value as HTMLInputElement;
@@ -25,7 +26,12 @@ const onNameSelectorChange = () => {
   if (!name) {
     return;
   }
+
   props.modelValue.currentOutputLabel = name;
+  if (weightInitializationMethod.value === 'zero') {
+    props.modelValue.zeroizeCurrentOutput();
+  }
+
   showLesson.value = false;
 };
 
@@ -142,6 +148,27 @@ onBeforeUnmount(() => {
             <a v-else @click="showLesson = false">Return to interactive</a>
             <div style="width: 100%"></div>
             <a @click="modelValue.deleteCurrentOutput()">Delete this label</a>
+          </div>
+        </div>
+
+        <div class="weight-initialization-controls">
+          <div>When creating new outputs, connections get initialized to...</div>
+
+          <div class="weight-initialization-choices">
+            <div
+              class="weight-initialization-choice"
+              :class="{ 'weight-initialization-selected': weightInitializationMethod === 'random' }"
+              @click="weightInitializationMethod = 'random'"
+            >
+              <strong>Random</strong> (more "realistic")
+            </div>
+            <div
+              class="weight-initialization-choice"
+              :class="{ 'weight-initialization-selected': weightInitializationMethod === 'zero' }"
+              @click="weightInitializationMethod = 'zero'"
+            >
+              <strong>Zero</strong> (easier to visualize)
+            </div>
           </div>
         </div>
       </div>
@@ -362,11 +389,6 @@ onBeforeUnmount(() => {
           :heatrange="modelValue.dim"
         >
         </VectorReadout>
-
-        <div style="text-align: right; font-size: 0.75rem; opacity: 0.8">
-          <div><a @click="modelValue.randomizeCurrentOutput()">Reset weights to random</a></div>
-          <div><a @click="modelValue.zeroizeCurrentOutput()">Reset weights to zero</a></div>
-        </div>
       </div>
 
       <br />
@@ -396,7 +418,7 @@ onBeforeUnmount(() => {
       font-size: 0.875rem;
     }
 
-    input {
+    input[type='text'] {
       width: 12ex;
       height: 1.5em;
       align-self: flex-end;
@@ -540,5 +562,40 @@ onBeforeUnmount(() => {
   border-radius: 50%;
   padding: 0.25ex;
   position: relative;
+}
+
+.weight-initialization-controls {
+  text-align: right;
+  font-size: 0.75rem;
+  margin-top: 0.5ex;
+
+  .weight-initialization-choices {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+
+    .weight-initialization-choice {
+      text-align: center;
+      flex: 1;
+      border-radius: 1ex;
+      background-color: #222;
+      padding: 0.5ex 1ex;
+
+      opacity: 0.7;
+      box-sizing: border-box;
+      border: 1px solid transparent;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &.weight-initialization-selected {
+        color: #fff;
+        background-color: #444;
+        border-color: currentColor;
+      }
+    }
+  }
 }
 </style>

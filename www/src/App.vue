@@ -111,9 +111,6 @@ onMounted(() => {
         This perceptron doesn't recognize this image as anything it's been trained on.
       </div>
     </div>
-    <div style="font-family: MathJax_Math-italic; font-size: 1.25rem; margin-bottom: 1em">
-      Network view
-    </div>
 
     <SvgViz
       style="max-width: 90vw"
@@ -165,6 +162,7 @@ onMounted(() => {
   .interactive-panel {
     flex: 1;
     margin: 1em;
+    margin-top: 0;
     text-align: center;
     min-width: 16em;
   }
