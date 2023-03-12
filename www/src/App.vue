@@ -44,24 +44,33 @@ const onSave = () => {
   console.log(`Path copied to clipboard: ${url}`);
 };
 
+const loadPerceptronFromSerial = (serial: string) => {
+  if (!serial) {
+    return;
+  }
+  const newPerceptron = Perceptron.deserialize(serial);
+  if (newPerceptron) {
+    thePerceptron.value = newPerceptron;
+  }
+};
+
 onMounted(() => {
   // https://www.js-howto.com/how-to-parse-a-url-query-parameters-in-javascript/
   const searchParams = new URLSearchParams(
     window.location.href.substring(window.location.href.indexOf('?'))
   );
 
-  const perceptronQueryParam = searchParams.get('perceptron')?.replace(/ /g, '+');
-  if (perceptronQueryParam) {
-    const newPerceptron = Perceptron.deserialize(perceptronQueryParam);
-    if (newPerceptron) {
-      thePerceptron.value = newPerceptron;
-    }
-  }
+  const perceptronQueryParam = searchParams.get('perceptron')?.replace(/ /g, '+') || '';
+  loadPerceptronFromSerial(perceptronQueryParam);
 });
 </script>
 
 <template>
-  <Header @showExplanations="areExplanationsShowing = $event" @save="onSave()"></Header>
+  <Header
+    @showExplanations="areExplanationsShowing = $event"
+    @save="onSave()"
+    @load="loadPerceptronFromSerial($event)"
+  ></Header>
 
   <main
     :class="{

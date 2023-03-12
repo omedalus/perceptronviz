@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import { ref, onMounted, onBeforeUnmount, watch, computed } from 'vue';
+
+import samplePerceptrons from '@/assets/sample-perceptrons.json';
 
 const elemSpacer = ref();
 const elemHeader = ref();
@@ -27,6 +29,7 @@ onBeforeUnmount(() => {
 const emit = defineEmits<{
   (e: 'showExplanations', show: boolean): void;
   (e: 'save'): void;
+  (e: 'load', serialized: string): void;
 }>();
 
 watch(isShowingExplanation, (newval) => {
@@ -34,6 +37,7 @@ watch(isShowingExplanation, (newval) => {
 });
 
 const isSaveMessageShowing = ref(false);
+const isLoadMessageShowing = ref(false);
 
 const onSaveClicked = () => {
   emit('save');
@@ -87,6 +91,33 @@ const onSaveClicked = () => {
           The URL of this perceptron (in its current state) has been copied to your clipboard. You
           can paste it into another browser window, link it on your website, or share it to social
           media.
+        </div>
+      </div>
+      <div>
+        <a @click="isLoadMessageShowing = !isLoadMessageShowing">
+          Load a pre-trained sample perceptron
+        </a>
+        <div
+          class="loadmessage"
+          :class="{
+            'loadmessage-showing': isLoadMessageShowing,
+            'loadmessage-not-showing': !isLoadMessageShowing
+          }"
+        >
+          <div
+            v-for="(sample, iSample) in samplePerceptrons"
+            :key="sample.name"
+            class="sample-perceptron"
+          >
+            <a
+              @click="
+                isLoadMessageShowing = false;
+                $emit('load', sample.value);
+              "
+            >
+              {{ sample.name }}
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -193,20 +224,29 @@ header {
   font-size: 0.75rem;
   position: absolute;
   left: 0;
-  top: 100%;
+  top: calc(100% - 0.75ex);
   background-color: #333;
   padding: 0.5ex 1ex;
+  padding-top: 0;
   border: 1.5px solid #666;
   border-top: none;
   border-left: none;
   border-radius: 0 0 1em 0;
   text-align: left;
-  max-width: 30ex;
+  max-width: 40ex;
 
-  .savemessage {
+  .savemessage,
+  .loadmessage {
     display: none;
-    &.savemessage-showing {
+    &.savemessage-showing,
+    &.loadmessage-showing {
       display: block;
+    }
+  }
+
+  .loadmessage {
+    .sample-perceptron {
+      margin-left: 2em;
     }
   }
 }
