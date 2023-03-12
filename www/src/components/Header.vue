@@ -58,7 +58,9 @@ const onSaveClicked = () => {
         <div style="font-size: 0.75rem; display: flex">
           <a href="mailto:perceptronviz@gmail.com">Contact the developer</a>
           <div style="width: 100%"></div>
-          <a href="https://github.com/omedalus/perceptronviz">See the source code</a>
+          <a target="_blank" href="https://github.com/omedalus/perceptronviz"
+            >See the source code</a
+          >
         </div>
       </div>
 
@@ -94,9 +96,7 @@ const onSaveClicked = () => {
         </div>
       </div>
       <div>
-        <a @click="isLoadMessageShowing = !isLoadMessageShowing">
-          Load a pre-trained sample perceptron
-        </a>
+        <a @click="isLoadMessageShowing = !isLoadMessageShowing"> Load a pre-trained sample </a>
         <div
           class="loadmessage"
           :class="{
@@ -153,7 +153,7 @@ header {
     align-items: center;
 
     @media screen and (max-width: 1024px) {
-      display: block;
+      display: inline-block;
       padding: 0 1ex 0.5ex;
     }
   }
@@ -169,6 +169,10 @@ header {
 .header-text {
   a {
     white-space: nowrap;
+  }
+
+  @media screen and (max-width: 1024px) {
+    padding-bottom: 1ex;
   }
 }
 
