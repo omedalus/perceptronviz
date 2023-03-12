@@ -60,8 +60,8 @@ defineEmits<{
             href="https://towardsdatascience.com/a-concise-history-of-neural-networks-2070655d3fec"
           >
             inventor Frank Rosenblatt's original Mark 1 Perceptron</a
-          >, these values weren't even <em>numbers</em>; they were simply the electrical voltages
-          coming out of a grid of analog photocells.
+          >, these values weren't even <em>numbers</em>; they were simply electrical voltages coming
+          out of a grid of analog photocells.
         </p>
         <p>
           The machine's input is a vector we'll call

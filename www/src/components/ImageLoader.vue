@@ -5,7 +5,7 @@ import HeatGrid from '@/components/HeatGrid.vue';
 
 import type Perceptron from '@/model/Perceptron';
 
-const prop = defineProps<{
+const props = defineProps<{
   modelValue: boolean;
   perceptron: Perceptron;
 }>();
@@ -17,6 +17,9 @@ const emit = defineEmits<{
 const selectImage = (imageJSON: string) => {
   emit('imageJSON', imageJSON);
   emit('update:modelValue', false);
+};
+const deleteImage = (ixImage: number) => {
+  props.perceptron.savedInputs.splice(ixImage, 1);
 };
 </script>
 
@@ -35,6 +38,8 @@ const selectImage = (imageJSON: string) => {
             input-overlay
             skip-bias
           ></HeatGrid>
+
+          <div class="image-loader-item-delete" @click.stop="deleteImage(i)">❌</div>
         </div>
       </div>
     </div>
@@ -62,8 +67,8 @@ const selectImage = (imageJSON: string) => {
     border-radius: 1em;
     padding: 1em;
 
-    width: 20em;
-    max-width: 90w;
+    width: 30em;
+    max-width: 90vw;
   }
 
   .image-loader-content {
@@ -73,7 +78,24 @@ const selectImage = (imageJSON: string) => {
   .image-loader-item {
     display: inline-block;
     padding: 1ex;
+    padding-right: 2ex;
     cursor: pointer;
+    position: relative;
+
+    .image-loader-item-delete {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
+      color: red;
+      display: none;
+    }
+
+    &:hover {
+      .image-loader-item-delete {
+        display: block;
+      }
+    }
   }
 }
 </style>
