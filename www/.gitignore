@@ -9,7 +9,7 @@ lerna-debug.log*
 
 node_modules
 .DS_Store
-dist
+# dist # Commenting out in order to make gh-pages work
 dist-ssr
 coverage
 *.local
