@@ -322,7 +322,7 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <div style="display: flex; flex-direction: row; justify-content: center; margin-top: 1em">
+      <div class="runningtotal-holder">
         <Tex formula="\vec{x}\cdot\vec{w}=\sum_{i=1}^{n}x_i w_i="></Tex>
 
         <div style="margin-top: 0.5ex; min-width: 7em">
@@ -565,6 +565,13 @@ onBeforeUnmount(() => {
   border-radius: 50%;
   padding: 0.25ex;
   position: relative;
+}
+.runningtotal-holder {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 1em;
+  height: 2.5em;
 }
 
 .weight-initialization-controls {

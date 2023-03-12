@@ -19,6 +19,26 @@ defineEmits<{
 <template>
   <div class="input-panel">
     <h2>Input</h2>
+
+    <div class="explanation-text dimmed-text explanation-hideable" style="margin-top: 1em; margin-bottom: 1em">
+      <p>
+        Perceptrons are really bad at processing visual input. Humans, however, are great at it
+        &mdash; and besides, the screen you're browsing on is a visual medium. So, for this
+        demonstration, you'll:
+        <ol>
+          <li>Draw a simple picture (don't forget to save it for later!)</li>
+          <li>Create a <em>label</em> (an output node) for this picture</li>
+          <li>Train the perceptron to associate this image with this label</li>
+        </ol>
+        Do this for two or three pictures. (Don't forget to train the perceptron on which
+        labels <em>don't</em> apply to which pictures, as well as those which do!) When
+        your perceptron is fully trained, you'll be able to see that the connection weights
+        for each output are most <span style="color: green">positive</span> for the specific
+        pixels that most distinctly indicate that output, and most <span style="color: red">negative</span>
+        for those that counterindicate it.
+      </p>
+    </div>
+
     <div class="gridmodel-holder">
       <GridModel v-model="modelValue.input" :dim="modelValue.dim"></GridModel>
       <div class="gridmodel-controls">
