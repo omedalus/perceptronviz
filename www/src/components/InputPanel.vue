@@ -35,7 +35,7 @@ defineEmits<{
         your perceptron is fully trained, you'll be able to see that the connection weights
         for each output are most <span style="color: green">positive</span> for the specific
         pixels that most distinctly indicate that output, and most <span style="color: red">negative</span>
-        for those that counterindicate it.
+        for those that contraindicate it.
       </p>
     </div>
 
