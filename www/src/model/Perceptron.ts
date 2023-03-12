@@ -100,21 +100,30 @@ class Perceptron {
   public createOutput(label: string) {
     if (!(label in this.outputs)) {
       if (this.isInitRandomOutputWeights) {
-        this.outputs[label] = _createRandomArray(this.size + 1, this.dim);
+        this.outputs[label] = _createRandomArray(this.size, this.dim);
       } else {
-        this.outputs[label] = _createZeroArray(this.size + 1);
+        this.outputs[label] = _createZeroArray(this.size);
       }
     }
     return this.outputs[label];
   }
 
   public randomizeOutput(label: string) {
-    this.outputs[label] = _createRandomArray(this.size + 1, this.dim);
+    this.outputs[label] = _createRandomArray(this.size, this.dim);
     return this.outputs[label];
   }
 
   public randomizeCurrentOutput() {
     return this.randomizeOutput(this.currentOutputLabel);
+  }
+
+  public zeroizeOutput(label: string) {
+    this.outputs[label] = [...Array(this.size)].map((x) => 0);
+    return this.outputs[label];
+  }
+
+  public zeroizeCurrentOutput() {
+    return this.zeroizeOutput(this.currentOutputLabel);
   }
 
   public deleteOutput(label: string) {

@@ -14,7 +14,7 @@ const emit = defineEmits<{
 }>();
 
 const timerTrainingAnimation = ref(0);
-const MS_TRAINING_ANIMATION_DURATION = 2500;
+const MS_TRAINING_ANIMATION_DURATION = 1500;
 const isTrainingAnimationRunning = computed(() => {
   return !!timerTrainingAnimation.value;
 });

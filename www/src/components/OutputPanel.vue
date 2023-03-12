@@ -362,6 +362,11 @@ onBeforeUnmount(() => {
           :heatrange="modelValue.dim"
         >
         </VectorReadout>
+
+        <div style="text-align: right; font-size: 0.75rem; opacity: 0.8">
+          <div><a @click="modelValue.randomizeCurrentOutput()">Reset weights to random</a></div>
+          <div><a @click="modelValue.zeroizeCurrentOutput()">Reset weights to zero</a></div>
+        </div>
       </div>
 
       <br />

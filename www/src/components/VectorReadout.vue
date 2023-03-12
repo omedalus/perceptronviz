@@ -41,6 +41,7 @@ const getStyle = (v: number) => {
 
   .vector-label {
     font-size: 1.5rem;
+    min-width: 2.5em;
   }
 
   .vector-readout {
