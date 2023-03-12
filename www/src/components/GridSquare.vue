@@ -72,6 +72,7 @@ watch(
     @mouseup="onMouseUp()"
     @mouseleave="onMouseUp()"
     @mouseout="onMouseUp()"
+    @click.stop="msTotalHoldTime += MS_INTERVAL_HOLD"
   >
     <div class="gridsquare-brightener" :style="{ opacity: theValue }"></div>
 

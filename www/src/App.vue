@@ -108,8 +108,7 @@ onMounted(() => {
         <strong style="color: green">{{ thePerceptron.bestOutput }}</strong>
       </div>
       <div v-else>
-        This perceptron doesn't think that this image resembles any of the output labels it's been
-        trained on.
+        This perceptron doesn't recognize this image as anything it's been trained on.
       </div>
     </div>
     <div style="font-family: MathJax_Math-italic; font-size: 1.25rem; margin-bottom: 1em">

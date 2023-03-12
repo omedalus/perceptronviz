@@ -115,6 +115,7 @@ onBeforeUnmount(() => {
       @mousedown="inputIndexGettingIncremented = ixInput"
       @mouseup="inputIndexGettingIncremented = -1"
       @mouseout="inputIndexGettingIncremented = -1"
+      @click.stop="$emit('input-increment', ixInput)"
     />
 
     <circle
