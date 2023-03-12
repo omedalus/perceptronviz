@@ -259,10 +259,22 @@ class Perceptron {
 
       return newPerceptron;
     } catch (ex) {
-      throw ex;
       console.error(ex);
       return null;
     }
+  }
+
+  public get bestOutput() {
+    let bestAssessment = 0;
+    let bestLabel = '';
+    this.outputLabels.forEach((label) => {
+      const assessment = this.assess(label);
+      if (assessment > bestAssessment) {
+        bestAssessment = assessment;
+        bestLabel = label;
+      }
+    });
+    return bestLabel;
   }
 }
 

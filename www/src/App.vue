@@ -101,9 +101,20 @@ onMounted(() => {
   </main>
 
   <div class="network-visualization-section">
+    <div style="max-width: 20em; margin: auto; margin-bottom: 1em">
+      <div v-if="thePerceptron.bestOutput">
+        This perceptron's best guess for this image is that it depicts a
+        <strong style="color: green">{{ thePerceptron.bestOutput }}</strong>
+      </div>
+      <div v-else>
+        This perceptron doesn't think that this image resembles any of the output labels it's been
+        trained on.
+      </div>
+    </div>
     <div style="font-family: MathJax_Math-italic; font-size: 1.25rem; margin-bottom: 1em">
       Network view
     </div>
+
     <SvgViz
       style="max-width: 90vw"
       :perceptron="thePerceptron"
@@ -131,7 +142,7 @@ onMounted(() => {
 }
 
 .explando-essay {
-  padding-top: 1em;
+  padding-top: 3em;
   padding-bottom: 2em;
   max-width: 640px;
   padding-left: 1em;
