@@ -70,6 +70,7 @@ onMounted(() => {
     @showExplanations="areExplanationsShowing = $event"
     @save="onSave()"
     @load="loadPerceptronFromSerial($event)"
+    @reset="thePerceptron = new Perceptron(thePerceptron.dim)"
   ></Header>
 
   <main

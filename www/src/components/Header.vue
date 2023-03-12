@@ -30,6 +30,7 @@ const emit = defineEmits<{
   (e: 'showExplanations', show: boolean): void;
   (e: 'save'): void;
   (e: 'load', serialized: string): void;
+  (e: 'reset'): void;
 }>();
 
 watch(isShowingExplanation, (newval) => {
@@ -119,6 +120,9 @@ const onSaveClicked = () => {
             </a>
           </div>
         </div>
+      </div>
+      <div>
+        <a @click="$emit('reset')">Reset all data</a>
       </div>
     </div>
   </header>
