@@ -27,8 +27,11 @@ const onNameSelectorChange = () => {
     return;
   }
 
+  const isNewOutput = !props.modelValue.outputLabels.includes(name);
+
   props.modelValue.currentOutputLabel = name;
-  if (weightInitializationMethod.value === 'zero') {
+
+  if (isNewOutput && weightInitializationMethod.value === 'zero') {
     props.modelValue.zeroizeCurrentOutput();
   }
 

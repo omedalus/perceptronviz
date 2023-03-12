@@ -13,7 +13,7 @@ const observer = new MutationObserver((mutations, observer) => {
   observer.disconnect();
   window.setTimeout(() => {
     hasRendered.value = true;
-  }, 100);
+  }, 500);
 });
 
 onMounted(() => {
