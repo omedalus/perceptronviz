@@ -254,7 +254,25 @@ header {
 
   .loadmessage {
     .sample-perceptron {
-      margin-left: 2em;
+      a {
+        display: block;
+        margin-left: 1em;
+        padding-left: 1em;
+        position: relative;
+
+        &::before {
+          position: absolute;
+          top: 0;
+          left: 0;
+          content: '⚬';
+        }
+
+        &:hover {
+          &::before {
+            content: '→';
+          }
+        }
+      }
     }
   }
 }
