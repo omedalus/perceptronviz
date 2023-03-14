@@ -448,6 +448,17 @@ onMounted(() => {
       GPT instance in their pockets isn't around the corner.
     </p>
     <p>But it's not <em>far off</em>, either.</p>
+    <p style="font-style: italic">
+      EDIT: In the time it took for me to publish this website, much of the above paragraph has been
+      rendered obsolete.
+      <a
+        href="https://techcrunch.com/2023/03/14/openai-releases-gpt-4-ai-that-it-claims-is-state-of-the-art/"
+        >OpenAI released GPT-4</a
+      >, which allegedly is slightly bigger than GPT-3. And Meta, the company that owns Facebook,
+      has produced LLaMa, a language model that is comparably performant to GPT but that
+      <a href="https://aituts.com/llama/">can be made to run on a desktop workstation</a>. We are
+      living in very interesting times.
+    </p>
 
     <p>
       The feedforward multilayer perceptron design, with backpropagation as its training algorithm,
