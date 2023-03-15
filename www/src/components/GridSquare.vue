@@ -72,7 +72,10 @@ watch(
     @mouseup="onMouseUp()"
     @mouseleave="onMouseUp()"
     @mouseout="onMouseUp()"
-    @click.stop="msTotalHoldTime += MS_INTERVAL_HOLD"
+    @click.stop="
+      msTotalHoldTime += MS_INTERVAL_HOLD;
+      $emit('update:modelValue', theValue);
+    "
   >
     <div class="gridsquare-brightener" :style="{ opacity: theValue }"></div>
 
