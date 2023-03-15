@@ -9,6 +9,7 @@ const props = defineProps<{
 }>();
 const emit = defineEmits<{
   (e: 'input-increment', i: number): void;
+  (e: 'output-select', o: string): void;
 }>();
 
 const inputX = (ixInput: number) => {
@@ -97,7 +98,9 @@ onBeforeUnmount(() => {
       y1="10"
       :x2="outputX(weightRecord.outputIndex)"
       y2="260"
-      stroke-width="1"
+      :stroke-width="
+        perceptron.outputLabels[weightRecord.outputIndex] === perceptron.currentOutputLabel ? 4 : 1
+      "
       :stroke="heatcolor(weightRecord.weight, perceptron.dim)"
       :opacity="0.15 + 0.85 * weightRecord.inputActivity"
     />
@@ -120,13 +123,15 @@ onBeforeUnmount(() => {
 
     <circle
       v-for="(outputLabel, ixOutput) in perceptron.outputLabels"
+      class="perceptron-svg-viz-outputnode"
       :key="ixOutput"
       :cx="outputX(ixOutput)"
       cy="260"
       r="8"
-      stroke="#666"
+      :stroke="outputLabel === perceptron.currentOutputLabel ? '#fff' : '#666'"
       stroke-width="2"
       :fill="outputColor(outputLabel)"
+      @click.stop="$emit('output-select', outputLabel)"
     />
 
     <text
@@ -162,6 +167,9 @@ onBeforeUnmount(() => {
 .perceptron-svg-viz {
   .perceptron-svg-viz-inputnode {
     cursor: url('@/assets/pen-cursor.svg'), pointer;
+  }
+  .perceptron-svg-viz-outputnode {
+    cursor: pointer;
   }
 }
 </style>

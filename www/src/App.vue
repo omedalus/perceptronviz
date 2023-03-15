@@ -31,6 +31,12 @@ const areExplanationsShowing = ref(null as boolean | null);
 
 const inputIncrement = (i: number) => {
   thePerceptron.value.input[i] = (thePerceptron.value.input[i] + 0.05) % 1.0;
+  updateViz();
+};
+
+const outputSelect = (o: string) => {
+  thePerceptron.value.currentOutputLabel = o;
+  updateViz();
 };
 
 const onSave = () => {
@@ -116,6 +122,7 @@ onMounted(() => {
       style="max-width: 90vw"
       :perceptron="thePerceptron"
       @input-increment="inputIncrement($event)"
+      @output-select="outputSelect($event)"
     ></SvgViz>
   </div>
 
